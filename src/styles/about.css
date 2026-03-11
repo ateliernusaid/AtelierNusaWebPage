@@ -332,3 +332,77 @@
 .gallery-grid {
     grid-template-rows: auto auto;
 }
+
+/* ========================================
+   ABOUT PAGE MOBILE FIXES
+   ======================================== */
+@media (max-width: 768px) {
+    .philosophy .arch-grid--offset {
+        grid-template-columns: 1fr;
+        gap: var(--space-md);
+    }
+
+    .philosophy .arch-card {
+        padding: var(--space-md);
+    }
+
+    .about-intro__image img {
+        height: 280px;
+    }
+}
+
+@media (max-width: 600px) {
+    .about-intro.arch-section,
+    .philosophy.arch-section,
+    .about-gallery.arch-section {
+        padding-top: var(--space-lg);
+        padding-bottom: var(--space-lg);
+    }
+
+    .about-intro__text h2 {
+        font-size: clamp(1.5rem, 6vw, 2rem);
+    }
+
+    .about-intro__text p {
+        font-size: 0.9rem;
+    }
+
+    .about-intro__image img {
+        height: 220px;
+    }
+
+    .philosophy .arch-card h3 {
+        font-size: 1rem;
+    }
+
+    .philosophy .arch-card .arch-text {
+        font-size: 0.85rem;
+    }
+
+    .philosophy .arch-card .arch-number {
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.9rem;
+    }
+
+    .about-intro .arch-grid,
+    .philosophy .arch-grid {
+        margin-bottom: var(--space-md);
+    }
+
+    .gallery-title {
+        font-size: 0.9rem;
+    }
+
+    .contact__info {
+        gap: var(--space-md);
+    }
+
+    .contact__title {
+        font-size: clamp(1.5rem, 6vw, 2rem);
+    }
+
+    .contact__desc {
+        font-size: 0.9rem;
+    }
+}
