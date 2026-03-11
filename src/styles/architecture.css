@@ -1,0 +1,265 @@
+/* ========================================
+   ARCHITECTURAL DESIGN SYSTEM
+   ======================================== */
+
+/* Asymmetrical Grid System */
+.arch-grid {
+    display: grid;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-section);
+}
+
+.arch-grid--split {
+    grid-template-columns: 1.618fr 1fr;
+    /* Golden ratio */
+    align-items: start;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+}
+
+.arch-grid--offset {
+    grid-template-columns: 1fr 1.2fr 1fr;
+
+    &>*:nth-child(2) {
+        transform: translateY(var(--space-xl));
+    }
+
+    @media (max-width: 968px) {
+        grid-template-columns: 1fr;
+
+        &>*:nth-child(2) {
+            transform: none;
+        }
+    }
+}
+
+/* Vertical Rhythm */
+.arch-section {
+    padding: var(--space-section) 0;
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 1px;
+        height: var(--space-lg);
+        background: linear-gradient(180deg, transparent, var(--color-border), transparent);
+        transform: translateX(-50%);
+    }
+}
+
+/* Material Cards - Glassmorphism */
+.arch-card {
+    background: rgba(20, 28, 38, 0.6);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+    /* Mouse-tracking glow */
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(212, 175, 55, 0.12),
+                transparent 60%);
+        opacity: 0;
+        transition: opacity var(--transition-normal);
+        z-index: 0;
+    }
+
+    /* Noise texture overlay */
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    &>* {
+        position: relative;
+        z-index: 1;
+    }
+
+    &:hover {
+        transform: translateY(-4px);
+        border-color: rgba(212, 175, 55, 0.25);
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25),
+            0 0 60px rgba(212, 175, 55, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+        &::before {
+            opacity: 1;
+        }
+    }
+}
+
+/* Architectural Lines */
+.arch-line {
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent,
+            var(--color-border) 20%,
+            var(--color-border) 80%,
+            transparent);
+    margin: var(--space-2xl) 0;
+}
+
+.arch-line--vertical {
+    width: 1px;
+    height: 100px;
+    background: linear-gradient(180deg,
+            transparent,
+            var(--color-border) 20%,
+            var(--color-border) 80%,
+            transparent);
+    margin: 0 auto;
+}
+
+/* Image Frames */
+.arch-frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border: 1px solid var(--glass-border);
+        border-radius: inherit;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform var(--transition-slow);
+    }
+
+    &:hover img {
+        transform: scale(1.05);
+    }
+}
+
+/* Text Blocks */
+.arch-text {
+    max-width: 65ch;
+
+    &--large {
+        font-size: var(--fs-h4);
+        line-height: var(--lh-relaxed);
+        color: var(--color-text-secondary);
+        letter-spacing: 0.01em;
+    }
+}
+
+/* Number Indicators */
+.arch-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    font-family: var(--font-heading);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-light);
+    color: var(--color-accent);
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    margin-bottom: var(--space-md);
+}
+
+/* Reveal Animations */
+.arch-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+
+    &.revealed {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.arch-reveal--left {
+    transform: translateX(-30px);
+
+    &.revealed {
+        transform: translateX(0);
+    }
+}
+
+.arch-reveal--scale {
+    transform: scale(0.95);
+
+    &.revealed {
+        transform: scale(1);
+    }
+}
+
+/* Stagger children animations */
+.stagger-parent.revealed>*,
+.stagger-parent.visible>* {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: staggerIn 0.6s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.stagger-parent.revealed>*:nth-child(1),
+.stagger-parent.visible>*:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.stagger-parent.revealed>*:nth-child(2),
+.stagger-parent.visible>*:nth-child(2) {
+    animation-delay: 0.12s;
+}
+
+.stagger-parent.revealed>*:nth-child(3),
+.stagger-parent.visible>*:nth-child(3) {
+    animation-delay: 0.19s;
+}
+
+.stagger-parent.revealed>*:nth-child(4),
+.stagger-parent.visible>*:nth-child(4) {
+    animation-delay: 0.26s;
+}
+
+.stagger-parent.revealed>*:nth-child(5),
+.stagger-parent.visible>*:nth-child(5) {
+    animation-delay: 0.33s;
+}
+
+.stagger-parent.revealed>*:nth-child(6),
+.stagger-parent.visible>*:nth-child(6) {
+    animation-delay: 0.40s;
+}
+
+@keyframes staggerIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

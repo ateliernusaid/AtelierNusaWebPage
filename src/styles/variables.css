@@ -1,0 +1,135 @@
+/* ========================================
+   DESIGN TOKENS - Atelier Nusa
+   ======================================== */
+
+:root {
+  /* Refined Color Palette - Architectural */
+  --color-bg-primary: #0a0f14;
+  /* Deep charcoal */
+  --color-bg-secondary: #111820;
+  /* Soft midnight */
+  --color-bg-tertiary: #1a2430;
+  /* Dark slate */
+  --color-bg-card: #141c26;
+  /* Elevated surface */
+
+  /* Warmer, luxurious accent */
+  --color-accent: #d4af37;
+  /* Architectural brass */
+  --color-accent-light: #e6c757;
+  /* Light gold */
+  --color-accent-dark: #b8962c;
+  /* Deep brass */
+  --color-accent-glow: rgba(212, 175, 55, 0.12);
+  --color-accent-soft: #f4e5c2;
+  /* Warm sand */
+
+  /* Material-inspired neutrals */
+  --color-concrete: #e8e6e1;
+  /* Light concrete */
+  --color-stone: #9b9b9b;
+  /* Natural stone */
+  --color-charcoal: #2c2c2c;
+  /* Dark charcoal */
+
+  --color-text-primary: #fafafa;
+  --color-text-secondary: rgba(250, 245, 235, 0.78);
+  --color-text-muted: rgba(250, 250, 250, 0.52);
+  --color-text-dark: #0a0f14;
+  --color-text-dark-secondary: #2c2c2c;
+
+  --color-border: rgba(212, 175, 55, 0.18);
+  --color-border-light: rgba(255, 255, 255, 0.06);
+
+  /* Gradients */
+  --gradient-hero: linear-gradient(180deg, #0d1b2a 0%, #132238 50%, #0d1b2a 100%);
+  --gradient-card: linear-gradient(145deg, rgba(20, 28, 38, 0.9) 0%, rgba(15, 22, 32, 0.95) 100%);
+  --gradient-gold-subtle: linear-gradient(135deg, rgba(200, 169, 110, 0.08) 0%, transparent 50%);
+  --gradient-overlay: linear-gradient(180deg, transparent 0%, rgba(13, 27, 42, 0.9) 100%);
+  --gradient-glow: radial-gradient(ellipse at center, rgba(200, 169, 110, 0.12) 0%, transparent 70%);
+
+  /* Typography - Refined System */
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Larger, more generous scale */
+  --fs-display: clamp(3.5rem, 7vw, 6rem);
+  --fs-h1: clamp(2.5rem, 5vw, 4.5rem);
+  --fs-h2: clamp(2rem, 3.5vw, 3rem);
+  --fs-h3: clamp(1.5rem, 2.5vw, 2rem);
+  --fs-h4: clamp(1.125rem, 1.8vw, 1.5rem);
+  --fs-body: clamp(1rem, 1.3vw, 1.125rem);
+  --fs-small: clamp(0.875rem, 1.1vw, 0.95rem);
+  --fs-xs: 0.8125rem;
+
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* Line height for better readability */
+  --lh-tight: 1.15;
+  --lh-normal: 1.6;
+  --lh-relaxed: 1.8;
+
+  --ls-tight: -0.02em;
+  --ls-normal: 0;
+  --ls-wide: 0.05em;
+  --ls-wider: 0.12em;
+
+  /* Spacing - More Generous */
+  --space-xs: 0.75rem;
+  --space-sm: 1.25rem;
+  --space-md: 2rem;
+  --space-lg: 3rem;
+  --space-xl: 5rem;
+  --space-2xl: 8rem;
+  --space-3xl: 12rem;
+  --space-4xl: 16rem;
+  --space-section: clamp(4rem, 8vw, 6rem);
+  --space-section-sm: clamp(3rem, 6vw, 5rem);
+
+  /* Layout */
+  --container-max: 1200px;
+  --container-narrow: 800px;
+  --container-padding: clamp(1.25rem, 4vw, 2.5rem);
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-arch: 50% 50% 0 0;
+  --radius-full: 9999px;
+
+  /* Shadows - Material Design Inspired */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.16), 0 4px 8px rgba(0, 0, 0, 0.23);
+  --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 12px rgba(0, 0, 0, 0.23);
+  --shadow-xl: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 20px rgba(0, 0, 0, 0.22);
+  --shadow-glow: 0 0 60px rgba(212, 175, 55, 0.15);
+  --shadow-glow-lg: 0 0 100px rgba(212, 175, 55, 0.2);
+
+  /* Glassmorphism Effects */
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-bg-hover: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: blur(20px);
+  --glass-blur-heavy: blur(40px);
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-magnetic: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* Z-index */
+  --z-base: 1;
+  --z-above: 10;
+  --z-nav: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+  --z-whatsapp: 400;
+}

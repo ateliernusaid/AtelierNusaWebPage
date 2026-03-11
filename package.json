@@ -1,0 +1,14 @@
+{
+    "name": "atelier-nusa-web",
+    "private": true,
+    "version": "1.0.0",
+    "description": "Atelier Nusa - Architecture & Construction Studio in Lombok",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "devDependencies": {
+        "vite": "^6.2.0"
+    }
+}

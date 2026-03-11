@@ -1,0 +1,334 @@
+/* ========================================
+   ABOUT PAGE STYLES
+   ======================================== */
+
+.about-intro {
+    position: relative;
+}
+
+.about-intro__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+}
+
+.about-intro__text h2 {
+    font-size: var(--fs-h2);
+    color: var(--color-accent);
+    margin-bottom: var(--space-md);
+}
+
+.about-intro__text p {
+    color: var(--color-text-secondary);
+    line-height: var(--lh-relaxed);
+    margin-bottom: var(--space-md);
+}
+
+.about-intro__image {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+}
+
+.about-intro__image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.about-intro__image:hover img {
+    transform: scale(1.05);
+}
+
+.about-intro__image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .about-intro__content {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+}
+
+/* ========================================
+   PHILOSOPHY SECTION - Tighter spacing
+   ======================================== */
+.philosophy {
+    background: var(--color-bg-secondary);
+}
+
+/* Override arch-section excessive padding for about page */
+.page-hero.arch-section {
+    padding-bottom: var(--space-xl);
+}
+
+.about-intro.arch-section {
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-xl);
+}
+
+.philosophy.arch-section {
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-xl);
+}
+
+.about-gallery.arch-section {
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-xl);
+}
+
+/* Override arch-grid excessive bottom margin */
+.about-intro .arch-grid,
+.philosophy .arch-grid {
+    margin-bottom: var(--space-lg);
+}
+
+.philosophy .arch-grid:last-child {
+    margin-bottom: 0;
+}
+
+/* Override the offset grid for about page - use clean 3-column */
+.about-intro .arch-grid--split {
+    align-items: center;
+}
+
+.philosophy .arch-grid--offset {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+}
+
+.philosophy .arch-grid--offset > *:nth-child(2) {
+    transform: none;
+}
+
+/* Tighter card padding for philosophy */
+.philosophy .arch-card {
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.philosophy .arch-card h3 {
+    font-size: var(--fs-h4);
+    margin-bottom: var(--space-sm);
+}
+
+.philosophy .arch-card .arch-text {
+    font-size: var(--fs-small);
+    color: var(--color-text-secondary);
+    line-height: var(--lh-relaxed);
+}
+
+.philosophy__items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+}
+
+.philosophy__item {
+    padding: var(--space-lg);
+    border-left: 3px solid var(--color-accent);
+}
+
+.philosophy__item h3 {
+    font-size: var(--fs-h3);
+    color: var(--color-accent);
+    margin-bottom: var(--space-md);
+}
+
+.philosophy__item p {
+    color: var(--color-text-secondary);
+    line-height: var(--lh-relaxed);
+}
+
+@media (max-width: 768px) {
+    .philosophy__items {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================
+   GALLERY GRID - Clean & Proportional
+   ======================================== */
+.about-gallery {
+    position: relative;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 280px;
+    gap: var(--space-md);
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.gallery-item--large {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.gallery-item--tall {
+    grid-row: span 2;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.06);
+}
+
+/* Gallery overlay */
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+            transparent 50%,
+            rgba(10, 15, 20, 0.8) 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: var(--space-lg);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-title {
+    font-family: var(--font-heading);
+    font-size: var(--fs-h4);
+    font-weight: var(--fw-medium);
+    color: var(--color-text-primary);
+    letter-spacing: var(--ls-wide);
+}
+
+@media (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 220px;
+    }
+
+    .gallery-item--large {
+        grid-column: span 2;
+        grid-row: span 1;
+    }
+
+    .gallery-item--tall {
+        grid-row: span 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 240px;
+    }
+
+    .gallery-item--large {
+        grid-column: span 1;
+    }
+}
+
+/* ========================================
+   CONTACT SECTION
+   ======================================== */
+.contact {
+    background: var(--color-bg-secondary);
+}
+
+.contact__inner {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact__title {
+    font-size: var(--fs-h2);
+    margin-bottom: var(--space-md);
+}
+
+.contact__desc {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-lg);
+    line-height: var(--lh-relaxed);
+}
+
+.contact__info {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-xl);
+    flex-wrap: wrap;
+}
+
+.contact__info-item {
+    text-align: center;
+}
+
+.contact__info-label {
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-wider);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-xs);
+}
+
+.contact__info-value {
+    color: var(--color-accent);
+    font-size: var(--fs-body);
+}
+
+/* ========================================
+   OVERALL ABOUT PAGE OVERRIDES
+   ======================================== */
+
+/* Fix the page-hero split grid text alignment for about page */
+.page-hero .arch-grid--split {
+    text-align: left;
+    align-items: center;
+}
+
+/* Prevent the arch-section pseudo-element line when not needed */
+.about-gallery.arch-section::before {
+    display: none;
+}
+
+/* Keep arch-frame images proportional */
+.about-intro .arch-frame img,
+.philosophy .arch-frame img {
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+}
+
+/* Shorten vertical decorative line in philosophy */
+.philosophy .arch-line--vertical {
+    height: 40px;
+}
+
+/* Gallery uses 2-col for bottom row to avoid orphan */
+.gallery-grid {
+    grid-template-rows: auto auto;
+}
