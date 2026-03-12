@@ -172,4 +172,12 @@ export function initPageTransitions() {
             });
         }
     });
+
+    // Fix for Bfcache (Back button blank page issue)
+    window.addEventListener('pageshow', (event) => {
+        // If the page is loaded from cache (e.g. Back button), reset opacity
+        if (event.persisted) {
+            document.body.style.opacity = '1';
+        }
+    });
 }
