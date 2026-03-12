@@ -151,6 +151,11 @@ export function initPageTransitions() {
     // Fade-out on navigation
     document.querySelectorAll('a[href]').forEach((link) => {
         const href = link.getAttribute('href');
+        const target = link.getAttribute('target');
+        
+        // Skip interception if the link is meant to open in a new tab
+        if (target === '_blank') return;
+
         if (href && href.startsWith('/') && !href.startsWith('//')) {
             link.addEventListener('click', (e) => {
                 // Don't intercept if same page
