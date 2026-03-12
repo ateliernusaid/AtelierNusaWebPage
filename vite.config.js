@@ -14,6 +14,8 @@ export default defineConfig({
                 privateResidence: resolve(__dirname, 'private-residence-lombok-barat.html'),
                 industrialResidence: resolve(__dirname, 'industrial-residence-mataram.html'),
                 tropicalVilla: resolve(__dirname, 'tropical-villa-senggigi.html'),
+                privacyPolicy: resolve(__dirname, 'privacy-policy.html'),
+                termsOfService: resolve(__dirname, 'terms-of-service.html'),
             },
         },
     },

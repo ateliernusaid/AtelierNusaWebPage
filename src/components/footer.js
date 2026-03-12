@@ -58,6 +58,12 @@ export function createFooter() {
               NTB 83124, Indonesia
             </p>
           </div>
+
+          <div class="footer__col">
+            <div class="footer__col-title">Legal</div>
+            <a href="/privacy-policy.html" class="footer__link">Privacy Policy</a>
+            <a href="/terms-of-service.html" class="footer__link">Terms of Service</a>
+          </div>
         </div>
       </div>
 
