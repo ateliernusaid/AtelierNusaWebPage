@@ -12,6 +12,8 @@ export default defineConfig({
                 services: resolve(__dirname, 'services.html'),
                 luxuryResidential: resolve(__dirname, 'luxury-residential-mataram.html'),
                 privateResidence: resolve(__dirname, 'private-residence-lombok-barat.html'),
+                industrialResidence: resolve(__dirname, 'industrial-residence-mataram.html'),
+                tropicalVilla: resolve(__dirname, 'tropical-villa-senggigi.html'),
             },
         },
     },
