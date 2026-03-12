@@ -46,7 +46,7 @@ export function createFooter() {
 
           <div class="footer__col">
             <div class="footer__col-title">Contact</div>
-            <a href="mailto:ateliernusaarchitects@gmail.com" class="footer__link">ateliernusaarchitects@gmail.com</a>
+            <a href="mailto:marketing@ateliernusa.id" class="footer__link">marketing@ateliernusa.id</a>
             <a href="tel:+6285190645078" class="footer__link">+62 851-9064-5078</a>
           </div>
 
