@@ -299,6 +299,7 @@
     }
 }
 
+
 @media (max-width: 600px) {
     .arch-card {
         padding: var(--space-md);
@@ -307,4 +308,9 @@
     .arch-text--large {
         font-size: 1rem;
     }
+}
+
+/* Specific fix for About Page Hero Alignment */
+.page-hero.arch-section .arch-grid--split {
+    align-items: center;
 }
