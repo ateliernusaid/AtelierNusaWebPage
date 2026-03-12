@@ -362,7 +362,7 @@
 /* Vertical accent text */
 .hero__vertical-text {
     position: absolute;
-    right: var(--space-lg);
+    right: -40px; /* Jarak teks ke gambar */
     top: 50%;
     transform: translateY(-50%) rotate(90deg);
     transform-origin: center;
