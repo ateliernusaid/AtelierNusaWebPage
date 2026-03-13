@@ -96,7 +96,8 @@
 }
 
 /* Override the offset grid for about page - use clean 3-column */
-.about-intro .arch-grid--split {
+.about-intro .arch-grid--split,
+.philosophy .arch-grid--split {
     align-items: center;
 }
 
@@ -115,6 +116,14 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+}
+
+/* Specifically for the Climate as a Design Tool text box next to the portrait image */
+.philosophy .arch-grid--split .arch-card {
+    max-width: 480px;
+    margin: 0 auto;
+    height: auto;
+    justify-content: center;
 }
 
 .philosophy .arch-card h3 {
@@ -316,10 +325,15 @@
 }
 
 /* Keep arch-frame images proportional */
-.about-intro .arch-frame img,
-.philosophy .arch-frame img {
+.about-intro .arch-frame img {
     height: auto;
     aspect-ratio: 16 / 10;
+    object-fit: cover;
+}
+
+.philosophy .arch-frame img {
+    height: auto;
+    aspect-ratio: auto;
     object-fit: cover;
 }
 
