@@ -16,6 +16,7 @@ export default defineConfig({
                 tropicalVilla: resolve(__dirname, 'tropical-villa-senggigi.html'),
                 privacyPolicy: resolve(__dirname, 'privacy-policy.html'),
                 termsOfService: resolve(__dirname, 'terms-of-service.html'),
+                jasaArsitekLombok: resolve(__dirname, 'jasa-arsitek-lombok.html'),
             },
         },
     },
