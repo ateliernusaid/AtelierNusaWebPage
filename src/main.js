@@ -62,51 +62,36 @@ document.addEventListener('click', (e) => {
 });
 
 // ========================================
-// ARCHITECT CURSOR RETICLE
-// Custom cursor with gold ring — desktop only
+// ARCHITECT CURSOR — SINGLE RING
+// Satu element saja, tidak ada "double"
+// Hanya muncul di desktop (mouse/trackpad)
 // ========================================
 function initCursor() {
-    // Only on devices with fine pointer (mouse/trackpad)
     if (!window.matchMedia('(pointer: fine)').matches) return;
 
-    const dot  = document.createElement('div');
+    // Satu element ring saja — tidak ada dot terpisah
     const ring = document.createElement('div');
-    dot.className  = 'cursor__dot';
     ring.className = 'cursor__ring';
-    document.body.appendChild(dot);
     document.body.appendChild(ring);
 
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
-
+    // Ring langsung ikut cursor (no lag = tidak terlihat "double")
     document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        dot.style.left = mouseX + 'px';
-        dot.style.top  = mouseY + 'px';
-    });
+        ring.style.left = e.clientX + 'px';
+        ring.style.top  = e.clientY + 'px';
+    }, { passive: true });
 
-    // Smooth ring follow
-    (function animateRing() {
-        ringX += (mouseX - ringX) * 0.12;
-        ringY += (mouseY - ringY) * 0.12;
-        ring.style.left = ringX + 'px';
-        ring.style.top  = ringY + 'px';
-        requestAnimationFrame(animateRing);
-    })();
-
-    // Expand on interactive elements
-    const interactives = 'a, button, [role="button"], .btn, .btn-wa, .proj, .svc';
+    // Besar saat hover element interaktif
+    const interactives = 'a, button, [role="button"], .btn, .btn-wa, .proj, .svc, .step';
     document.addEventListener('mouseover', (e) => {
-        if (e.target.closest(interactives)) {
-            dot.parentElement?.classList.add('cursor--hover');
-        }
+        if (e.target.closest(interactives)) ring.classList.add('cursor--hover');
     });
     document.addEventListener('mouseout', (e) => {
-        if (e.target.closest(interactives)) {
-            dot.parentElement?.classList.remove('cursor--hover');
-        }
+        if (e.target.closest(interactives)) ring.classList.remove('cursor--hover');
     });
+
+    // Sembunyikan saat mouse keluar dari window
+    document.addEventListener('mouseleave', () => ring.style.opacity = '0');
+    document.addEventListener('mouseenter', () => ring.style.opacity = '');
 }
 
 // ========================================
