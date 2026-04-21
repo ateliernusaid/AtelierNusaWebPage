@@ -125,6 +125,42 @@ function initLazyImageFade() {
     });
 }
 
+// ========================================
+// COUNT-UP ANIMATION
+// Numbers animate from 0 when scrolled into view
+// ========================================
+function initCountUp() {
+    const counters = document.querySelectorAll('[data-count]');
+    if (counters.length === 0) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            if (el.dataset.counted) return;
+            el.dataset.counted = 'true';
+
+            const target = parseInt(el.dataset.count, 10);
+            const suffix = el.dataset.suffix || '';
+            const duration = 2000;
+            const start = performance.now();
+
+            function update(now) {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                // easeOutExpo
+                const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                const current = Math.round(ease * target);
+                el.textContent = current + suffix;
+                if (progress < 1) requestAnimationFrame(update);
+            }
+            requestAnimationFrame(update);
+        });
+    }, { threshold: 0.3 });
+
+    counters.forEach(el => observer.observe(el));
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     createNavbar(getActivePage());
@@ -138,4 +174,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initCursor();
     initScrollProgress();
     initLazyImageFade();
+    initCountUp();
 });
