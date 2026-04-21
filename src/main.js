@@ -61,6 +61,85 @@ document.addEventListener('click', (e) => {
     }, 350);
 });
 
+// ========================================
+// ARCHITECT CURSOR RETICLE
+// Custom cursor with gold ring — desktop only
+// ========================================
+function initCursor() {
+    // Only on devices with fine pointer (mouse/trackpad)
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    const dot  = document.createElement('div');
+    const ring = document.createElement('div');
+    dot.className  = 'cursor__dot';
+    ring.className = 'cursor__ring';
+    document.body.appendChild(dot);
+    document.body.appendChild(ring);
+
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        dot.style.left = mouseX + 'px';
+        dot.style.top  = mouseY + 'px';
+    });
+
+    // Smooth ring follow
+    (function animateRing() {
+        ringX += (mouseX - ringX) * 0.12;
+        ringY += (mouseY - ringY) * 0.12;
+        ring.style.left = ringX + 'px';
+        ring.style.top  = ringY + 'px';
+        requestAnimationFrame(animateRing);
+    })();
+
+    // Expand on interactive elements
+    const interactives = 'a, button, [role="button"], .btn, .btn-wa, .proj, .svc';
+    document.addEventListener('mouseover', (e) => {
+        if (e.target.closest(interactives)) {
+            dot.parentElement?.classList.add('cursor--hover');
+        }
+    });
+    document.addEventListener('mouseout', (e) => {
+        if (e.target.closest(interactives)) {
+            dot.parentElement?.classList.remove('cursor--hover');
+        }
+    });
+}
+
+// ========================================
+// SCROLL PROGRESS BAR
+// Thin gold line at the top of the page
+// ========================================
+function initScrollProgress() {
+    const bar = document.createElement('div');
+    bar.className = 'scroll-progress';
+    document.body.prepend(bar);
+
+    window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = total > 0 ? scrolled / total : 0;
+        bar.style.transform = `scaleX(${progress})`;
+    }, { passive: true });
+}
+
+// ========================================
+// LAZY IMAGE FADE-IN
+// Images fade in smoothly when loaded
+// ========================================
+function initLazyImageFade() {
+    document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+        if (img.complete) {
+            img.classList.add('loaded');
+        } else {
+            img.addEventListener('load', () => img.classList.add('loaded'));
+        }
+    });
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     createNavbar(getActivePage());
@@ -69,4 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initAnimations();
     initPageTransitions();
     initLightbox();
+
+    // Design enhancements
+    initCursor();
+    initScrollProgress();
+    initLazyImageFade();
 });

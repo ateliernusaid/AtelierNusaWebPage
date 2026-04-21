@@ -1,0 +1,311 @@
+/* ============================================================
+   PERFORMANCE + DESIGN ENHANCEMENTS — Atelier Nusa
+   - Reduced motion support (saves CPU on low-end mobile)
+   - Architect-catchy micro-details & visual polish
+   - Font-display swap for web fonts
+   - Cursor trailer effect
+   - Section dividers & architectural accents
+   ============================================================ */
+
+/* ---- 1. REDUCED MOTION (Performance Fix) ---- */
+/* Stops the infinite 20s grid animation on devices requesting it.
+   This alone can significantly improve mobile Lighthouse score. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ---- 2. FONT DISPLAY SWAP (prevents invisible text) ---- */
+/* Applied via Google Fonts &display=swap param, but we re-enforce here */
+@font-face {
+    font-display: swap;
+}
+
+/* ---- 3. CURSOR ARCHITECTURAL RETICLE ---- */
+/* Custom cursor - architectural crosshair feel on desktop */
+@media (pointer: fine) {
+    html {
+        cursor: none;
+    }
+
+    a,
+    button,
+    [role="button"],
+    .btn,
+    .btn-wa,
+    .btn-primary {
+        cursor: none;
+    }
+
+    .cursor {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        mix-blend-mode: difference;
+    }
+
+    .cursor__dot {
+        position: fixed;
+        width: 8px;
+        height: 8px;
+        background: var(--color-accent, #d4af37);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
+        pointer-events: none;
+        z-index: 9999;
+    }
+
+    .cursor__ring {
+        position: fixed;
+        width: 36px;
+        height: 36px;
+        border: 1px solid rgba(212, 175, 55, 0.6);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+        pointer-events: none;
+        z-index: 9998;
+    }
+
+    /* Expand ring on hover over interactive elements */
+    .cursor--hover .cursor__ring {
+        width: 56px;
+        height: 56px;
+        border-color: var(--color-accent, #d4af37);
+        border-width: 1.5px;
+    }
+
+    .cursor--hover .cursor__dot {
+        width: 4px;
+        height: 4px;
+        opacity: 0.6;
+    }
+}
+
+/* ---- 4. ARCHITECTURAL SECTION DIVIDERS ---- */
+/* Elegant thin line dividers with center accent mark */
+.arch-divider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 4rem auto;
+    max-width: 300px;
+}
+
+.arch-divider::before,
+.arch-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(212, 175, 55, 0.4),
+        transparent
+    );
+}
+
+.arch-divider__mark {
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--color-accent, #d4af37);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+}
+
+/* ---- 5. IMAGE LAZY LOAD — FADE IN EFFECT ---- */
+img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+img[loading="lazy"].loaded {
+    opacity: 1;
+}
+
+/* ---- 6. GLASS CARD ENHANCED HOVER ---- */
+/* Adds subtle light-sweep on card hover — premium feel */
+.glass-card,
+.card,
+.svc,
+.step,
+.proj {
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-card::before,
+.card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        transparent 50%,
+        transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: inherit;
+}
+
+.glass-card:hover::before,
+.card:hover::before {
+    opacity: 1;
+}
+
+/* ---- 7. SECTION LABELS — Architect Badge Style ---- */
+/* Upgrade the section label chips with a refined left-line accent */
+.section-label,
+.sec-label,
+[class*="section__label"],
+[class*="label--section"] {
+    position: relative;
+    padding-left: 1.2rem;
+}
+
+.section-label::before,
+.sec-label::before,
+[class*="section__label"]::before,
+[class*="label--section"]::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 100%;
+    background: var(--color-accent, #d4af37);
+    border-radius: 2px;
+}
+
+/* ---- 8. BUTTON MICRO-INTERACTION — Shimmer ---- */
+.btn-primary,
+.btn,
+.nav-cta,
+.btn-wa {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::after,
+.btn::after,
+.nav-cta::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.15),
+        transparent
+    );
+    transform: skewX(-15deg);
+    transition: left 0.6s ease;
+}
+
+.btn-primary:hover::after,
+.btn:hover::after,
+.nav-cta:hover::after {
+    left: 150%;
+}
+
+/* ---- 9. ARCHITECTURAL LINE ACCENTS — Section Headings ---- */
+/* Adds a subtle left bracket accent to section headings */
+.section-heading-accent {
+    display: inline-block;
+    position: relative;
+}
+
+.section-heading-accent::before {
+    content: '[';
+    color: var(--color-accent, #d4af37);
+    opacity: 0.5;
+    margin-right: 0.3em;
+    font-weight: 300;
+}
+
+.section-heading-accent::after {
+    content: ']';
+    color: var(--color-accent, #d4af37);
+    opacity: 0.5;
+    margin-left: 0.3em;
+    font-weight: 300;
+}
+
+/* ---- 10. SCROLL PROGRESS BAR ---- */
+/* Thin gold line at top of page showing scroll progress */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        var(--color-accent-dark, #b8962c),
+        var(--color-accent, #d4af37),
+        var(--color-accent-light, #e6c757)
+    );
+    z-index: 9999;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 0.1s linear;
+}
+
+/* ---- 11. IMPROVED GRID ANIMATION (lighter version) ---- */
+/* Replace infinite animation with will-change for GPU compositing */
+.hero::after {
+    will-change: transform;
+    animation-timing-function: linear;
+}
+
+/* Stop grid on tablet — performance improvement */
+@media (max-width: 1024px) {
+    .hero::after {
+        animation: none;
+        opacity: 0.15;
+    }
+}
+
+/* ---- 12. NUMBER COUNTER STYLE (trust metrics) ---- */
+.trust-num,
+.stat-number,
+[class*="stat__number"],
+[class*="counter"] {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+}
+
+/* ---- 13. FOCUS VISIBLE — Accessibility (already 98/100, keep it!) ---- */
+:focus-visible {
+    outline: 2px solid var(--color-accent, #d4af37);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* ---- 14. IMAGE ASPECT RATIO PLACEHOLDERS (prevent CLS) ---- */
+/* Reserves space before images load to prevent layout shift */
+.img-aspect-4-3 { aspect-ratio: 4 / 3; }
+.img-aspect-4-5 { aspect-ratio: 4 / 5; }
+.img-aspect-16-9 { aspect-ratio: 16 / 9; }
+.img-aspect-1-1 { aspect-ratio: 1 / 1; }
+
+/* All project/portfolio images get background while loading */
+.proj img,
+.hero__image-frame img,
+.portfolio-img {
+    background: var(--color-bg-secondary, #111820);
+}
