@@ -17,6 +17,7 @@ export default defineConfig({
                 privacyPolicy: resolve(__dirname, 'privacy-policy.html'),
                 termsOfService: resolve(__dirname, 'terms-of-service.html'),
                 jasaArsitekLombok: resolve(__dirname, 'jasa-arsitek-lombok.html'),
+                arsitekMataram: resolve(__dirname, 'arsitek-mataram.html'),
             },
         },
     },
