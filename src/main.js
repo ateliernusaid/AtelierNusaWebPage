@@ -15,6 +15,7 @@ function getActivePage() {
     if (path.includes('about')) return 'about';
     if (path.includes('projects')) return 'projects';
     if (path.includes('services')) return 'services';
+    if (path.includes('artikel')) return 'artikel';
     return 'home';
 }
 
