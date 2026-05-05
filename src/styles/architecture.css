@@ -161,13 +161,13 @@
 /* Text Blocks */
 .arch-text {
     max-width: 65ch;
+}
 
-    &--large {
-        font-size: var(--fs-h4);
-        line-height: var(--lh-relaxed);
-        color: var(--color-text-secondary);
-        letter-spacing: 0.01em;
-    }
+.arch-text--large {
+    font-size: var(--fs-h4);
+    line-height: var(--lh-relaxed);
+    color: var(--color-text-secondary);
+    letter-spacing: 0.01em;
 }
 
 /* Number Indicators */

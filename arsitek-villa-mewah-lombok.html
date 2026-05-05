@@ -148,7 +148,8 @@
           <div class="fg"><label>Nama</label><input type="text" id="f-name" placeholder="Nama lengkap" required/></div>
           <div class="fg"><label>WhatsApp</label><input type="tel" id="f-phone" placeholder="08123456789" required/></div>
         </div>
-        <div class="fg"><label>Tipe proyek</label><select id="f-type" required>
+        <div class="fg-row">
+<div class="fg"><label>Tipe proyek</label><select id="f-type" required>
           <option value="">Pilih tipe proyek</option>
           <option>Villa pribadi</option>
           <option>Boutique resort / hotel</option>
@@ -156,6 +157,13 @@
           <option>Rumah mewah</option>
           <option>Lainnya</option>
         </select></div>
+          <div class="fg"><label>Status Lahan</label><select id="f-lahan" required>
+            <option value="">Pilih status lahan</option>
+            <option>Sudah ada lahan</option>
+            <option>Masih proses pencarian/beli</option>
+            <option>Belum ada lahan (butuh info)</option>
+          </select></div>
+</div>
         <div class="fg-row">
           <div class="fg"><label>Lokasi</label><select id="f-location">
             <option value="">Pilih lokasi</option>
@@ -225,14 +233,14 @@ document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 document.getElementById('lead-form-el').addEventListener('submit',async function(e){
   e.preventDefault();
   const btn=document.getElementById('submit-btn');btn.disabled=true;btn.textContent='Mengirim...';
-  const name=document.getElementById('f-name').value.trim(),phone=document.getElementById('f-phone').value.trim(),type=document.getElementById('f-type').value,loc=document.getElementById('f-location').value,budget=document.getElementById('f-budget').value,msg=document.getElementById('f-message').value.trim();
-  const full=['[LP: arsitek-villa-mewah]','Tipe: '+type,loc?'Lokasi: '+loc:'',budget?'Budget: '+budget:'',msg?'Pesan: '+msg:''].filter(Boolean).join(' | ');
+  const name=document.getElementById('f-name').value.trim(),phone=document.getElementById('f-phone').value.trim(),type=document.getElementById('f-type').value,loc=document.getElementById('f-location').value,budget=document.getElementById('f-budget').value,lahan=document.getElementById('f-lahan')?document.getElementById('f-lahan').value:'',msg=document.getElementById('f-message').value.trim();
+  const full=['[LP: arsitek-villa-mewah]','Tipe: '+type,loc?'Lokasi: '+loc:'',lahan?'Lahan: '+lahan:'',budget?'Budget: '+budget:'',msg?'Pesan: '+msg:''].filter(Boolean).join(' | ');
   try{await fetch('https://example.invalid/internal-webhook/webhook/lead',{method:'POST',headers:{'Content-Type':'application/json','X-Retired-Webhook-Header':'REVOKED_SECRET'},body:JSON.stringify({name,phone,message:full})})}catch(err){}
   if(typeof gtag==='function')gtag('event','conversion',{'send_to':'AW-17992260618/RYIECJGXwo8cEIq4sIND','value':1.0,'currency':'IDR'});
   document.getElementById('form-content').style.display='none';
   document.getElementById('success-msg').style.display='block';
 });
 </script>
-<script src="https://retired-tracker.invalid/webhook/tracker.js"></script>
+<script src="https://retired-tracker.invalid/webhook/tracker.js" async></script>
 </body>
 </html>

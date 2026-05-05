@@ -89,13 +89,20 @@
 }
 
 /* ---- 5. IMAGE LAZY LOAD — FADE IN EFFECT ---- */
+/* CSS-only fallback: images fade in via animation even if JS fails */
 img[loading="lazy"] {
     opacity: 0;
-    transition: opacity 0.4s ease;
+    animation: imgFadeIn 0.5s ease forwards;
+    animation-delay: 0.3s;
 }
 
 img[loading="lazy"].loaded {
+    animation: none;
     opacity: 1;
+}
+
+@keyframes imgFadeIn {
+    to { opacity: 1; }
 }
 
 /* ---- 6. GLASS CARD ENHANCED HOVER ---- */

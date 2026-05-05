@@ -151,7 +151,7 @@
         flex-direction: column;
         justify-content: center;
         gap: var(--space-lg);
-        background: rgba(13, 27, 42, 0.98);
+        background: rgb(10, 15, 20);
         backdrop-filter: blur(30px);
         -webkit-backdrop-filter: blur(30px);
         transform: translateX(100%);
@@ -159,6 +159,7 @@
         transition: transform var(--transition-slow),
             opacity var(--transition-normal);
         pointer-events: none;
+        z-index: 9998;
     }
 
     .navbar__menu.open {
