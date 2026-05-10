@@ -176,4 +176,46 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollProgress();
     initLazyImageFade();
     initCountUp();
+
+    // Homepage lead form handler
+    const hpForm = document.getElementById('homepage-lead-form');
+    if (hpForm) {
+        hpForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('hp-submit');
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+
+            const name = document.getElementById('hp-name').value.trim();
+            const phone = document.getElementById('hp-phone').value.trim();
+            const type = document.getElementById('hp-type').value;
+            const msg = document.getElementById('hp-message').value.trim();
+
+            const full = ['[LP: homepage]', type ? 'Type: ' + type : '', msg ? 'Message: ' + msg : ''].filter(Boolean).join(' | ');
+
+            try {
+                await fetch('https://example.invalid/internal-webhook/webhook/lead', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Retired-Webhook-Header': 'REVOKED_SECRET' },
+                    body: JSON.stringify({ name, phone, message: full })
+                });
+            } catch (err) { /* silent */ }
+
+            // Fire Google Ads conversion
+            if (typeof gtag === 'function') {
+                gtag('event', 'conversion', {
+                    'send_to': AW_CONVERSION_ID,
+                    'value': 1.0,
+                    'currency': 'IDR'
+                });
+                gtag('event', 'lead_form_submit', {
+                    event_category: 'lead',
+                    event_label: 'homepage_form'
+                });
+            }
+
+            document.getElementById('cta-form-content').style.display = 'none';
+            document.getElementById('cta-success').style.display = 'block';
+        });
+    }
 });

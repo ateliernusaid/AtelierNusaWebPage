@@ -248,7 +248,7 @@
     }
 }
 
-/* CTA Section */
+/* CTA Section — Split Layout with Form */
 .cta {
     background: var(--color-bg-primary);
     position: relative;
@@ -268,10 +268,18 @@
     pointer-events: none;
 }
 
-.cta__content {
-    text-align: center;
+.cta__split {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: var(--space-xl);
+    align-items: start;
     position: relative;
     z-index: var(--z-base);
+}
+
+.cta__left {
+    position: sticky;
+    top: 100px;
 }
 
 .cta__title {
@@ -283,8 +291,228 @@
     font-size: var(--fs-body);
     color: var(--color-text-secondary);
     max-width: 500px;
-    margin: 0 auto var(--space-lg);
+    margin-bottom: var(--space-lg);
     line-height: var(--lh-relaxed);
+}
+
+.cta__trust {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.cta__trust-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: var(--fs-small);
+    color: var(--color-text-secondary);
+}
+
+.cta__form-box {
+    background: rgba(20, 28, 38, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.cta__form-title {
+    font-family: var(--font-heading);
+    font-size: var(--fs-h4);
+    font-weight: var(--fw-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.cta__form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+}
+
+.cta__fg {
+    margin-bottom: var(--space-sm);
+}
+
+.cta__fg label {
+    display: block;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-medium);
+    color: var(--color-text-secondary);
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+}
+
+.cta__fg input,
+.cta__fg select,
+.cta__fg textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: var(--fs-small);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    outline: none;
+}
+
+.cta__fg input:focus,
+.cta__fg select:focus,
+.cta__fg textarea:focus {
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.08);
+}
+
+.cta__fg input::placeholder,
+.cta__fg textarea::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.cta__fg textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.cta__fg select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+}
+
+.cta__submit {
+    width: 100%;
+    margin-top: var(--space-sm);
+    padding: 16px;
+    font-size: var(--fs-small);
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .cta__split {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+    .cta__left {
+        position: static;
+        text-align: center;
+    }
+    .cta__desc {
+        margin: 0 auto var(--space-md);
+    }
+    .cta__trust {
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .cta__form-row {
+        grid-template-columns: 1fr;
+    }
+    .cta__form-box {
+        padding: var(--space-md);
+    }
+}
+
+/* ========================================
+   FAQ SECTION
+   ======================================== */
+.faq {
+    background: var(--color-bg-secondary);
+    position: relative;
+}
+
+.faq::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+}
+
+.faq__grid {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.faq__item {
+    background: rgba(20, 28, 38, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.faq__item[open] {
+    border-color: rgba(212, 175, 55, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.faq__question {
+    padding: 20px 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-heading);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-medium);
+    color: var(--color-text-primary);
+    list-style: none;
+    transition: color 0.3s;
+}
+
+.faq__question::-webkit-details-marker { display: none; }
+
+.faq__question:hover {
+    color: var(--color-accent);
+}
+
+.faq__question svg {
+    flex-shrink: 0;
+    color: var(--color-accent);
+    transition: transform 0.3s ease;
+}
+
+.faq__item[open] .faq__question svg {
+    transform: rotate(180deg);
+}
+
+.faq__answer {
+    padding: 0 24px 20px;
+}
+
+.faq__answer p {
+    font-size: var(--fs-small);
+    color: var(--color-text-secondary);
+    line-height: var(--lh-relaxed);
+}
+
+@media (max-width: 768px) {
+    .faq__question {
+        font-size: var(--fs-small);
+        padding: 16px 18px;
+    }
+    .faq__answer {
+        padding: 0 18px 16px;
+    }
+    .faq__answer p {
+        font-size: 0.875rem;
+    }
 }
 
 /* ========================================

@@ -20,6 +20,7 @@
   <link rel="canonical" href="https://ateliernusa.id/"/>
   <link rel="alternate" hreflang="id" href="https://ateliernusa.id/" />
   <link rel="alternate" hreflang="x-default" href="https://ateliernusa.id/" />
+  <link rel="preload" as="image" href="/images/Rumah Anastasia.webp" type="image/webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
@@ -62,6 +63,66 @@
   }
   </script>
 
+  <!-- Review Schema -->
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "Review",
+      "author": {"@type": "Person", "name": "Anastasia"},
+      "reviewRating": {"@type": "Rating", "ratingValue": "5"},
+      "reviewBody": "Tim Atelier Nusa benar-benar memahami apa yang kami inginkan. Desainnya modern tapi tetap cocok dengan iklim Lombok.",
+      "itemReviewed": {"@type": "LocalBusiness", "name": "Atelier Nusa"}
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Review",
+      "author": {"@type": "Person", "name": "Sholeh"},
+      "reviewRating": {"@type": "Rating", "ratingValue": "5"},
+      "reviewBody": "Sangat detail dan benar-benar mengerti visi rumah tropis impian kami.",
+      "itemReviewed": {"@type": "LocalBusiness", "name": "Atelier Nusa"}
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Review",
+      "author": {"@type": "Person", "name": "Franklyn"},
+      "reviewRating": {"@type": "Rating", "ratingValue": "5"},
+      "reviewBody": "The design perfectly blends tropical living with modern comfort. Highly recommended for anyone building in Lombok.",
+      "itemReviewed": {"@type": "LocalBusiness", "name": "Atelier Nusa"}
+    }
+  ]
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Berapa biaya jasa arsitek di Lombok?",
+        "acceptedAnswer": {"@type": "Answer", "text": "Biaya jasa arsitek di Atelier Nusa mulai dari Rp 150.000 - Rp 350.000 per meter persegi, tergantung kompleksitas desain. Konsultasi awal gratis dan tanpa komitmen."}
+      },
+      {
+        "@type": "Question",
+        "name": "Berapa lama proses desain dan konstruksi?",
+        "acceptedAnswer": {"@type": "Answer", "text": "Proses desain biasanya memakan waktu 4-8 minggu, sementara konstruksi 6-18 bulan tergantung skala proyek. Kami memberikan timeline detail di awal proyek."}
+      },
+      {
+        "@type": "Question",
+        "name": "Apakah melayani proyek di luar Mataram?",
+        "acceptedAnswer": {"@type": "Answer", "text": "Ya, kami melayani seluruh area Lombok termasuk Senggigi, Kuta Mandalika, Selong Belanak, Gili Islands, dan seluruh NTB."}
+      },
+      {
+        "@type": "Question",
+        "name": "Apa saja layanan yang ditawarkan Atelier Nusa?",
+        "acceptedAnswer": {"@type": "Answer", "text": "Kami menyediakan layanan arsitektur lengkap: desain rumah, villa, bangunan komersial, desain interior, renovasi, dan jasa design-and-build (dari desain hingga konstruksi)."}
+      }
+    ]
+  }
+  </script>
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17992260618"></script>
     <script>
@@ -71,6 +132,14 @@
       gtag('config', 'G-69F6MHRBK5');
       gtag('config', 'AW-17992260618');
     </script>
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "CLARITY_PROJECT_ID");
+  </script>
   <meta name="theme-color" content="#0a0f14"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Atelier Nusa | Studio Arsitek di Mataram & Lombok, NTB"/>
@@ -443,19 +512,118 @@
     </div>
   </section>
 
-  <!-- CTA SECTION -->
-  <section class="section cta" id="cta">
+  <!-- FAQ SECTION -->
+  <section class="section faq" id="faq">
     <div class="container">
-      <div class="cta__content reveal">
-        <h2 class="cta__title">Have a Project in Mind?</h2>
-        <p class="cta__desc">
-          Whether it's a family home, a villa, or a hospitality space, let's talk about what you're planning. Initial
-          consultations are free and come with no obligations.
-        </p>
-        <a href="https://wa.me/6285190645078?text=Hi%20Atelier%20Nusa!%20I%27d%20love%20to%20discuss%20a%20project."
-          class="btn btn--primary" target="_blank">
-          Get in Touch
-        </a>
+      <div class="section-header reveal">
+        <span class="section-label">FAQ</span>
+        <h2 class="section-title">Pertanyaan yang Sering Ditanyakan</h2>
+      </div>
+      <div class="faq__grid reveal">
+        <details class="faq__item" open>
+          <summary class="faq__question">
+            <span>Berapa biaya jasa arsitek di Lombok?</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="faq__answer">
+            <p>Biaya jasa arsitek di Atelier Nusa mulai dari Rp 150.000 - Rp 350.000 per meter persegi, tergantung kompleksitas desain dan skala proyek. Konsultasi awal sepenuhnya gratis dan tanpa komitmen.</p>
+          </div>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span>Berapa lama proses desain dan konstruksi?</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="faq__answer">
+            <p>Proses desain biasanya memakan waktu 4-8 minggu, sementara konstruksi berkisar 6-18 bulan tergantung skala proyek. Kami memberikan timeline detail di awal proyek sehingga Anda bisa merencanakan semuanya.</p>
+          </div>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span>Apakah melayani proyek di luar Mataram?</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="faq__answer">
+            <p>Ya, kami melayani seluruh area Lombok termasuk Senggigi, Kuta Mandalika, Selong Belanak, Gili Islands, dan seluruh Nusa Tenggara Barat. Kami juga menerima proyek remote dari klien internasional.</p>
+          </div>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__question">
+            <span>Apa saja layanan yang ditawarkan?</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+          <div class="faq__answer">
+            <p>Kami menyediakan layanan arsitektur lengkap: desain rumah, villa, bangunan komersial, desain interior, renovasi, dan jasa design-and-build (dari desain hingga konstruksi selesai).</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA + LEAD FORM SECTION -->
+  <section class="section cta" id="konsultasi">
+    <div class="container">
+      <div class="cta__split reveal">
+        <div class="cta__left">
+          <h2 class="cta__title">Have a Project in Mind?</h2>
+          <p class="cta__desc">
+            Whether it's a family home, a villa, or a hospitality space, let's talk about what you're planning. Initial
+            consultations are free and come with no obligations.
+          </p>
+          <div class="cta__trust">
+            <div class="cta__trust-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span>Free consultation — no commitment</span>
+            </div>
+            <div class="cta__trust-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span>Response within 1 hour</span>
+            </div>
+            <div class="cta__trust-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span>48+ successful projects</span>
+            </div>
+          </div>
+        </div>
+        <div class="cta__form-box">
+          <div id="cta-form-content">
+            <div class="cta__form-title">Start Your Consultation</div>
+            <form id="homepage-lead-form" novalidate>
+              <div class="cta__form-row">
+                <div class="cta__fg">
+                  <label for="hp-name">Name *</label>
+                  <input type="text" id="hp-name" placeholder="Your full name" required>
+                </div>
+                <div class="cta__fg">
+                  <label for="hp-phone">WhatsApp *</label>
+                  <input type="tel" id="hp-phone" placeholder="08123456789" required>
+                </div>
+              </div>
+              <div class="cta__fg">
+                <label for="hp-type">Project Type</label>
+                <select id="hp-type">
+                  <option value="">Select type</option>
+                  <option>Residential / Rumah</option>
+                  <option>Villa</option>
+                  <option>Commercial / Hospitality</option>
+                  <option>Interior Design</option>
+                  <option>Renovation</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="cta__fg">
+                <label for="hp-message">Tell us about your project</label>
+                <textarea id="hp-message" placeholder="e.g. 3-bedroom villa in Senggigi, tropical modern style..."></textarea>
+              </div>
+              <button type="submit" class="btn btn--primary cta__submit" id="hp-submit">Send Free Consultation</button>
+            </form>
+          </div>
+          <div id="cta-success" style="display:none; text-align:center; padding: 48px 24px;">
+            <div style="font-size: 48px; margin-bottom: 16px;">✅</div>
+            <h3 style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--text-primary); margin-bottom: 8px;">Thank You!</h3>
+            <p style="color: var(--text-secondary); line-height: 1.7;">Our team will reach out via WhatsApp within <strong>1 hour</strong>.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
