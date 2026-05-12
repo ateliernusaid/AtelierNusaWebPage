@@ -24,6 +24,7 @@ export default defineConfig({
                 arsitekKutaMandalika: resolve(__dirname, 'arsitek-kuta-mandalika.html'),
                 desainInteriorLombok: resolve(__dirname, 'desain-interior-lombok.html'),
                 arsitekVillaMewah: resolve(__dirname, 'arsitek-villa-mewah-lombok.html'),
+                biayaArsitekLombok: resolve(__dirname, 'biaya-arsitek-lombok.html'),
             },
         },
     },
