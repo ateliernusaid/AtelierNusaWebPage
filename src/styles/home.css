@@ -389,6 +389,11 @@
     padding-right: 36px;
 }
 
+.cta__fg select option {
+    background-color: #141c26;
+    color: #ffffff;
+}
+
 .cta__submit {
     width: 100%;
     margin-top: var(--space-sm);
