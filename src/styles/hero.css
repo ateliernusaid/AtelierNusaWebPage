@@ -234,6 +234,17 @@
     }
 }
 
+.hero__title-sub {
+    display: block;
+    font-size: 0.3em;
+    font-weight: var(--fw-light);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    margin-top: var(--space-xs);
+    opacity: 0.7;
+}
+
 @keyframes titleFade {
     from {
         opacity: 0;
