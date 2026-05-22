@@ -20,8 +20,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/interior-v2.css">
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17992260618"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-69F6MHRBK5');gtag('config','AW-17992260618');</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-8060600341"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-69F6MHRBK5');gtag('config','AW-8060600341');</script>
   <meta name="theme-color" content="#0a0f14"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Arsitek Spesialis Villa & Properti Mewah di Lombok | Atelier Nusa"/>
@@ -240,7 +240,7 @@ document.getElementById('lead-form-el').addEventListener('submit',async function
   const name=document.getElementById('f-name').value.trim(),phone=document.getElementById('f-phone').value.trim(),type=document.getElementById('f-type').value,loc=document.getElementById('f-location').value,budget=document.getElementById('f-budget').value,lahan=document.getElementById('f-lahan')?document.getElementById('f-lahan').value:'',msg=document.getElementById('f-message').value.trim();
   const full=['[LP: arsitek-villa-mewah]','Tipe: '+type,loc?'Lokasi: '+loc:'',lahan?'Lahan: '+lahan:'',budget?'Budget: '+budget:'',msg?'Pesan: '+msg:''].filter(Boolean).join(' | ');
   try{await fetch('https://example.invalid/internal-webhook/webhook/lead',{method:'POST',headers:{'Content-Type':'application/json','X-Retired-Webhook-Header':'REVOKED_SECRET'},body:JSON.stringify({name,phone,message:full})})}catch(err){}
-  if(typeof gtag==='function')gtag('event','conversion',{'send_to':'AW-17992260618/RYIECJGXwo8cEIq4sIND','value':1.0,'currency':'IDR'});
+  if(typeof gtag==='function')gtag('event', 'ads_conversion_Contact_1', { 'value':1.0,'currency':'IDR' });
   document.getElementById('form-content').style.display='none';
   document.getElementById('success-msg').style.display='block';
 });

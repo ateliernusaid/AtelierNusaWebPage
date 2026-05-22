@@ -1,0 +1,16 @@
+node_modules
+dist
+.git
+.vercel
+
+# Ignore huge raw image files in public (already optimized to webp)
+public/images/Image13_000.png
+public/images/Rumah Pak Sholeh1.png
+public/images/Rumah Pak Sholeh3.png
+public/images/Scene 6_upscale02_124412 (1).jpg
+public/images/T30 03.png
+public/images/T30 04.png
+public/images/T45 01.png
+public/images/T45 03.png
+public/images/Villa Hills Kuta.png
+public/images/G House Lombok Tengah.jpg

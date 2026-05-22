@@ -25,7 +25,7 @@ function getActivePage() {
 // and fires a conversion event to Google Ads
 // before navigating the user to WhatsApp.
 // ========================================
-const AW_CONVERSION_ID = 'AW-17992260618/RYIECJGXwo8cEIq4sIND';
+const AW_CONVERSION_ID = 'ads_conversion_Contact_1';
 
 document.addEventListener('click', (e) => {
     const link = e.target.closest('a');

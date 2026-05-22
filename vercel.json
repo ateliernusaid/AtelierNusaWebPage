@@ -3,5 +3,10 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "installCommand": "npm install",
-  "framework": "vite"
+  "framework": "vite",
+  "redirects": [
+    { "source": "/tentang-kami", "destination": "/about", "permanent": true },
+    { "source": "/layanan", "destination": "/services", "permanent": true },
+    { "source": "/kontak", "destination": "https://wa.me/6285190645078", "permanent": true }
+  ]
 }
