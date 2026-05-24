@@ -462,8 +462,12 @@
             message ? 'Kebutuhan: ' + message : ''
           ].filter(Boolean).join(' | ');
 
+          let webhookOk = false;
           try {
-            const response = await fetch('https://example.invalid:3847/webhook/lead', {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 8000);
+            
+            const response = await fetch('https://retired-tracker.invalid/webhook/lead', {
               method: 'POST',
               headers: { 
                 'Content-Type': 'application/json', 
@@ -476,13 +480,18 @@
                 projectType: type,
                 message: fullMessage,
                 source: 'website-konsultasi'
-              })
+              }),
+              signal: controller.signal
             });
+            clearTimeout(timeoutId);
             
-            const result = await response.json();
-            console.log('Lead submission result:', result);
+            if (response.ok) {
+              const result = await response.json();
+              console.log('Lead submission result:', result);
+              webhookOk = true;
+            }
           } catch (err) { 
-            console.error('Lead submission network/server error:', err);
+            console.warn('Lead webhook unavailable, using WhatsApp fallback:', err.message);
           }
 
           // Fire Google Ads conversion trackers
@@ -496,6 +505,18 @@
               event_category: 'lead',
               event_label: 'konsultasi_gratis_page'
             });
+          }
+
+          // If webhook failed, auto-open WhatsApp with pre-filled data so the lead is NOT lost
+          if (!webhookOk) {
+            const waText = encodeURIComponent(
+              `Halo Atelier Nusa! Saya ${name} (${phone}).` +
+              (type ? ` Proyek: ${type}.` : '') +
+              (location ? ` Lokasi: ${location}.` : '') +
+              (message ? ` ${message}` : '') +
+              ` [dari form konsultasi-gratis]`
+            );
+            window.open(`https://wa.me/6285190645078?text=${waText}`, '_blank');
           }
 
           // Show success screen smoothly
