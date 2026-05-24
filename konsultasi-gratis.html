@@ -463,7 +463,7 @@
           ].filter(Boolean).join(' | ');
 
           try {
-            const response = await fetch('https://example.invalid/internal-webhook/webhook/lead', {
+            const response = await fetch('https://example.invalid:3847/webhook/lead', {
               method: 'POST',
               headers: { 
                 'Content-Type': 'application/json', 
