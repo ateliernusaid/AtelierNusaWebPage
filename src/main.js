@@ -193,18 +193,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const full = ['[LP: homepage]', type ? 'Type: ' + type : '', msg ? 'Message: ' + msg : ''].filter(Boolean).join(' | ');
 
+            let webhookOk = false;
             try {
-                await fetch('https://example.invalid/internal-webhook/webhook/lead', {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+                const response = await fetch('https://retired-tracker.invalid/webhook/lead', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-Retired-Webhook-Header': 'REVOKED_SECRET' },
-                    body: JSON.stringify({ name, phone, message: full })
+                    body: JSON.stringify({
+                        name: name,
+                        phone: phone,
+                        projectType: type,
+                        message: full,
+                        source: 'website-homepage'
+                    }),
+                    signal: controller.signal
                 });
-            } catch (err) { /* silent */ }
+                clearTimeout(timeoutId);
+                if (response.ok) {
+                    webhookOk = true;
+                }
+            } catch (err) {
+                console.warn('Lead webhook unavailable, using WhatsApp fallback:', err.message);
+            }
 
             // Fire Google Ads conversion
             if (typeof gtag === 'function') {
                 gtag('event', 'conversion', {
-                    'send_to': AW_CONVERSION_ID,
+                    'send_to': typeof AW_CONVERSION_ID !== 'undefined' ? AW_CONVERSION_ID : 'ads_conversion_Contact_1',
                     'value': 1.0,
                     'currency': 'IDR'
                 });
@@ -212,6 +229,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     event_category: 'lead',
                     event_label: 'homepage_form'
                 });
+            }
+
+            // If webhook failed, auto-open WhatsApp with pre-filled data so the lead is NOT lost
+            if (!webhookOk) {
+                const waText = encodeURIComponent(
+                    `Halo Atelier Nusa! Saya ${name} (${phone}).` +
+                    (type ? ` Proyek: ${type}.` : '') +
+                    (msg ? ` ${msg}` : '') +
+                    ` [dari form homepage]`
+                );
+                window.open(`https://wa.me/6285190645078?text=${waText}`, '_blank');
             }
 
             document.getElementById('cta-form-content').style.display = 'none';
