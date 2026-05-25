@@ -202,3 +202,17 @@ nav.scrolled .logo-img{height:34px}
   .svc-scroll{padding:0 20px}
   .svc-card{flex:0 0 85vw}
 }
+
+/* --- Mobile Hamburger Menu --- */
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;z-index:300}
+.hamburger span{display:block;width:24px;height:2px;background:var(--text);margin:5px 0;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+@media(max-width:968px){
+  .hamburger{display:block}
+  .nav-links{display:none!important;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(8,11,15,.98);flex-direction:column;justify-content:center;align-items:center;gap:32px;z-index:250}
+  .nav-links.open{display:flex!important}
+  .nav-links a{font-size:18px}
+}

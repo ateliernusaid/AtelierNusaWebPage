@@ -757,3 +757,14 @@
                 rgba(10, 15, 20, 0.92) 100%);
     }
 }
+
+/* Studio Map Responsive Container */
+.map-container {
+    aspect-ratio: 16 / 7;
+}
+
+@media (max-width: 768px) {
+    .map-container {
+        aspect-ratio: 4 / 3;
+    }
+}

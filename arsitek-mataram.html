@@ -245,9 +245,19 @@
     .reveal.visible { opacity: 1; transform: none }
 
     /* MOBILE */
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;z-index:300}
+    .hamburger span{display:block;width:24px;height:2px;background:var(--text);margin:5px 0;transition:all .3s}
+    .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+    .hamburger.open span:nth-child(2){opacity:0}
+    .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
     @media (max-width: 768px) {
       nav { padding: 12px 20px }
-      .nav-links { display: none }
+      .hamburger { display: block }
+      .nav-links { display: none!important; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10,15,20,0.98); flex-direction: column; justify-content: center; align-items: center; gap: 32px; z-index: 250 }
+      .nav-links.open { display: flex!important }
+      .nav-links a { font-size: 18px }
+      
       .hero { padding: 100px 20px 60px }
       .sec { padding: 64px 20px }
       .trust-row { gap: 20px }
@@ -278,6 +288,7 @@
       <a href="/services.html">Layanan</a>
       <a href="https://wa.me/6285190645078?text=Halo%20Atelier%20Nusa!%20Saya%20ingin%20konsultasi%20dengan%20arsitek%20di%20Mataram." target="_blank" class="nav-cta">Konsultasi Gratis</a>
     </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </nav>
 
   <!-- HERO -->
@@ -549,6 +560,10 @@
         });
       }
     }
+
+    // Hamburger toggle
+    const hb=document.getElementById('hamburger'),nl=document.querySelector('.nav-links');
+    if(hb&&nl){hb.addEventListener('click',()=>{hb.classList.toggle('open');nl.classList.toggle('open');document.body.style.overflow=nl.classList.contains('open')?'hidden':''})}
   </script>
 
 </body>

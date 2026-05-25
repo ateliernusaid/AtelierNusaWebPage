@@ -39,6 +39,7 @@
 .navbar__logo-icon {
     width: 180px;
     height: 130px;
+    object-fit: contain;
     transition: all var(--transition-normal);
 }
 
@@ -715,6 +716,13 @@
 
     .project-card__overlay {
         padding: var(--space-md);
+        opacity: 1; /* Always show titles/badges on mobile/touch screens */
+        background: linear-gradient(180deg,
+                transparent 15%,
+                rgba(10, 15, 20, 0.5) 45%,
+                rgba(10, 15, 20, 0.9) 100%);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
     }
 
     .project-card__title {
