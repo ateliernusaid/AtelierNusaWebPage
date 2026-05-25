@@ -37,20 +37,30 @@ export function createFooter() {
 
         <div class="footer__links">
           <div class="footer__col">
-            <div class="footer__col-title">Navigation</div>
+            <div class="footer__col-title">Navigasi</div>
             <a href="/" class="footer__link">Home</a>
             <a href="/about.html" class="footer__link">About</a>
             <a href="/projects.html" class="footer__link">Projects</a>
             <a href="/services.html" class="footer__link">Services</a>
-            <br>
-            <a href="/jasa-arsitek-lombok.html" class="footer__link" style="color:#d4af37;">Arsitek Lombok</a>
-            <a href="/arsitek-mataram.html" class="footer__link" style="color:#d4af37;">Arsitek Mataram</a>
+            <a href="/artikel.html" class="footer__link">Artikel</a>
+          </div>
+
+          <div class="footer__col">
+            <div class="footer__col-title">Layanan</div>
+            <a href="/konsultasi-gratis.html" class="footer__link" style="color: var(--color-accent); font-weight: var(--fw-medium);">Konsultasi Gratis</a>
+            <a href="/jasa-arsitek-lombok.html" class="footer__link">Jasa Arsitek Lombok</a>
+            <a href="/arsitek-mataram.html" class="footer__link">Arsitek Mataram</a>
+            <a href="/desain-interior-lombok.html" class="footer__link">Desain Interior Lombok</a>
+            <a href="/arsitek-villa-mewah-lombok.html" class="footer__link">Arsitek Villa Mewah</a>
+            <a href="/biaya-arsitek-lombok.html" class="footer__link">Biaya Arsitek Lombok</a>
+            <a href="/renovasi-rumah-mataram-lombok.html" class="footer__link">Renovasi Rumah Mataram</a>
+            <a href="/tren-desain-interior-lombok.html" class="footer__link">Tren Interior Tropis</a>
           </div>
 
           <div class="footer__col">
             <div class="footer__col-title">Contact</div>
             <a href="mailto:marketing@ateliernusa.id" class="footer__link">marketing@ateliernusa.id</a>
-            <a href="tel:+6285190645078" class="footer__link">+62 851-9064-5078</a>
+            <a href="https://wa.me/6285190645078" target="_blank" rel="noopener" class="footer__link">+62 851-9064-5078</a>
           </div>
 
           <div class="footer__col">
@@ -61,12 +71,6 @@ export function createFooter() {
               NTB 83124, Indonesia
             </p>
           </div>
-
-          <div class="footer__col">
-            <div class="footer__col-title">Legal</div>
-            <a href="/privacy-policy.html" class="footer__link">Privacy Policy</a>
-            <a href="/terms-of-service.html" class="footer__link">Terms of Service</a>
-          </div>
         </div>
       </div>
 
@@ -74,9 +78,15 @@ export function createFooter() {
 
       <div class="footer__bottom">
         <div class="footer__copyright">© ${new Date().getFullYear()} Atelier Nusa. All rights reserved.</div>
+        <div class="footer__legal">
+          <a href="/privacy-policy.html" class="footer__link" style="font-size: var(--fs-xs);">Privacy Policy</a>
+          <span class="footer__legal-sep">|</span>
+          <a href="/terms-of-service.html" class="footer__link" style="font-size: var(--fs-xs);">Terms of Service</a>
+        </div>
       </div>
     </div>
   `;
 
   document.body.appendChild(footer);
 }
+
