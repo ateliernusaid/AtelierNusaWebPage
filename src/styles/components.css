@@ -140,6 +140,11 @@
 @media (max-width: 768px) {
     .navbar__hamburger {
         display: flex;
+        z-index: 9999; /* Ensure hamburger is above full-screen menu to allow closing */
+    }
+
+    .navbar__logo {
+        z-index: 9999; /* Ensure logo is visible on top of mobile menu */
     }
 
     .navbar__menu {
@@ -151,9 +156,7 @@
         flex-direction: column;
         justify-content: center;
         gap: var(--space-lg);
-        background: rgb(10, 15, 20);
-        backdrop-filter: blur(30px);
-        -webkit-backdrop-filter: blur(30px);
+        background: var(--color-bg-primary); /* Solid color to prevent text overlapping */
         transform: translateX(100%);
         opacity: 0;
         transition: transform var(--transition-slow),
@@ -179,8 +182,8 @@
     }
 
     .navbar__menu {
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
     }
 }
 
