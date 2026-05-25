@@ -47,7 +47,7 @@ export function createFooter() {
 
           <div class="footer__col">
             <div class="footer__col-title">Layanan</div>
-            <a href="/konsultasi-gratis.html" class="footer__link" style="color: var(--color-accent); font-weight: var(--fw-medium);">Konsultasi Gratis</a>
+            <a href="/#konsultasi" class="footer__link" style="color: var(--color-accent); font-weight: var(--fw-medium);">Konsultasi Gratis</a>
             <a href="/jasa-arsitek-lombok.html" class="footer__link">Jasa Arsitek Lombok</a>
             <a href="/arsitek-mataram.html" class="footer__link">Arsitek Mataram</a>
             <a href="/desain-interior-lombok.html" class="footer__link">Desain Interior Lombok</a>

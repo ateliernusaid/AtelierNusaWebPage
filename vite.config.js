@@ -27,7 +27,6 @@ export default defineConfig({
                 biayaArsitekLombok: resolve(__dirname, 'biaya-arsitek-lombok.html'),
                 trenDesainInterior: resolve(__dirname, 'tren-desain-interior-lombok.html'),
                 renovasiRumah: resolve(__dirname, 'renovasi-rumah-mataram-lombok.html'),
-                konsultasiGratis: resolve(__dirname, 'konsultasi-gratis.html'),
             },
         },
     },
