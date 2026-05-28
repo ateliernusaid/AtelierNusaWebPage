@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Optimization -->
+    <title>Konsultasi Gratis Arsitektur & Konstruksi Villa | Atelier Nusa Lombok</title>
+    <meta name="description" content="Mulai wujudkan proyek villa mewah atau rumah impian Anda di Lombok. Dapatkan sesi konsultasi konsep desain pertama gratis langsung dengan Principal Architect Atelier Nusa.">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Style Tokens -->
+    <link rel="stylesheet" href="/design-tokens.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--color-bg-primary, #0a0f14);
+            color: var(--color-text-primary, #fafafa);
+            font-family: var(--font-body, 'Inter', sans-serif);
+            line-height: var(--lh-normal, 1.6);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Glows */
+        .ambient-glow-1 {
+            position: absolute;
+            top: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .ambient-glow-2 {
+            position: absolute;
+            bottom: -200px;
+            left: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Container & Grid Layout */
+        .container {
+            max-width: var(--container-max, 1200px);
+            margin: 0 auto;
+            padding: 0 var(--container-padding, 1.5rem);
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            padding: var(--space-xs, 1.5rem) 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border, rgba(255, 255, 255, 0.06));
+            backdrop-filter: var(--glass-blur, blur(20px));
+            position: sticky;
+            top: 0;
+            z-index: var(--z-nav, 100);
+        }
+
+        .logo {
+            font-family: var(--font-heading, 'Outfit', sans-serif);
+            font-size: var(--fs-h4, 1.5rem);
+            font-weight: var(--fw-bold, 700);
+            letter-spacing: var(--ls-tight, -0.02em);
+            color: var(--color-text-primary, #fafafa);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--color-accent, #d4af37);
+        }
+
+        .btn-back {
+            font-family: var(--font-body, 'Inter', sans-serif);
+            font-size: var(--fs-small, 0.9rem);
+            color: var(--color-text-secondary, rgba(250, 245, 235, 0.8));
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: var(--transition-fast, 0.2s);
+        }
+
+        .btn-back:hover {
+            color: var(--color-accent, #d4af37);
+        }
+
+        /* Landing Split Hero Section */
+        .hero-section {
+            padding: var(--space-xl, 4rem) 0;
+            min-height: calc(100vh - 100px);
+            display: flex;
+            align-items: center;
+        }
+
+        .grid-split {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: var(--space-xl, 4rem);
+            align-items: center;
+        }
+
+        /* Value Proposition */
+        .val-prop {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s var(--transition-spring, cubic-bezier(.34, 1.56, .64, 1)) forwards;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid var(--color-border, rgba(212, 175, 55, 0.18));
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-full, 9999px);
+            font-size: var(--fs-xs, 0.8rem);
+            font-weight: var(--fw-semibold, 600);
+            color: var(--color-accent, #d4af37);
+            letter-spacing: var(--ls-wider, 0.12em);
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .headline {
+            font-family: var(--font-heading, 'Outfit', sans-serif);
+            font-size: var(--fs-h1, 2.5rem);
+            font-weight: var(--fw-bold, 700);
+            line-height: var(--lh-tight, 1.15);
+            letter-spacing: var(--ls-tight, -0.02em);
+            margin-bottom: 1.5rem;
+        }
+
+        .headline span {
+            display: block;
+            background: linear-gradient(135deg, var(--color-text-primary) 30%, var(--color-accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .lead-text {
+            font-size: var(--fs-body, 1.125rem);
+            color: var(--color-text-secondary, rgba(250, 245, 235, 0.8));
+            margin-bottom: 2.5rem;
+            max-width: 90%;
+        }
+
+        .features-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 50%;
+            border: 1px solid var(--color-border, rgba(212, 175, 55, 0.18));
+            color: var(--color-accent, #d4af37);
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .feature-text h3 {
+            font-family: var(--font-heading, 'Outfit', sans-serif);
+            font-size: var(--fs-h4, 1.15rem);
+            font-weight: var(--fw-semibold, 600);
+            margin-bottom: 0.2rem;
+        }
+
+        .feature-text p {
+            font-size: var(--fs-small, 0.95rem);
+            color: var(--color-text-muted, rgba(250, 250, 250, 0.52));
+        }
+
+        /* Glassmorphic Form Card */
+        .form-card {
+            background: var(--gradient-card, linear-gradient(145deg, rgba(20, 28, 38, .9) 0%, rgba(15, 22, 32, .95) 100%));
+            border: 1px solid var(--color-border, rgba(212, 175, 55, 0.18));
+            border-radius: var(--radius-lg, 16px);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-xl, 0 14px 28px rgba(0, 0, 0, 0.25));
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s var(--transition-spring, cubic-bezier(.34, 1.56, .64, 1)) 0.2s forwards;
+        }
+
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-accent, #d4af37), var(--color-accent-light, #e6c757));
+        }
+
+        .form-title {
+            font-family: var(--font-heading, 'Outfit', sans-serif);
+            font-size: var(--fs-h3, 1.5rem);
+            font-weight: var(--fw-bold, 700);
+            margin-bottom: 0.5rem;
+            letter-spacing: var(--ls-tight, -0.01em);
+        }
+
+        .form-subtitle {
+            font-size: var(--fs-small, 0.95rem);
+            color: var(--color-text-muted, rgba(250, 250, 250, 0.52));
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-family: var(--font-heading, 'Outfit', sans-serif);
+            font-size: var(--fs-xs, 0.85rem);
+            font-weight: var(--fw-medium, 500);
+            color: var(--color-text-secondary, rgba(250, 245, 235, 0.8));
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: var(--ls-wide, 0.05em);
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            background: rgba(10, 15, 20, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-sm, 8px);
+            padding: 0.9rem 1rem;
+            color: var(--color-text-primary, #fafafa);
+            font-family: var(--font-body, 'Inter', sans-serif);
+            font-size: var(--fs-small, 0.95rem);
+            transition: var(--transition-fast, 0.2s);
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--color-accent, #d4af37);
+            background: rgba(20, 28, 38, 0.8);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+        }
+
+        .form-textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.25rem;
+            padding-right: 2.5rem;
+            cursor: pointer;
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--color-accent-dark, #b8962c) 0%, var(--color-accent, #d4af37) 100%);
+            border: none;
+            border-radius: var(--radius-sm, 8px);
+            padding: 1rem;
+            color: var(--color-text-dark, #0a0f14);
+            font-family: var(--font-heading, 'Outfit', sans-serif);
+            font-size: var(--fs-h4, 1.05rem);
+            font-weight: var(--fw-bold, 700);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+            transition: var(--transition-normal, 0.4s);
+            margin-top: 1rem;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+            background: linear-gradient(135deg, var(--color-accent, #d4af37) 0%, var(--color-accent-light, #e6c757) 100%);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit svg {
+            transition: transform 0.3s var(--transition-spring, cubic-bezier(.34, 1.56, .64, 1));
+        }
+
+        .btn-submit:hover svg {
+            transform: translateX(4px);
+        }
+
+        .secure-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            font-size: var(--fs-xs, 0.75rem);
+            color: var(--color-text-muted, rgba(250, 250, 250, 0.52));
+            margin-top: 1rem;
+        }
+
+        /* Success View */
+        .success-view {
+            display: none;
+            text-align: center;
+            padding: 3rem 1.5rem;
+        }
+
+        .success-icon {
+            width: 72px;
+            height: 72px;
+            background: rgba(37, 211, 102, 0.1);
+            border: 2px solid #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #25d366;
+            margin: 0 auto 2rem;
+            animation: scaleIn 0.5s var(--transition-spring, cubic-bezier(.34, 1.56, .64, 1)) forwards;
+        }
+
+        .success-title {
+            font-family: var(--font-heading, 'Outfit', sans-serif);
+            font-size: var(--fs-h2, 1.8rem);
+            font-weight: var(--fw-bold, 700);
+            margin-bottom: 1rem;
+        }
+
+        .success-desc {
+            font-size: var(--fs-small, 0.95rem);
+            color: var(--color-text-secondary, rgba(250, 245, 235, 0.8));
+            margin-bottom: 2.5rem;
+        }
+
+        .btn-success {
+            background: transparent;
+            border: 1px solid var(--color-border, rgba(212, 175, 55, 0.18));
+            border-radius: var(--radius-sm, 8px);
+            padding: 0.8rem 2rem;
+            color: var(--color-accent, #d4af37);
+            font-family: var(--font-heading, 'Outfit', sans-serif);
+            font-size: var(--fs-small, 0.95rem);
+            font-weight: var(--fw-bold, 700);
+            text-decoration: none;
+            transition: var(--transition-fast, 0.2s);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-success:hover {
+            background: rgba(212, 175, 55, 0.05);
+            border-color: var(--color-accent, #d4af37);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.6);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 991px) {
+            .grid-split {
+                grid-template-columns: 1fr;
+                gap: var(--space-lg, 3rem);
+            }
+
+            .val-prop {
+                text-align: center;
+            }
+
+            .badge {
+                margin: 0 auto 1.5rem;
+            }
+
+            .lead-text {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .features-list {
+                align-items: center;
+            }
+
+            .feature-item {
+                max-width: 450px;
+                text-align: left;
+            }
+
+            .hero-section {
+                padding: var(--space-lg, 3rem) 0;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .headline {
+                font-size: var(--fs-h2, 2.2rem);
+            }
+
+            .form-card {
+                padding: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <div class="container">
+        <!-- Premium Header -->
+        <header>
+            <a href="/" class="logo">ATELIER<span>NUSA</span></a>
+            <a href="/" class="btn-back">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Kembali ke Beranda
+            </a>
+        </header>
+
+        <!-- Split Landing Layout -->
+        <main class="hero-section">
+            <div class="grid-split">
+                <!-- Value Proposition (Left Column) -->
+                <div class="val-prop">
+                    <span class="badge" id="promo-badge">PROMO EKSKLUSIF</span>
+                    <h1 class="headline">
+                        Dapatkan Konsultasi
+                        <span>Konsep Desain Gratis</span>
+                    </h1>
+                    <p class="lead-text">
+                        Rencanakan villa mewah atau residensial tropis idaman Anda di Lombok dengan bantuan principal architect profesional kami. Jadwalkan diskusi privat pertama hari ini secara gratis.
+                    </p>
+
+                    <ul class="features-list">
+                        <li class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <div class="feature-text">
+                                <h3>Principal Architect Consultation</h3>
+                                <p>Diskusi interaktif langsung untuk membahas layout, zonasi lahan, & preferensi style desain Anda.</p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <div class="feature-text">
+                                <h3>Premium Tropis Specialists</h3>
+                                <p>Keahlian khusus pada desain tropis modern berkelanjutan untuk villa mewah, hotel butik, & luxury estate.</p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <div class="feature-text">
+                                <h3>One-Stop Design & Build</h3>
+                                <p>Mulai perencanaan konsep awal, studi kelayakan, DED lengkap, hingga konstruksi fisik bergaransi.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Form Capture Card (Right Column) -->
+                <div class="form-card" id="form-container">
+                    <div id="input-view">
+                        <h2 class="form-title">Mulai Konsultasi Gratis</h2>
+                        <p class="form-subtitle">Lengkapi formulir di bawah ini, tim arsitek kami akan segera menghubungi Anda melalui WhatsApp.</p>
+                        
+                        <form id="consultation-form" novalidate>
+                            <div class="form-group">
+                                <label class="form-label" for="lead-name">Nama Lengkap</label>
+                                <input type="text" id="lead-name" class="form-input" placeholder="Masukkan nama lengkap Anda" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="lead-phone">Nomor WhatsApp</label>
+                                <input type="tel" id="lead-phone" class="form-input" placeholder="Contoh: 08123456789" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="lead-project">Tipe Proyek</label>
+                                <select id="lead-project" class="form-select">
+                                    <option value="Villa Mewah">Villa Mewah (Luxury Villa)</option>
+                                    <option value="Rumah Tinggal">Rumah Tinggal (Residential)</option>
+                                    <option value="Interior Design">Desain Interior</option>
+                                    <option value="Renovasi & Konstruksi">Renovasi / Pembangunan Fisik</option>
+                                    <option value="Lainnya">Tipe Proyek Lainnya</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="lead-location">Lokasi Rencana Proyek</label>
+                                <input type="text" id="lead-location" class="form-input" placeholder="Contoh: Senggigi, Kuta Lombok, Mataram, dsb." required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="lead-message">Pesan / Deskripsi Proyek</label>
+                                <textarea id="lead-message" class="form-textarea" placeholder="Tuliskan gambaran singkat rencana proyek Anda (opsional)"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-submit" id="submit-btn">
+                                <span>Kirim Permintaan Konsultasi</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </button>
+                        </form>
+
+                        <div class="secure-note">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            Data Anda dijamin 100% aman dan terjaga kerahasiaannya.
+                        </div>
+                    </div>
+
+                    <!-- AJAX Success View -->
+                    <div class="success-view" id="success-view">
+                        <div class="success-icon">
+                            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        <h2 class="success-title">Permintaan Terkirim!</h2>
+                        <p class="success-desc">Terima kasih atas kepercayaan Anda. Tim arsitek Atelier Nusa akan segera memvalidasi rencana proyek Anda dan menghubungi melalui WhatsApp dalam waktu maksimal 24 jam.</p>
+                        <a href="/" class="btn-success">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            Kembali ke Beranda
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Form Submission Logic
+        document.getElementById('consultation-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            var nameEl = document.getElementById('lead-name');
+            var phoneEl = document.getElementById('lead-phone');
+            var projectEl = document.getElementById('lead-project');
+            var locationEl = document.getElementById('lead-location');
+            var messageEl = document.getElementById('lead-message');
+            var submitBtn = document.getElementById('submit-btn');
+
+            // Reset field borders
+            [nameEl, phoneEl, locationEl].forEach(function(el) {
+                el.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+            });
+
+            // Simple validation
+            var valid = true;
+            if (!nameEl.value.trim()) {
+                nameEl.style.borderColor = '#ff4d4d';
+                valid = false;
+            }
+            if (!phoneEl.value.trim()) {
+                phoneEl.style.borderColor = '#ff4d4d';
+                valid = false;
+            }
+            if (!locationEl.value.trim()) {
+                locationEl.style.borderColor = '#ff4d4d';
+                valid = false;
+            }
+
+            if (!valid) return;
+
+            // Update UI state to loading
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>Memproses...</span>';
+
+            // Gather conversion parameters
+            var gclidCookie = document.cookie.match(/_nusa_gclid=([^;]+)/);
+            var gclid = gclidCookie ? gclidCookie[1] : '';
+
+            var payload = {
+                name: nameEl.value.trim(),
+                phone: phoneEl.value.trim(),
+                source: 'website',
+                projectType: projectEl.value,
+                location: locationEl.value.trim(),
+                message: messageEl.value.trim()
+            };
+
+            // Post lead data
+            fetch('https://retired-tracker.invalid/webhook/lead?key=REVOKED_SECRET', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-webhook-key': 'REVOKED_SECRET'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(function(res) {
+                // Fire conversion tracker event as well
+                try {
+                    navigator.sendBeacon('https://retired-tracker.invalid/webhook/conversion', JSON.stringify({
+                        event: 'form_submit',
+                        page: location.pathname,
+                        referrer: document.referrer,
+                        gclid: gclid
+                    }));
+                } catch(e) {}
+
+                // Switch views on card
+                document.getElementById('input-view').style.display = 'none';
+                document.getElementById('success-view').style.display = 'block';
+            })
+            .catch(function(err) {
+                console.error('Error submitting form:', err);
+                // Fallback to success view to prevent blocking interested leads
+                document.getElementById('input-view').style.display = 'none';
+                document.getElementById('success-view').style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>

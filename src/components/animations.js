@@ -54,8 +54,8 @@ export function initAnimations() {
             });
         },
         {
-            threshold: 0.05,
-            rootMargin: '0px 0px -30px 0px',
+            threshold: 0.08,
+            rootMargin: '0px 0px -60px 0px',
         }
     );
 
@@ -105,6 +105,31 @@ export function initAnimations() {
         }, { passive: true });
     }
 
+    // Scroll-triggered parallax for section headers (desktop only)
+    const isDesktopParallax = window.matchMedia('(min-width: 769px) and (hover: hover)').matches;
+    if (isDesktopParallax) {
+        const parallaxHeaders = document.querySelectorAll('.section-header, .page-hero');
+        if (parallaxHeaders.length > 0) {
+            let scrollTicking = false;
+            window.addEventListener('scroll', () => {
+                if (!scrollTicking) {
+                    scrollTicking = true;
+                    requestAnimationFrame(() => {
+                        parallaxHeaders.forEach((el) => {
+                            const rect = el.getBoundingClientRect();
+                            const inView = rect.top < window.innerHeight && rect.bottom > 0;
+                            if (inView) {
+                                const offset = (rect.top / window.innerHeight) * 20;
+                                el.style.transform = `translateY(${offset}px)`;
+                            }
+                        });
+                        scrollTicking = false;
+                    });
+                }
+            }, { passive: true });
+        }
+    }
+
     // Counter animation for stats
     const counters = document.querySelectorAll('[data-count]');
     const counterObserver = new IntersectionObserver(
@@ -139,45 +164,3 @@ function animateCounter(el) {
     requestAnimationFrame(update);
 }
 
-// Smooth page transitions
-export function initPageTransitions() {
-    // Page fade-in on load
-    document.body.style.opacity = '0';
-    document.body.style.transition = 'opacity 0.4s ease';
-    requestAnimationFrame(() => {
-        document.body.style.opacity = '1';
-    });
-
-    // Fade-out on navigation
-    document.querySelectorAll('a[href]').forEach((link) => {
-        const href = link.getAttribute('href');
-        const target = link.getAttribute('target');
-        
-        // Skip interception if the link is meant to open in a new tab
-        if (target === '_blank') return;
-
-        if (href && href.startsWith('/') && !href.startsWith('//')) {
-            link.addEventListener('click', (e) => {
-                // Don't intercept if same page
-                if (href === window.location.pathname) {
-                    e.preventDefault();
-                    return;
-                }
-
-                e.preventDefault();
-                document.body.style.opacity = '0';
-                setTimeout(() => {
-                    window.location.href = href;
-                }, 300);
-            });
-        }
-    });
-
-    // Fix for Bfcache (Back button blank page issue)
-    window.addEventListener('pageshow', (event) => {
-        // If the page is loaded from cache (e.g. Back button), reset opacity
-        if (event.persisted) {
-            document.body.style.opacity = '1';
-        }
-    });
-}

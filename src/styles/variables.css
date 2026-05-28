@@ -4,10 +4,10 @@
 
 :root {
   /* Refined Color Palette - Architectural */
-  --color-bg-primary: #0a0f14;
-  /* Deep charcoal */
-  --color-bg-secondary: #111820;
-  /* Soft midnight */
+  --color-bg-primary: #070A0E;
+  /* Deep ebony charcoal */
+  --color-bg-secondary: #0D1117;
+  /* Midnight studio */
   --color-bg-tertiary: #1a2430;
   /* Dark slate */
   --color-bg-card: #141c26;
@@ -112,9 +112,9 @@
   --shadow-glow-lg: 0 0 100px rgba(212, 175, 55, 0.2);
 
   /* Glassmorphism Effects */
-  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-bg: rgba(255, 255, 255, 0.02);
   --glass-bg-hover: rgba(255, 255, 255, 0.06);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(212, 175, 55, 0.08);
   --glass-blur: blur(20px);
   --glass-blur-heavy: blur(40px);
 

@@ -6,7 +6,7 @@ import './styles/index.css';
 import { createNavbar } from './components/navbar.js';
 import { createFooter } from './components/footer.js';
 import { createWhatsApp } from './components/whatsapp.js';
-import { initAnimations, initPageTransitions } from './components/animations.js';
+import { initAnimations } from './components/animations.js';
 import { initLightbox } from './components/lightbox.js';
 
 // Determine active page
@@ -168,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
     createFooter();
     createWhatsApp();
     initAnimations();
-    initPageTransitions();
     initLightbox();
 
     // Design enhancements
