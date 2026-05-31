@@ -25,6 +25,8 @@ export default defineConfig({
                 desainInteriorLombok: resolve(__dirname, 'desain-interior-lombok.html'),
                 arsitekVillaMewah: resolve(__dirname, 'arsitek-villa-mewah-lombok.html'),
                 biayaArsitekLombok: resolve(__dirname, 'biaya-arsitek-lombok.html'),
+                biayaBangunRumahLombok: resolve(__dirname, 'biaya-bangun-rumah-lombok.html'),
+                portofolioVillaLombok: resolve(__dirname, 'portofolio-villa-lombok.html'),
                 trenDesainInterior: resolve(__dirname, 'tren-desain-interior-lombok.html'),
                 renovasiRumah: resolve(__dirname, 'renovasi-rumah-mataram-lombok.html'),
                 konsultasiGratis: resolve(__dirname, 'konsultasi-gratis.html'),
