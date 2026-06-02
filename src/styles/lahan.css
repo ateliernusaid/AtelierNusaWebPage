@@ -558,3 +558,91 @@
     color: var(--color-text-primary);
     transform: translateX(-4px);
 }
+
+/* Symmetric Grid — balanced 1fr 1fr with vertical center */
+.arch-grid--symmetric {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .arch-grid--symmetric {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+}
+
+/* Price Block — integrated in left text column */
+.land-hero__price-block {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-md);
+}
+
+.land-hero__price-block-label {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.land-hero__price-block-val {
+    font-family: var(--font-heading);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-bold);
+    color: var(--color-accent);
+}
+
+.land-hero__price-block-nego {
+    margin-left: auto;
+    font-size: var(--fs-xs);
+    color: var(--color-accent);
+    font-weight: var(--fw-semibold);
+    border: 1px solid var(--color-border);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+}
+
+@media (max-width: 576px) {
+    .land-hero__price-block {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .land-hero__price-block-nego {
+        margin-left: 0;
+    }
+}
+
+/* CTA Box — detail page bottom call-to-action */
+.land-cta-section {
+    padding: var(--space-lg) 0 var(--space-xl);
+}
+
+.land-cta-section .cta-box {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--space-lg);
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-lg);
+}
+
+@media (max-width: 768px) {
+    .land-cta-section .cta-box {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: var(--space-lg);
+    }
+    .land-cta-section .cta-box > div:last-child {
+        justify-self: center;
+    }
+}
