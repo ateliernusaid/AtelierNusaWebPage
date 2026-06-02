@@ -43,6 +43,7 @@ export function createFooter() {
             <a href="/projects.html" class="footer__link">Projects</a>
             <a href="/services.html" class="footer__link">Services</a>
             <a href="/artikel.html" class="footer__link">Artikel</a>
+            <a href="/lahan.html" class="footer__link">Lahan</a>
           </div>
 
           <div class="footer__col">

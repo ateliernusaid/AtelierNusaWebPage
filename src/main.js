@@ -16,6 +16,7 @@ function getActivePage() {
     if (path.includes('projects')) return 'projects';
     if (path.includes('services')) return 'services';
     if (path.includes('artikel')) return 'artikel';
+    if (path.includes('lahan') || path.includes('tanah-')) return 'lahan';
     return 'home';
 }
 

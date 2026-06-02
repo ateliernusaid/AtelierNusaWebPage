@@ -13,6 +13,7 @@ export function createNavbar(activePage = 'home') {
     { key: 'projects', label: 'Projects', href: '/projects.html' },
     { key: 'services', label: 'Services', href: '/services.html' },
     { key: 'artikel', label: 'Artikel', href: '/artikel.html' },
+    { key: 'lahan', label: 'Lahan', href: '/lahan.html' },
   ];
 
   nav.innerHTML = `
