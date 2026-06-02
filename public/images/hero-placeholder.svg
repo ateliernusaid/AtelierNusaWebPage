@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a3a4a"/>
+      <stop offset="100%" style="stop-color:#2d5a6a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <text x="600" y="280" font-family="Georgia, serif" font-size="48" fill="white" text-anchor="middle" font-weight="bold">Atelier Nusa</text>
+  <text x="600" y="340" font-family="Arial, sans-serif" font-size="24" fill="#e0e8e8" text-anchor="middle">Arsitektur &amp; Konstruksi Tropis</text>
+  <text x="600" y="380" font-family="Arial, sans-serif" font-size="16" fill="#b0c8c8" text-anchor="middle">Lombok — Bali — NTT</text>
+  <rect x="500" y="420" width="200" height="50" rx="25" fill="#c8a96e" opacity="0.9"/>
+  <text x="600" y="453" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle" font-weight="bold">Konsultasi</text>
+</svg>

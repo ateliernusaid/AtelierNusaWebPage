@@ -5,8 +5,35 @@
   "installCommand": "npm install",
   "framework": "vite",
   "redirects": [
-    { "source": "/tentang-kami", "destination": "/about", "permanent": true },
-    { "source": "/layanan", "destination": "/services", "permanent": true },
-    { "source": "/kontak", "destination": "https://wa.me/6285190645078", "permanent": true }
+    {
+      "source": "/tentang-kami",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/layanan",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/kontak",
+      "destination": "https://wa.me/6285190645078",
+      "permanent": true
+    },
+    {
+      "source": "/artikel/biaya-bangun-rumah-di-lombok",
+      "destination": "/biaya-bangun-rumah-lombok",
+      "permanent": true
+    },
+    {
+      "source": "/artikel/cara-memilih-arsitek-lombok",
+      "destination": "/jasa-arsitek-lombok",
+      "permanent": true
+    },
+    {
+      "source": "/artikel/desain-villa-tropis-lombok",
+      "destination": "/portofolio-villa-lombok",
+      "permanent": true
+    }
   ]
 }
