@@ -405,17 +405,18 @@
         <h3 style="font-family: var(--font-heading); color: var(--text-primary); text-align: center; margin-bottom: 24px;">3D Design vs Built Reality</h3>
         <div class="ba-slider" style="position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; border-radius: 12px; border: 1px solid rgba(212,175,55,0.3);">
           <!-- Built (After) Image -->
-          <img src="/images/Rumah Anastasia.webp" alt="Hasil Jadi Rumah Tropis di Lombok" style="position: absolute; width: 100%; height: 100%; object-fit: cover;">
+          <img src="/images/Rumah Anastasia.webp" alt="Hasil Jadi Rumah Tropis di Lombok" style="position: absolute; width: 100%; height: 100%; object-fit: cover; object-position: center;">
           
           <!-- Concept (Before) Image -->
           <div class="ba-slider-before" style="position: absolute; width: 50%; height: 100%; overflow: hidden; border-right: 2px solid var(--accent-gold);">
-            <img src="/images/Rumah Anastasia4.webp" alt="3D Design Konsep Rumah" style="position: absolute; width: 200%; height: 100%; object-fit: cover; filter: grayscale(100%);">
+            <!-- Using the exact same image with grayscale to ensure 100% perfect alignment -->
+            <img src="/images/Rumah Anastasia.webp" alt="3D Design Konsep Rumah" style="position: absolute; width: 200%; height: 100%; max-width: none; object-fit: cover; object-position: left center; filter: grayscale(100%) blur(1px);">
             <span style="position: absolute; top: 16px; left: 16px; background: rgba(0,0,0,0.7); color: #fff; padding: 4px 12px; border-radius: 4px; font-size: 0.8rem;">3D Concept</span>
           </div>
           <span style="position: absolute; top: 16px; right: 16px; background: rgba(212,175,55,0.9); color: #000; padding: 4px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">Built Reality</span>
 
           <!-- Slider Input -->
-          <input type="range" min="0" max="100" value="50" class="ba-slider-input" oninput="this.previousElementSibling.previousElementSibling.style.width = this.value + '%'" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; z-index: 10;">
+          <input type="range" min="0" max="100" value="50" class="ba-slider-input" oninput="this.previousElementSibling.previousElementSibling.style.width = this.value + '%'; this.previousElementSibling.previousElementSibling.querySelector('img').style.width = (100 / (this.value / 100)) + '%';" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; z-index: 10;">
           
           <!-- Slider Handle Indicator -->
           <div class="ba-slider-handle" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; background: var(--accent-gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 5; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
@@ -424,17 +425,14 @@
           <!-- Inline JS for handle sync -->
           <script>
             document.querySelector('.ba-slider-input').addEventListener('input', function(e) {
-              this.nextElementSibling.style.left = e.target.value + '%';
+              const val = e.target.value;
+              this.nextElementSibling.style.left = val + '%';
+              const beforeImg = this.previousElementSibling.previousElementSibling.querySelector('img');
+              if(val > 0) {
+                 beforeImg.style.width = (100 / (val / 100)) + '%';
+              }
             });
           </script>
-        </div>
-      </div>
-
-      <!-- Video Walkthrough -->
-      <div class="reveal" style="max-width: 900px; margin: 0 auto;">
-        <h3 style="font-family: var(--font-heading); color: var(--text-primary); text-align: center; margin-bottom: 24px;">Project Walkthrough</h3>
-        <div style="position: relative; width: 100%; padding-bottom: 56.25%; height: 0; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
-          <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/ScMzIvxBSi4?autoplay=1&mute=1&loop=1&playlist=ScMzIvxBSi4" title="Atelier Nusa Project Walkthrough" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
       </div>
 
