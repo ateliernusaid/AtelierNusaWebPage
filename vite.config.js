@@ -33,6 +33,7 @@ export default defineConfig({
                 lahan: resolve(__dirname, 'lahan.html'),
                 tanahLabuhanLombok: resolve(__dirname, 'tanah-labuhan-lombok.html'),
                 tanahBatuLayar: resolve(__dirname, 'tanah-batu-layar.html'),
+                desainCafeRestoranLombok: resolve(__dirname, 'desain-cafe-restoran-lombok.html'),
             },
         },
     },
