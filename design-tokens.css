@@ -24,19 +24,18 @@
   /* Typography — Families */
   --font-body: 'Inter', sans-serif;
   --font-heading: 'Outfit', sans-serif;
-  --font-body: 'Times New Roman', sans-serif;
 
   /* Typography — Scale */
-  --font-size-89.6: 89.6px;
+  --font-size-display: 89.6px;
   --font-size-64: 64px;
-  --font-size-44.8: 44.8px;
+  --font-size-44-8: 44.8px;
   --font-size-32: 32px;
-  --font-size-23.04: 23.04px;
-  --font-size-16.64: 16.64px;
+  --font-size-23-04: 23.04px;
+  --font-size-16-64: 16.64px;
   --font-size-16: 16px;
-  --font-size-14.08: 14.08px;
-  --font-size-13.6: 13.6px;
-  --font-size-13.3333: 13.3333px;
+  --font-size-14-08: 14.08px;
+  --font-size-13-6: 13.6px;
+  --font-size-13-3333: 13.3333px;
   --font-size-13: 13px;
 
   /* Spacing */
@@ -55,7 +54,6 @@
   --radius-xs: 2px;
   --radius-lg: 16px;
   --radius-xl: 24px;
-  --radius-full: 50px;
   --radius-full: 9999px;
 
   /* Box Shadows */

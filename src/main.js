@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Homepage lead form handler
     const hpForm = document.getElementById('homepage-lead-form');
     if (hpForm) {
-        hpForm.addEventListener('submit', async (e) => {
+        hpForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const btn = document.getElementById('hp-submit');
             btn.disabled = true;
@@ -190,33 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const phone = document.getElementById('hp-phone').value.trim();
             const type = document.getElementById('hp-type').value;
             const msg = document.getElementById('hp-message').value.trim();
-
-            const full = ['[LP: homepage]', type ? 'Type: ' + type : '', msg ? 'Message: ' + msg : ''].filter(Boolean).join(' | ');
-
-            let webhookOk = false;
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 8000);
-
-                const response = await fetch('https://retired-tracker.invalid/webhook/lead', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'X-Retired-Webhook-Header': 'REVOKED_SECRET' },
-                    body: JSON.stringify({
-                        name: name,
-                        phone: phone,
-                        projectType: type,
-                        message: full,
-                        source: 'website-homepage'
-                    }),
-                    signal: controller.signal
-                });
-                clearTimeout(timeoutId);
-                if (response.ok) {
-                    webhookOk = true;
-                }
-            } catch (err) {
-                console.warn('Lead webhook unavailable, using WhatsApp fallback:', err.message);
-            }
 
             // Fire Google Ads conversion
             if (typeof gtag === 'function') {
@@ -231,16 +204,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-            // If webhook failed, auto-open WhatsApp with pre-filled data so the lead is NOT lost
-            if (!webhookOk) {
-                const waText = encodeURIComponent(
-                    `Halo Atelier Nusa! Saya ${name} (${phone}).` +
-                    (type ? ` Proyek: ${type}.` : '') +
-                    (msg ? ` ${msg}` : '') +
-                    ` [dari form homepage]`
-                );
-                window.open(`https://wa.me/6285190645078?text=${waText}`, '_blank');
-            }
+            // Keep the lead flow immediate while webhook delivery is moved server-side.
+            const waText = encodeURIComponent(
+                `Halo Atelier Nusa! Saya ${name} (${phone}).` +
+                (type ? ` Proyek: ${type}.` : '') +
+                (msg ? ` ${msg}` : '') +
+                ` [dari form homepage]`
+            );
+            window.open(`https://wa.me/6285190645078?text=${waText}`, '_blank', 'noopener,noreferrer');
 
             document.getElementById('cta-form-content').style.display = 'none';
             document.getElementById('cta-success').style.display = 'block';
