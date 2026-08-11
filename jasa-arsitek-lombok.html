@@ -15,7 +15,28 @@
       gtag('config', 'G-69F6MHRBK5');
       gtag('config', 'AW-8060600341');
     </script>
-    <link rel="canonical" href="https://ateliernusa.id/jasa-arsitek-lombok">
+<link rel="canonical" href="https://www.ateliernusa.id/jasa-arsitek-lombok">
+    <meta property="og:title" content="Jasa Arsitek Lombok | Atelier Nusa">
+    <meta property="og:description" content="Desain rumah, villa, dan bangunan tropis di Lombok dari konsep hingga konstruksi. Konsultasi awal gratis.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.ateliernusa.id/jasa-arsitek-lombok">
+    <meta property="og:image" content="https://www.ateliernusa.id/images/og-image.jpg">
+    <meta property="og:locale" content="id_ID">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jasa Arsitek Lombok | Atelier Nusa">
+    <meta name="twitter:description" content="Desain rumah, villa, dan bangunan tropis di Lombok dari konsep hingga konstruksi.">
+    <meta name="twitter:image" content="https://www.ateliernusa.id/images/og-image.jpg">
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"Service",
+      "name":"Jasa Arsitek Lombok",
+      "serviceType":"Architectural design and design-build",
+      "provider":{"@type":"LocalBusiness","name":"Atelier Nusa","url":"https://www.ateliernusa.id/"},
+      "areaServed":["Lombok","Mataram","Senggigi","Kuta Mandalika"],
+      "url":"https://www.ateliernusa.id/jasa-arsitek-lombok"
+    }
+    </script>
     <style>
         * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',system-ui,sans-serif; }
         body { background:#f8f6f3; color:#2d2d2d; line-height:1.7; }
@@ -29,6 +50,12 @@
         .services { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; }
         .service-card { background:white; padding:30px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.05); }
         .service-card h3 { color:#c8a96e; margin-bottom:10px; }
+        .process { background:#f0ece5; }
+        .process-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
+        .process-step { background:white; padding:24px; border-radius:12px; border-top:3px solid #c8a96e; }
+        .process-step strong { display:block; color:#1a3a3a; margin-bottom:8px; }
+        .page-links { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:28px; }
+        .page-links a { color:#1a3a3a; border:1px solid #c8a96e; padding:9px 16px; border-radius:999px; text-decoration:none; font-weight:600; }
         .why-us { background:white; }
         .why-list { list-style:none; display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; }
         .why-list li { padding:15px; border-left:4px solid #c8a96e; background:#f8f6f3; }
@@ -65,6 +92,23 @@
             </div>
         </div>
     </section>
+    <section class="process">
+        <div class="container">
+            <h2>Alur Kerja yang Jelas</h2>
+            <div class="process-grid">
+                <div class="process-step"><strong>01. Kenali kebutuhan</strong><p>Kami memetakan lokasi, program ruang, target waktu, dan kisaran anggaran.</p></div>
+                <div class="process-step"><strong>02. Susun konsep</strong><p>Konsep tropis dikembangkan melalui denah, material, dan visual yang mudah didiskusikan.</p></div>
+                <div class="process-step"><strong>03. Detailkan desain</strong><p>Gambar kerja, spesifikasi, dan estimasi biaya disusun sesuai lingkup proyek.</p></div>
+                <div class="process-step"><strong>04. Dampingi pelaksanaan</strong><p>Jika dibutuhkan, tim membantu koordinasi dan pengawasan dari desain menuju konstruksi.</p></div>
+            </div>
+            <div class="page-links">
+                <a href="/arsitek-mataram">Arsitek Mataram</a>
+                <a href="/arsitek-kuta-mandalika">Arsitek Kuta Mandalika</a>
+                <a href="/biaya-arsitek-lombok">Panduan Biaya Arsitek</a>
+                <a href="/portofolio-villa-lombok">Lihat Portofolio</a>
+            </div>
+        </div>
+    </section>
     <section class="why-us">
         <div class="container">
             <h2>Kenapa Pilih Atelier Nusa?</h2>
@@ -77,17 +121,18 @@
             </ul>
         </div>
     </section>
-    <section id="kontak" class="contact-form">
+    <section id="kontak" class="contact-form" data-lead-shell>
         <div class="container">
             <h2 style="color:white;">Mulai Proyek Anda</h2>
             <p style="text-align:center;margin-bottom:30px;">Isi form di bawah, tim kami akan menghubungi Anda dalam 1x24 jam</p>
-            <form action="https://ateliernusa.id/kontak" method="POST" style="max-width:500px;margin:0 auto;">
+            <form id="service-lead-form" data-lead-form data-form-name="jasa-arsitek-lombok" style="max-width:500px;margin:0 auto;">
                 <input type="text" name="nama" placeholder="Nama Lengkap" required>
                 <input type="tel" name="telepon" placeholder="Nomor WhatsApp" required>
                 <input type="email" name="email" placeholder="Email (opsional)">
                 <textarea name="pesan" rows="4" placeholder="Ceritakan proyek Anda..." required></textarea>
                 <button type="submit">Kirim Sekarang</button>
             </form>
+            <p data-lead-success hidden style="max-width:500px;margin:20px auto 0;text-align:center;">WhatsApp akan terbuka dengan ringkasan proyek Anda. Silakan kirim pesan tersebut agar tim kami dapat menindaklanjuti.</p>
         </div>
     </section>
     <footer>
@@ -97,5 +142,9 @@
             <p style="margin-top:15px;">&copy; 2026 Atelier Nusa. All rights reserved.</p>
         </div>
     </footer>
+    <script type="module">
+      import { initLeadForms } from '/src/analytics/forms.js';
+      initLeadForms();
+    </script>
 </body>
 </html>

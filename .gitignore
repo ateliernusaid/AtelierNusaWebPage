@@ -7,3 +7,8 @@ dist/
 
 .vercel
 tanah-labuhan-lombok-webpage/
+
+# High-resolution originals stay outside the deployable site.
+media/source/*
+!media/source/.gitkeep
+public/images/_staging/

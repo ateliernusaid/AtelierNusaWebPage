@@ -37,6 +37,7 @@ export default defineConfig({
                 estimasiBiayaBangunRumah2Lantai: resolve(__dirname, 'estimasi-biaya-bangun-rumah-2-lantai-lombok.html'),
                 tipsMemilihArsitekMataram: resolve(__dirname, 'tips-memilih-arsitek-mataram.html'),
                 desainRumahTropisNtb: resolve(__dirname, 'desain-rumah-tropis-ntb.html'),
+                panduanMemilihArsitekLombok: resolve(__dirname, 'panduan-memilih-arsitek-lombok.html'),
             },
         },
     },

@@ -7,14 +7,26 @@ export function createNavbar(activePage = 'home') {
   nav.className = 'navbar';
   nav.id = 'navbar';
 
-  const pages = [
+  const isIndonesian = document.documentElement.lang.toLowerCase().startsWith('id');
+  const pages = isIndonesian ? [
+    { key: 'home', label: 'Beranda', href: '/' },
+    { key: 'about', label: 'Studio', href: '/about.html' },
+    { key: 'projects', label: 'Proyek', href: '/projects.html' },
+    { key: 'services', label: 'Layanan', href: '/services.html' },
+    { key: 'artikel', label: 'Artikel', href: '/artikel.html' },
+    { key: 'lahan', label: 'Lahan', href: '/lahan.html' },
+  ] : [
     { key: 'home', label: 'Home', href: '/' },
     { key: 'about', label: 'About', href: '/about.html' },
     { key: 'projects', label: 'Projects', href: '/projects.html' },
     { key: 'services', label: 'Services', href: '/services.html' },
-    { key: 'artikel', label: 'Artikel', href: '/artikel.html' },
-    { key: 'lahan', label: 'Lahan', href: '/lahan.html' },
+    { key: 'artikel', label: 'Journal', href: '/artikel.html' },
+    { key: 'lahan', label: 'Land', href: '/lahan.html' },
   ];
+
+  const languageHref = isIndonesian ? '/services.html' : '/jasa-arsitek-lombok.html';
+  const languageLabel = isIndonesian ? 'EN' : 'ID';
+  const languageTitle = isIndonesian ? 'Open English site' : 'Open Indonesian services';
 
   nav.innerHTML = `
     <div class="container navbar__inner">
@@ -27,6 +39,8 @@ export function createNavbar(activePage = 'home') {
           <a href="${p.href}" class="navbar__link ${activePage === p.key ? 'active' : ''}">${p.label}</a>
         `).join('')}
       </div>
+
+      <a href="${languageHref}" class="navbar__language" aria-label="${languageTitle}" title="${languageTitle}">${languageLabel}</a>
 
       <button class="navbar__hamburger" id="navHamburger" aria-label="Toggle menu">
         <span></span>

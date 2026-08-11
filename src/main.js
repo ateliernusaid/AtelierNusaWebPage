@@ -8,6 +8,7 @@ import { createFooter } from './components/footer.js';
 import { createWhatsApp } from './components/whatsapp.js';
 import { initAnimations } from './components/animations.js';
 import { initLightbox } from './components/lightbox.js';
+import { initLeadForms } from './analytics/forms.js';
 
 // Determine active page
 function getActivePage() {
@@ -21,29 +22,16 @@ function getActivePage() {
 }
 
 // ========================================
-// GOOGLE ADS CONVERSION INTERCEPTOR
-// Intercepts ALL wa.me clicks across the site
-// and fires a conversion event to Google Ads
-// before navigating the user to WhatsApp.
+// WHATSAPP ENGAGEMENT TRACKER
+// Keep WhatsApp clicks measurable even while paid campaigns are paused.
 // ========================================
-const AW_CONVERSION_ID = 'ads_conversion_Contact_1';
-
 document.addEventListener('click', (e) => {
     const link = e.target.closest('a');
     if (!link || !link.href || !link.href.includes('wa.me')) return;
 
     e.preventDefault();
 
-    // Fire Google Ads conversion event
-    if (typeof gtag === 'function') {
-        gtag('event', 'conversion', {
-            'send_to': AW_CONVERSION_ID,
-            'value': 1.0,
-            'currency': 'IDR'
-        });
-    }
-
-    // Also fire a GA4 event for Analytics reporting
+    // Track the intent separately from a qualified form submission.
     if (typeof gtag === 'function') {
         gtag('event', 'whatsapp_click', {
             event_category: 'lead',
@@ -176,45 +164,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollProgress();
     initLazyImageFade();
     initCountUp();
-
-    // Homepage lead form handler
-    const hpForm = document.getElementById('homepage-lead-form');
-    if (hpForm) {
-        hpForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('hp-submit');
-            btn.disabled = true;
-            btn.textContent = 'Sending...';
-
-            const name = document.getElementById('hp-name').value.trim();
-            const phone = document.getElementById('hp-phone').value.trim();
-            const type = document.getElementById('hp-type').value;
-            const msg = document.getElementById('hp-message').value.trim();
-
-            // Fire Google Ads conversion
-            if (typeof gtag === 'function') {
-                gtag('event', 'conversion', {
-                    'send_to': typeof AW_CONVERSION_ID !== 'undefined' ? AW_CONVERSION_ID : 'ads_conversion_Contact_1',
-                    'value': 1.0,
-                    'currency': 'IDR'
-                });
-                gtag('event', 'lead_form_submit', {
-                    event_category: 'lead',
-                    event_label: 'homepage_form'
-                });
-            }
-
-            // Keep the lead flow immediate while webhook delivery is moved server-side.
-            const waText = encodeURIComponent(
-                `Halo Atelier Nusa! Saya ${name} (${phone}).` +
-                (type ? ` Proyek: ${type}.` : '') +
-                (msg ? ` ${msg}` : '') +
-                ` [dari form homepage]`
-            );
-            window.open(`https://wa.me/6285190645078?text=${waText}`, '_blank', 'noopener,noreferrer');
-
-            document.getElementById('cta-form-content').style.display = 'none';
-            document.getElementById('cta-success').style.display = 'block';
-        });
-    }
+    initLeadForms();
 });

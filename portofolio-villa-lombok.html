@@ -6,7 +6,27 @@
     <title>Portofolio Villa Lombok | Atelier Nusa — Desain & Konstruksi Villa</title>
     <meta name="description" content="Lihat portofolio villa dan rumah tropis karya Atelier Nusa di Lombok. Desain villa modern, private residence, dan proyek komersial.">
     <meta name="keywords" content="portofolio arsitek lombok, villa lombok, desain villa lombok, proyek arsitek lombok, rumah tropis lombok">
-    <link rel="canonical" href="https://ateliernusa.id/portofolio-villa-lombok">
+<link rel="canonical" href="https://www.ateliernusa.id/portofolio-villa-lombok">
+    <meta property="og:title" content="Portofolio Villa dan Proyek Lombok | Atelier Nusa">
+    <meta property="og:description" content="Pilihan karya villa tropis, rumah tinggal, dan proyek komersial Atelier Nusa di Lombok.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.ateliernusa.id/portofolio-villa-lombok">
+    <meta property="og:image" content="https://www.ateliernusa.id/images/og-image.jpg">
+    <meta property="og:locale" content="id_ID">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Portofolio Villa dan Proyek Lombok | Atelier Nusa">
+    <meta name="twitter:description" content="Pilihan karya villa tropis, rumah tinggal, dan proyek komersial Atelier Nusa di Lombok.">
+    <meta name="twitter:image" content="https://www.ateliernusa.id/images/og-image.jpg">
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"CollectionPage",
+      "name":"Portofolio Villa dan Proyek Lombok",
+      "description":"Pilihan karya villa tropis, rumah tinggal, dan proyek komersial Atelier Nusa di Lombok.",
+      "isPartOf":{"@type":"WebSite","name":"Atelier Nusa","url":"https://www.ateliernusa.id/"},
+      "url":"https://www.ateliernusa.id/portofolio-villa-lombok"
+    }
+    </script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-8060600341"></script>
     <script>
@@ -29,6 +49,10 @@
         .portfolio-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:30px; }
         .portfolio-card { background:white; border-radius:12px; overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,0.05); }
         .portfolio-card .img-placeholder { background:linear-gradient(135deg,#1a3a3a,#2d5a5a); height:220px; display:flex; align-items:center; justify-content:center; color:#c8a96e; font-size:3em; }
+        .featured-work { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; margin-bottom:34px; }
+        .featured-work a { display:block; color:#1a3a3a; text-decoration:none; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,.05); }
+        .featured-work img { display:block; width:100%; aspect-ratio:4/3; object-fit:cover; }
+        .featured-work span { display:block; padding:14px 16px; font-weight:700; }
         .portfolio-card .info { padding:25px; }
         .portfolio-card .info h3 { color:#1a3a3a; margin-bottom:5px; }
         .portfolio-card .info .tag { display:inline-block; background:#c8a96e20; color:#c8a96e; padding:3px 12px; border-radius:20px; font-size:0.85em; margin-top:10px; }
@@ -52,6 +76,11 @@
     <section>
         <div class="container">
             <h2>Proyek Terbaru</h2>
+            <div class="featured-work" aria-label="Pilihan proyek Atelier Nusa">
+                <a href="/luxury-residential-mataram"><img src="/images/Rumah Anastasia.webp" alt="Visual proyek luxury residential Atelier Nusa di Mataram" width="800" height="600" loading="lazy"><span>Luxury Residential — Mataram</span></a>
+                <a href="/private-residence-lombok-barat"><img src="/images/Rumah Pak Sholeh.webp" alt="Visual proyek private residence Atelier Nusa di Lombok Barat" width="800" height="600" loading="lazy"><span>Private Residence — Lombok Barat</span></a>
+                <a href="/tropical-villa-senggigi"><img src="/images/project-1.webp" alt="Visual proyek tropical villa Atelier Nusa di Senggigi" width="800" height="600" loading="lazy"><span>Tropical Villa — Senggigi</span></a>
+            </div>
             <div class="portfolio-grid">
                 <div class="portfolio-card">
                     <div class="img-placeholder">🏝️</div>
@@ -101,16 +130,17 @@
             </div>
         </div>
     </section>
-    <section id="kontak" class="contact-form">
+    <section id="kontak" class="contact-form" data-lead-shell>
         <div class="container">
             <h2 style="color:white;">Mulai Proyek Anda Bersama Kami</h2>
             <p style="text-align:center;margin-bottom:30px;">Konsultasi gratis. Isi form dan kami akan menghubungi Anda.</p>
-            <form action="https://ateliernusa.id/kontak" method="POST" style="max-width:500px;margin:0 auto;">
+            <form id="portfolio-lead-form" data-lead-form data-form-name="portofolio-villa-lombok" style="max-width:500px;margin:0 auto;">
                 <input type="text" name="nama" placeholder="Nama Lengkap" required>
                 <input type="tel" name="telepon" placeholder="Nomor WhatsApp" required>
                 <textarea name="pesan" rows="4" placeholder="Ceritakan proyek impian Anda..." required></textarea>
                 <button type="submit">Kirim Sekarang</button>
             </form>
+            <p data-lead-success hidden style="max-width:500px;margin:20px auto 0;text-align:center;">WhatsApp akan terbuka dengan ringkasan proyek Anda. Silakan kirim pesan tersebut agar tim kami dapat menindaklanjuti.</p>
         </div>
     </section>
     <footer>
@@ -120,5 +150,9 @@
             <p style="margin-top:15px;">&copy; 2026 Atelier Nusa. All rights reserved.</p>
         </div>
     </footer>
+    <script type="module">
+      import { initLeadForms } from '/src/analytics/forms.js';
+      initLeadForms();
+    </script>
 </body>
 </html>

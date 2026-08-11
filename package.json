@@ -1,12 +1,17 @@
 {
     "name": "atelier-nusa-web",
     "private": true,
+    "type": "module",
     "version": "1.0.0",
     "description": "Atelier Nusa - Architecture & Construction Studio in Lombok",
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "validate:seo": "node scripts/seo/validate-site.mjs",
+        "generate:sitemap": "node scripts/seo/generate-sitemap.mjs",
+        "validate:build": "node scripts/validation/verify-build.mjs",
+        "optimize:images": "node scripts/assets/optimize-images.mjs"
     },
     "devDependencies": {
         "sharp": "^0.34.5",
