@@ -319,6 +319,29 @@
     align-items: center;
 }
 
+/* Give the About hero two equal visual weights instead of a narrow text column. */
+.about-hero .arch-grid--split {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+    gap: clamp(var(--space-xl), 8vw, var(--space-3xl));
+}
+
+.about-hero .arch-grid--split > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.about-hero .arch-grid--split > div:last-child {
+    width: 100%;
+    max-width: 34rem;
+    justify-self: end;
+}
+
+.about-hero .arch-line {
+    margin-top: var(--space-lg);
+}
+
 /* Prevent the arch-section pseudo-element line when not needed */
 .about-gallery.arch-section::before {
     display: none;
@@ -351,6 +374,15 @@
    ABOUT PAGE MOBILE FIXES
    ======================================== */
 @media (max-width: 768px) {
+    .about-hero .arch-grid--split {
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
+    }
+
+    .about-hero .arch-grid--split > div:last-child {
+        max-width: none;
+    }
+
     .philosophy .arch-grid--offset {
         grid-template-columns: 1fr;
         gap: var(--space-md);
