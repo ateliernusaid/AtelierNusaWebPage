@@ -5,6 +5,22 @@
 export function createFooter() {
   const footer = document.createElement('footer');
   footer.className = 'footer';
+  const isIndonesian = document.documentElement.lang.toLowerCase().startsWith('id');
+  const copy = isIndonesian ? {
+    navigationTitle: 'Navigasi',
+    navigation: [['Beranda', '/'], ['Studio', '/about.html'], ['Proyek', '/projects.html'], ['Layanan', '/services.html'], ['Artikel', '/artikel.html'], ['Lahan', '/lahan.html']],
+    servicesTitle: 'Layanan',
+    services: [['Konsultasi Gratis', '/#konsultasi'], ['Jasa Arsitek Lombok', '/jasa-arsitek-lombok'], ['Arsitek Mataram', '/arsitek-mataram'], ['Desain Interior Lombok', '/desain-interior-lombok'], ['Arsitek Villa Mewah', '/arsitek-villa-mewah-lombok'], ['Biaya Arsitek Lombok', '/biaya-arsitek-lombok'], ['Renovasi Rumah Mataram', '/renovasi-rumah-mataram-lombok'], ['Tren Interior Tropis', '/tren-desain-interior-lombok']],
+    contactTitle: 'Kontak',
+    studioTitle: 'Studio',
+  } : {
+    navigationTitle: 'Explore',
+    navigation: [['Home', '/'], ['About', '/about.html'], ['Projects', '/projects.html'], ['Services', '/services.html'], ['Journal', '/artikel.html'], ['Land', '/lahan.html']],
+    servicesTitle: 'Our Services',
+    services: [['Start a consultation', '/#konsultasi'], ['Architecture & Construction', '/services.html'], ['Architecture Projects', '/projects.html'], ['About the Studio', '/about.html'], ['Read the Journal', '/artikel.html']],
+    contactTitle: 'Contact',
+    studioTitle: 'Studio',
+  };
 
   footer.innerHTML = `
     <div class="container footer__inner">
@@ -37,35 +53,23 @@ export function createFooter() {
 
         <div class="footer__links">
           <div class="footer__col">
-            <div class="footer__col-title">Navigasi</div>
-            <a href="/" class="footer__link">Home</a>
-            <a href="/about.html" class="footer__link">About</a>
-            <a href="/projects.html" class="footer__link">Projects</a>
-            <a href="/services.html" class="footer__link">Services</a>
-            <a href="/artikel.html" class="footer__link">Artikel</a>
-            <a href="/lahan.html" class="footer__link">Lahan</a>
+            <div class="footer__col-title">${copy.navigationTitle}</div>
+            ${copy.navigation.map(([label, href]) => `<a href="${href}" class="footer__link">${label}</a>`).join('')}
           </div>
 
           <div class="footer__col">
-            <div class="footer__col-title">Layanan</div>
-            <a href="/#konsultasi" class="footer__link" style="color: var(--color-accent); font-weight: var(--fw-medium);">Konsultasi Gratis</a>
-            <a href="/jasa-arsitek-lombok.html" class="footer__link">Jasa Arsitek Lombok</a>
-            <a href="/arsitek-mataram.html" class="footer__link">Arsitek Mataram</a>
-            <a href="/desain-interior-lombok.html" class="footer__link">Desain Interior Lombok</a>
-            <a href="/arsitek-villa-mewah-lombok.html" class="footer__link">Arsitek Villa Mewah</a>
-            <a href="/biaya-arsitek-lombok.html" class="footer__link">Biaya Arsitek Lombok</a>
-            <a href="/renovasi-rumah-mataram-lombok.html" class="footer__link">Renovasi Rumah Mataram</a>
-            <a href="/tren-desain-interior-lombok.html" class="footer__link">Tren Interior Tropis</a>
+            <div class="footer__col-title">${copy.servicesTitle}</div>
+            ${copy.services.map(([label, href], index) => `<a href="${href}" class="footer__link"${index === 0 ? ' style="color: var(--color-accent); font-weight: var(--fw-medium);"' : ''}>${label}</a>`).join('')}
           </div>
 
           <div class="footer__col">
-            <div class="footer__col-title">Contact</div>
+            <div class="footer__col-title">${copy.contactTitle}</div>
             <a href="mailto:marketing@ateliernusa.id" class="footer__link">marketing@ateliernusa.id</a>
             <a href="https://wa.me/6285190645078" target="_blank" rel="noopener" class="footer__link">+62 851-9064-5078</a>
           </div>
 
           <div class="footer__col">
-            <div class="footer__col-title">Studio</div>
+            <div class="footer__col-title">${copy.studioTitle}</div>
             <p class="footer__address">
               Jl. Jend. Sudirman No.34, Rembiga,<br>
               Kec. Selaparang, Kota Mataram,<br>
