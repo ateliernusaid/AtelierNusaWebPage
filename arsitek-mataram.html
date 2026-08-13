@@ -554,9 +554,9 @@
     // Google Ads Conversion
     function fireConversion() {
       if (typeof gtag === 'function') {
-        gtag('event', 'ads_conversion_Contact_1', {
-          'value': 1.0,
-          'currency': 'IDR'
+        gtag('event', 'whatsapp_click', {
+          event_category: 'lead',
+          event_label: window.location.pathname
         });
       }
     }

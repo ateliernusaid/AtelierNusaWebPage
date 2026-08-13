@@ -1984,6 +1984,7 @@
     // FORM SUBMIT
     document.getElementById('lead-form-el').addEventListener('submit', async function (e) {
       e.preventDefault();
+      if (!this.checkValidity()) { this.reportValidity(); return; }
       const btn = document.getElementById('submit-btn');
       btn.disabled = true;
       btn.querySelector('.var-a').textContent = 'Mengirim...';
@@ -1994,6 +1995,9 @@
       const whatsappUrl = `https://wa.me/6285190645078?text=${encodeURIComponent(whatsappMessage)}`;
       const whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
       if (!whatsappWindow) window.location.href = whatsappUrl;
+      if (typeof gtag === 'function') gtag('event', 'lead_submit', {
+        event_category: 'lead', event_label: 'jasa-arsitek-senggigi', project_type: type || 'unspecified'
+      });
       fireGoogleAdsConversion(); fireFBPixel();
       document.getElementById('form-content').style.display = 'none';
       document.getElementById('success-msg').style.display = 'block';

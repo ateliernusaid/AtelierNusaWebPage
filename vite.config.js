@@ -38,6 +38,7 @@ export default defineConfig({
                 tipsMemilihArsitekMataram: resolve(__dirname, 'tips-memilih-arsitek-mataram.html'),
                 desainRumahTropisNtb: resolve(__dirname, 'desain-rumah-tropis-ntb.html'),
                 panduanMemilihArsitekLombok: resolve(__dirname, 'panduan-memilih-arsitek-lombok.html'),
+                blogBiayaBangunRumah2026: resolve(__dirname, 'blog/biaya-bangun-rumah-lombok-2026.html'),
             },
         },
     },

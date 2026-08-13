@@ -54,6 +54,14 @@ function submitToWhatsApp(form) {
     project_type: type || 'unspecified',
   });
 
+  // Count the Ads conversion only after the visitor submits a valid lead form.
+  trackEvent('ads_conversion_Contact_1', {
+    value: 1.0,
+    currency: 'IDR',
+    form_id: form.id || source,
+    page_path: window.location.pathname,
+  });
+
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener,noreferrer');
   showSuccess(form);
 }
@@ -79,4 +87,3 @@ export function initLeadForms(root = document) {
     });
   });
 }
-

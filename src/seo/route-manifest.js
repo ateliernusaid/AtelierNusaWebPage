@@ -4,7 +4,7 @@ import { absoluteUrl } from './site-config.js';
 export const routeManifest = [
   { file: 'index.html', path: '/', language: 'en', group: 'brand', adsEligible: false },
   { file: 'about.html', path: '/about', language: 'en', group: 'brand', adsEligible: false },
-  { file: 'services.html', path: '/services', language: 'en', group: 'brand', adsEligible: false },
+  { file: 'services.html', path: '/services', language: 'id', group: 'acquisition', adsEligible: true },
   { file: 'projects.html', path: '/projects', language: 'en', group: 'portfolio', adsEligible: false },
   { file: 'luxury-residential-mataram.html', path: '/luxury-residential-mataram', language: 'en', group: 'portfolio', adsEligible: false },
   { file: 'private-residence-lombok-barat.html', path: '/private-residence-lombok-barat', language: 'en', group: 'portfolio', adsEligible: false },
@@ -24,6 +24,7 @@ export const routeManifest = [
   { file: 'artikel.html', path: '/artikel', language: 'id', group: 'content', adsEligible: false },
   { file: 'tren-desain-interior-lombok.html', path: '/tren-desain-interior-lombok', language: 'id', group: 'content', adsEligible: false },
   { file: 'panduan-memilih-arsitek-lombok.html', path: '/panduan-memilih-arsitek-lombok', language: 'id', group: 'content', adsEligible: false },
+  { file: 'blog/biaya-bangun-rumah-lombok-2026.html', path: '/blog/biaya-bangun-rumah-lombok-2026', language: 'id', group: 'content', adsEligible: false },
   { file: 'tips-memilih-arsitek-mataram.html', path: '/tips-memilih-arsitek-mataram', language: 'id', group: 'content', adsEligible: false },
   { file: 'desain-rumah-tropis-ntb.html', path: '/desain-rumah-tropis-ntb', language: 'id', group: 'content', adsEligible: false },
   { file: 'desain-cafe-restoran-lombok.html', path: '/desain-cafe-restoran-lombok', language: 'id', group: 'acquisition', adsEligible: true },

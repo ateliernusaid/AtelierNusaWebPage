@@ -61,6 +61,11 @@
       "source": "/artikel/desain-villa-tropis-lombok",
       "destination": "/portofolio-villa-lombok",
       "permanent": true
+    },
+    {
+      "source": "/artikel/biaya-bangun-rumah-lombok",
+      "destination": "/artikel/biaya-bangun-rumah-di-lombok",
+      "permanent": true
     }
   ]
 }
