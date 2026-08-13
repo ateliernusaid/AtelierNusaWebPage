@@ -630,49 +630,30 @@
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<span>Memproses...</span>';
 
-            // Gather conversion parameters
-            var gclidCookie = document.cookie.match(/_nusa_gclid=([^;]+)/);
-            var gclid = gclidCookie ? gclidCookie[1] : '';
+            var lines = [
+                'Halo Atelier Nusa, saya ingin berkonsultasi tentang proyek saya.',
+                'Nama: ' + nameEl.value.trim(),
+                'WhatsApp: ' + phoneEl.value.trim(),
+                projectEl.value ? 'Jenis proyek: ' + projectEl.value : '',
+                'Lokasi: ' + locationEl.value.trim(),
+                messageEl.value.trim() ? 'Detail: ' + messageEl.value.trim() : '',
+                'Sumber: konsultasi-gratis'
+            ].filter(Boolean);
+            var whatsappUrl = 'https://wa.me/6285190645078?text=' + encodeURIComponent(lines.join('\n'));
 
-            var payload = {
-                name: nameEl.value.trim(),
-                phone: phoneEl.value.trim(),
-                source: 'website',
-                projectType: projectEl.value,
-                location: locationEl.value.trim(),
-                message: messageEl.value.trim()
-            };
+            if (typeof gtag === 'function') {
+                gtag('event', 'lead_submit', {
+                    event_category: 'lead',
+                    event_label: 'konsultasi-gratis',
+                    project_type: projectEl.value || 'unspecified'
+                });
+            }
 
-            // Post lead data
-            fetch('https://retired-tracker.invalid/webhook/lead?key=REVOKED_SECRET', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-webhook-key': 'REVOKED_SECRET'
-                },
-                body: JSON.stringify(payload)
-            })
-            .then(function(res) {
-                // Fire conversion tracker event as well
-                try {
-                    navigator.sendBeacon('https://retired-tracker.invalid/webhook/conversion', JSON.stringify({
-                        event: 'form_submit',
-                        page: location.pathname,
-                        referrer: document.referrer,
-                        gclid: gclid
-                    }));
-                } catch(e) {}
+            var whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+            if (!whatsappWindow) window.location.href = whatsappUrl;
 
-                // Switch views on card
-                document.getElementById('input-view').style.display = 'none';
-                document.getElementById('success-view').style.display = 'block';
-            })
-            .catch(function(err) {
-                console.error('Error submitting form:', err);
-                // Fallback to success view to prevent blocking interested leads
-                document.getElementById('input-view').style.display = 'none';
-                document.getElementById('success-view').style.display = 'block';
-            });
+            document.getElementById('input-view').style.display = 'none';
+            document.getElementById('success-view').style.display = 'block';
         });
     </script>
 </body>

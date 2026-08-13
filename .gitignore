@@ -12,3 +12,6 @@ tanah-labuhan-lombok-webpage/
 media/source/*
 !media/source/.gitkeep
 public/images/_staging/
+
+.vercel
+.env*

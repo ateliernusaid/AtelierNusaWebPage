@@ -240,7 +240,10 @@ document.getElementById('lead-form-el').addEventListener('submit',async function
   const btn=document.getElementById('submit-btn');btn.disabled=true;btn.textContent='Mengirim...';
   const name=document.getElementById('f-name').value.trim(),phone=document.getElementById('f-phone').value.trim(),type=document.getElementById('f-type').value,loc=document.getElementById('f-location').value,budget=document.getElementById('f-budget').value,lahan=document.getElementById('f-lahan')?document.getElementById('f-lahan').value:'',msg=document.getElementById('f-message').value.trim();
   const full=['[LP: arsitek-villa-mewah]','Tipe: '+type,loc?'Lokasi: '+loc:'',lahan?'Lahan: '+lahan:'',budget?'Budget: '+budget:'',msg?'Pesan: '+msg:''].filter(Boolean).join(' | ');
-  try{await fetch('https://example.invalid/internal-webhook/webhook/lead',{method:'POST',headers:{'Content-Type':'application/json','X-Retired-Webhook-Header':'REVOKED_SECRET'},body:JSON.stringify({name,phone,message:full})})}catch(err){}
+  const whatsappMessage=['Halo Atelier Nusa, saya ingin berkonsultasi tentang proyek saya.',`Nama: ${name}`,`WhatsApp: ${phone}`,full].filter(Boolean).join('\\n');
+  const whatsappUrl=`https://wa.me/6285190645078?text=${encodeURIComponent(whatsappMessage)}`;
+  const whatsappWindow=window.open(whatsappUrl,'_blank','noopener,noreferrer');
+  if(!whatsappWindow) window.location.href=whatsappUrl;
   if(typeof gtag==='function')gtag('event', 'ads_conversion_Contact_1', { 'value':1.0,'currency':'IDR' });
   document.getElementById('form-content').style.display='none';
   document.getElementById('success-msg').style.display='block';
@@ -249,6 +252,5 @@ document.getElementById('lead-form-el').addEventListener('submit',async function
   if(hb&&nl){hb.addEventListener('click',()=>{hb.classList.toggle('open');nl.classList.toggle('open');document.body.style.overflow=nl.classList.contains('open')?'hidden':''})}
 });
 </script>
-<script src="https://retired-tracker.invalid/webhook/tracker.js" async></script>
 </body>
 </html>

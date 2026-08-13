@@ -31,7 +31,7 @@
   "name":"Atelier Nusa","description":"Studio arsitektur dan konstruksi profesional di Lombok, NTB.",
   "url":"https://www.ateliernusa.id","telephone":"+6285190645078",
   "address":{"@type":"PostalAddress","addressLocality":"Mataram","addressRegion":"Nusa Tenggara Barat","addressCountry":"ID"},
-  "geo":{"@type":"GeoCoordinates","latitude":-8.5833,"longitude":116.1167},
+  "geo":{"@type":"GeoCoordinates","latitude":-8.5642571,"longitude":116.1174039},
   "areaServed":["Lombok","Mataram","Senggigi","Kuta Mandalika","Selong Belanak","Gili Islands"],
   "serviceType":["Jasa Arsitek","Desain Rumah","Konstruksi","Design & Build","Renovasi"],
   "priceRange":"$$","openingHours":"Mo-Sa 08:00-17:00",
@@ -1990,7 +1990,10 @@
       btn.querySelector('.var-b').textContent = 'Mengirim...';
       const name = document.getElementById('f-name').value.trim(), phone = document.getElementById('f-phone').value.trim(), type = document.getElementById('f-type').value, loc = document.getElementById('f-location').value, budget = document.getElementById('f-budget').value, msg = document.getElementById('f-message').value.trim(), utm = window._utmData || {}, variant = sessionStorage.getItem('ab_variant') || 'a';
       const fullMessage = ['[Landing: jasa-arsitek-lombok]', `[Variant: ${variant}]`, utm.source !== 'direct' ? `[UTM: ${utm.source}/${utm.medium}/${utm.campaign}/${utm.term}]` : '', `Tipe: ${type}`, loc ? `Lokasi: ${loc}` : '', budget ? `Budget: ${budget}` : '', msg ? `Pesan: ${msg}` : ''].filter(Boolean).join(' | ');
-      try { await fetch('https://example.invalid/internal-webhook/webhook/lead', { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Retired-Webhook-Header': 'REVOKED_SECRET' }, body: JSON.stringify({ name, phone, message: fullMessage }) }) } catch (err) { console.log('Webhook failed, continuing') }
+      const whatsappMessage = ['Halo Atelier Nusa, saya ingin berkonsultasi tentang proyek saya.', `Nama: ${name}`, `WhatsApp: ${phone}`, fullMessage].filter(Boolean).join('\\n');
+      const whatsappUrl = `https://wa.me/6285190645078?text=${encodeURIComponent(whatsappMessage)}`;
+      const whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+      if (!whatsappWindow) window.location.href = whatsappUrl;
       fireGoogleAdsConversion(); fireFBPixel();
       document.getElementById('form-content').style.display = 'none';
       document.getElementById('success-msg').style.display = 'block';
@@ -2048,11 +2051,11 @@
         </a>
 
         <!-- Email Section -->
-        <a href="mailto:hello@ateliernusa.id" style="display:flex; align-items:flex-start; gap:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:24px; border-radius:16px; text-decoration:none;">
+        <a href="mailto:marketing@ateliernusa.id" style="display:flex; align-items:flex-start; gap:16px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); padding:24px; border-radius:16px; text-decoration:none;">
           <div style="font-size:28px;">✉️</div>
           <div>
             <div style="font-size:11px; font-weight:600; color:#d4af37; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Email</div>
-            <div style="font-size:16px; font-weight:500; color:#ffffff;">hello@ateliernusa.id</div>
+            <div style="font-size:16px; font-weight:500; color:#ffffff;">marketing@ateliernusa.id</div>
             <div style="font-size:13px; color:#888; margin-top:4px;">Balasan dalam 1x24 jam kerja</div>
           </div>
         </a>
@@ -2078,8 +2081,6 @@
     </div>
   </section>
 
-  <!-- Conversion Tracker -->
-  <script src="https://retired-tracker.invalid/webhook/tracker.js" async></script>
 </body>
 
 
