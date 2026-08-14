@@ -684,8 +684,23 @@
             about where to begin. Tell us what you know so far, and we can work out the next useful step together.
           </p>
 
+          <div class="cta__trust" style="margin-top: 1.5rem;">
+            <div class="cta__trust-item">
+              <strong>1.</strong>
+              <span>Share the site, project type, and what you know so far.</span>
+            </div>
+            <div class="cta__trust-item">
+              <strong>2.</strong>
+              <span>We review the brief and clarify the most useful next step.</span>
+            </div>
+            <div class="cta__trust-item">
+              <strong>3.</strong>
+              <span>You receive a practical starting point for design or construction.</span>
+            </div>
+          </div>
+
           <div class="cta__links" style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem;">
-          <a href="/services" class="btn btn--outline" style="font-size: 0.9rem;">Architecture Services</a>
+          <a href="/jasa-arsitek-lombok" class="btn btn--outline" style="font-size: 0.9rem;">Architecture &amp; Design-Build Services</a>
           <a href="/biaya-bangun-rumah-lombok" class="btn btn--outline" style="font-size: 0.9rem;">Building Cost Guide</a>
           <a href="/projects" class="btn btn--outline" style="font-size: 0.9rem;">View Villa Projects</a>
           </div>
@@ -711,16 +726,20 @@
               <div class="cta__form-row">
                 <div class="cta__fg">
                   <label for="hp-name">Name *</label>
-                  <input type="text" id="hp-name" placeholder="Your full name" required>
+                  <input type="text" id="hp-name" name="nama" placeholder="Your full name" required>
                 </div>
                 <div class="cta__fg">
                   <label for="hp-phone">WhatsApp *</label>
-                  <input type="tel" id="hp-phone" placeholder="08123456789" required>
+                  <input type="tel" id="hp-phone" name="telepon" placeholder="08123456789" required>
                 </div>
               </div>
               <div class="cta__fg">
+                <label for="hp-email">Email (optional)</label>
+                <input type="email" id="hp-email" name="email" placeholder="you@example.com">
+              </div>
+              <div class="cta__fg">
                 <label for="hp-type">Project Type</label>
-                <select id="hp-type">
+                <select id="hp-type" name="jenis_proyek">
                   <option value="">Select type</option>
                   <option>Residential</option>
                   <option>Villa</option>
@@ -732,15 +751,15 @@
               </div>
               <div class="cta__fg">
                 <label for="hp-message">Tell us about your project</label>
-                <textarea id="hp-message" placeholder="e.g. 3-bedroom villa in Senggigi, tropical modern style..."></textarea>
+                <textarea id="hp-message" name="pesan" placeholder="e.g. 3-bedroom villa in Senggigi, tropical modern style..."></textarea>
               </div>
-              <button type="submit" class="btn btn--primary cta__submit" id="hp-submit">Send Free Consultation</button>
+              <button type="submit" class="btn btn--primary cta__submit" id="hp-submit">Send Project Brief</button>
             </form>
           </div>
           <div id="cta-success" data-lead-success hidden style="text-align:center; padding: 48px 24px;">
             <div style="font-size: 48px; margin-bottom: 16px;">✅</div>
             <h3 style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--text-primary); margin-bottom: 8px;">Thank You!</h3>
-            <p style="color: var(--text-secondary); line-height: 1.7;">Our team will reach out via WhatsApp within <strong>1 hour</strong>.</p>
+            <p style="color: var(--text-secondary); line-height: 1.7;">We will review your brief and follow up with the most useful next step.</p>
           </div>
         </div>
       </div>
