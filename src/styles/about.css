@@ -322,14 +322,14 @@
 /* Give the About hero two equal visual weights instead of a narrow text column. */
 .about-hero .arch-grid--split {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: stretch;
+    align-items: start;
     gap: clamp(var(--space-xl), 8vw, var(--space-3xl));
 }
 
 .about-hero .arch-grid--split > div {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .about-hero .arch-grid--split > div:last-child {
