@@ -2,7 +2,7 @@ import { absoluteUrl } from './site-config.js';
 
 // This manifest is the single source of truth for language and acquisition intent.
 export const routeManifest = [
-  { file: 'index.html', path: '/', language: 'en', group: 'brand', adsEligible: false },
+  { file: 'index.html', path: '/', language: 'id', group: 'brand', adsEligible: false },
   { file: 'about.html', path: '/about', language: 'en', group: 'brand', adsEligible: false },
   { file: 'services.html', path: '/services', language: 'id', group: 'acquisition', adsEligible: true },
   { file: 'projects.html', path: '/projects', language: 'en', group: 'portfolio', adsEligible: false },
