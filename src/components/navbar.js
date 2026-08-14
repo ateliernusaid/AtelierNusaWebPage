@@ -8,6 +8,7 @@ export function createNavbar(activePage = 'home') {
   nav.id = 'navbar';
 
   const isIndonesian = document.documentElement.lang.toLowerCase().startsWith('id');
+  const currentPath = window.location.pathname.replace(/\/+$/, '') || '/';
   const pages = isIndonesian ? [
     { key: 'home', label: 'Beranda', href: '/' },
     { key: 'about', label: 'Studio', href: '/about.html' },
@@ -26,7 +27,16 @@ export function createNavbar(activePage = 'home') {
 
   // The Indonesian service page has no separate English duplicate; use the
   // English services section on the homepage as its language counterpart.
-  const languageHref = isIndonesian ? '/#services' : '/jasa-arsitek-lombok';
+  const languageTargets = isIndonesian
+    ? {
+        '/jasa-arsitek-lombok': '/services',
+        '/portofolio-villa-lombok': '/projects',
+      }
+    : {
+        '/services': '/jasa-arsitek-lombok',
+        '/projects': '/portofolio-villa-lombok',
+      };
+  const languageHref = languageTargets[currentPath] || (isIndonesian ? '/services' : '/jasa-arsitek-lombok');
   const languageLabel = isIndonesian ? 'EN' : 'ID';
   const languageTitle = isIndonesian ? 'Open English site' : 'Open Indonesian services';
 
