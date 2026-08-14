@@ -8,7 +8,6 @@ export function createNavbar(activePage = 'home') {
   nav.id = 'navbar';
 
   const isIndonesian = document.documentElement.lang.toLowerCase().startsWith('id');
-  const currentPath = window.location.pathname.replace(/\/+$/, '') || '/';
   const pages = isIndonesian ? [
     { key: 'home', label: 'Beranda', href: '/' },
     { key: 'about', label: 'Studio', href: '/about.html' },
@@ -25,20 +24,17 @@ export function createNavbar(activePage = 'home') {
     { key: 'lahan', label: 'Land', href: '/lahan.html' },
   ];
 
-  // The Indonesian service page has no separate English duplicate; use the
-  // English services section on the homepage as its language counterpart.
-  const languageTargets = isIndonesian
-    ? {
-        '/jasa-arsitek-lombok': '/services',
-        '/portofolio-villa-lombok': '/projects',
-      }
-    : {
-        '/services': '/jasa-arsitek-lombok',
-        '/projects': '/portofolio-villa-lombok',
-      };
-  const languageHref = languageTargets[currentPath] || (isIndonesian ? '/services' : '/jasa-arsitek-lombok');
+  const localizeCoreHref = (href) => {
+    if (!isIndonesian || !['/', '/services.html', '/projects.html'].includes(href)) return href;
+    return `${href}?lang=id`;
+  };
+  pages.forEach(page => { page.href = localizeCoreHref(page.href); });
+
+  const languageUrl = new URL(window.location.href);
+  languageUrl.searchParams.set('lang', isIndonesian ? 'en' : 'id');
+  const languageHref = `${languageUrl.pathname}${languageUrl.search}${languageUrl.hash}`;
   const languageLabel = isIndonesian ? 'EN' : 'ID';
-  const languageTitle = isIndonesian ? 'Open English site' : 'Open Indonesian services';
+  const languageTitle = isIndonesian ? 'Switch to English' : 'Switch to Indonesian';
 
   nav.innerHTML = `
     <div class="container navbar__inner">

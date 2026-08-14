@@ -9,6 +9,7 @@ import { createWhatsApp } from './components/whatsapp.js';
 import { initAnimations } from './components/animations.js';
 import { initLightbox } from './components/lightbox.js';
 import { initLeadForms } from './analytics/forms.js';
+import { applyLanguage } from './components/language.js';
 
 // Determine active page
 function getActivePage() {
@@ -154,6 +155,7 @@ function initCountUp() {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+    applyLanguage();
     createNavbar(getActivePage());
     createFooter();
     createWhatsApp();

@@ -22,6 +22,11 @@ export function createFooter() {
     studioTitle: 'Studio',
   };
 
+  const localizeCoreHref = (href) => {
+    if (!isIndonesian || !['/', '/services.html', '/projects.html'].includes(href)) return href;
+    return `${href}?lang=id`;
+  };
+
   footer.innerHTML = `
     <div class="container footer__inner">
       <div class="footer__top">
@@ -54,12 +59,12 @@ export function createFooter() {
         <div class="footer__links">
           <div class="footer__col">
             <div class="footer__col-title">${copy.navigationTitle}</div>
-            ${copy.navigation.map(([label, href]) => `<a href="${href}" class="footer__link">${label}</a>`).join('')}
+            ${copy.navigation.map(([label, href]) => `<a href="${localizeCoreHref(href)}" class="footer__link">${label}</a>`).join('')}
           </div>
 
           <div class="footer__col">
             <div class="footer__col-title">${copy.servicesTitle}</div>
-            ${copy.services.map(([label, href], index) => `<a href="${href}" class="footer__link"${index === 0 ? ' style="color: var(--color-accent); font-weight: var(--fw-medium);"' : ''}>${label}</a>`).join('')}
+            ${copy.services.map(([label, href], index) => `<a href="${localizeCoreHref(href)}" class="footer__link"${index === 0 ? ' style="color: var(--color-accent); font-weight: var(--fw-medium);"' : ''}>${label}</a>`).join('')}
           </div>
 
           <div class="footer__col">
