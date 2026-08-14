@@ -1498,6 +1498,7 @@
   <meta name="twitter:title" content="Jasa Arsitek Villa Senggigi | Atelier Nusa"/>
   <meta name="twitter:description" content="Studio arsitektur spesialis desain villa dan resort di area Senggigi, Lombok."/>
   <meta name="twitter:image" content="https://www.ateliernusa.id/images/Rumah Anastasia.png"/>
+  <script type="module" src="/src/analytics/attribution.js"></script>
 </head>
 
 <body>
@@ -1996,6 +1997,7 @@
       const whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
       if (!whatsappWindow) window.location.href = whatsappUrl;
       if (typeof gtag === 'function') gtag('event', 'lead_submit', {
+        ...(window.atelierNusaAttribution ? window.atelierNusaAttribution() : {}),
         event_category: 'lead', event_label: 'jasa-arsitek-senggigi', project_type: type || 'unspecified'
       });
       fireGoogleAdsConversion(); fireFBPixel();

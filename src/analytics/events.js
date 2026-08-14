@@ -1,3 +1,5 @@
+import { getAttribution } from './attribution.js';
+
 export const ANALYTICS_EVENTS = Object.freeze({
   whatsappClick: 'whatsapp_click',
   phoneClick: 'phone_click',
@@ -8,5 +10,5 @@ export const ANALYTICS_EVENTS = Object.freeze({
 
 export function trackEvent(name, parameters = {}) {
   if (typeof window === 'undefined' || typeof window.gtag !== 'function') return;
-  window.gtag('event', name, parameters);
+  window.gtag('event', name, { ...getAttribution(), ...parameters });
 }

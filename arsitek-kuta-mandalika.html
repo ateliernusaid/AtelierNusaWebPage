@@ -1498,6 +1498,7 @@
   <meta name="twitter:title" content="Arsitek Kuta Mandalika | Atelier Nusa"/>
   <meta name="twitter:description" content="Spesialis desain resort, villa, dan ruang komersial di kawasan Kuta Mandalika, Lombok."/>
   <meta name="twitter:image" content="https://www.ateliernusa.id/images/Rumah Anastasia.png"/>
+  <script type="module" src="/src/analytics/attribution.js"></script>
 </head>
 
 <body>
@@ -1996,6 +1997,7 @@
       const whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
       if (!whatsappWindow) window.location.href = whatsappUrl;
       if (typeof gtag === 'function') gtag('event', 'lead_submit', {
+        ...(window.atelierNusaAttribution ? window.atelierNusaAttribution() : {}),
         event_category: 'lead', event_label: 'arsitek-kuta-mandalika', project_type: type || 'unspecified'
       });
       fireGoogleAdsConversion(); fireFBPixel();

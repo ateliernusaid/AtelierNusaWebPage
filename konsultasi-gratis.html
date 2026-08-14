@@ -464,6 +464,7 @@
             }
         }
     </style>
+  <script type="module" src="/src/analytics/attribution.js"></script>
 </head>
 <body>
 
@@ -643,6 +644,7 @@
 
             if (typeof gtag === 'function') {
                 gtag('event', 'lead_submit', {
+                    ...(window.atelierNusaAttribution ? window.atelierNusaAttribution() : {}),
                     event_category: 'lead',
                     event_label: 'konsultasi-gratis',
                     project_type: projectEl.value || 'unspecified'

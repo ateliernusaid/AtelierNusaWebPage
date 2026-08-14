@@ -27,6 +27,7 @@
   <meta name="twitter:title" content="Arsitek Spesialis Villa & Properti Mewah di Lombok | Atelier Nusa"/>
   <meta name="twitter:description" content="Arsitek spesialis villa dan properti mewah di Lombok. Konsultasi gratis."/>
   <meta name="twitter:image" content="https://www.ateliernusa.id/images/og-image.jpg"/>
+  <script type="module" src="/src/analytics/attribution.js"></script>
 </head><body>
 
 <!-- NAV -->
@@ -246,7 +247,7 @@ document.getElementById('lead-form-el').addEventListener('submit',async function
   const whatsappWindow=window.open(whatsappUrl,'_blank','noopener,noreferrer');
   if(!whatsappWindow) window.location.href=whatsappUrl;
   if(typeof gtag==='function'){
-    gtag('event', 'lead_submit', { event_category:'lead', event_label:'arsitek-villa-mewah-lombok', project_type:type || 'unspecified' });
+    gtag('event', 'lead_submit', { ...(window.atelierNusaAttribution ? window.atelierNusaAttribution() : {}), event_category:'lead', event_label:'arsitek-villa-mewah-lombok', project_type:type || 'unspecified' });
     gtag('event', 'ads_conversion_Contact_1', { value:1.0, currency:'IDR', event_label:'arsitek-villa-mewah-lombok' });
   }
   document.getElementById('form-content').style.display='none';
