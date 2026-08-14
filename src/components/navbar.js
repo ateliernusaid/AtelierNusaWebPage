@@ -24,7 +24,9 @@ export function createNavbar(activePage = 'home') {
     { key: 'lahan', label: 'Land', href: '/lahan.html' },
   ];
 
-  const languageHref = isIndonesian ? '/services.html' : '/jasa-arsitek-lombok.html';
+  // The Indonesian service page has no separate English duplicate; use the
+  // English services section on the homepage as its language counterpart.
+  const languageHref = isIndonesian ? '/#services' : '/jasa-arsitek-lombok';
   const languageLabel = isIndonesian ? 'EN' : 'ID';
   const languageTitle = isIndonesian ? 'Open English site' : 'Open Indonesian services';
 
