@@ -142,12 +142,72 @@ function applyProjectsIndonesian() {
   setLabel('.cta .btn--primary', 'Mulai Percakapan');
 }
 
+function applyArtikelEnglish() {
+  setHtml('.page-hero__title', 'Insights for <em>building better</em>');
+  setText('.page-hero__subtitle', 'Practical guides to homes, villas, costs, materials, and the decisions that matter before building in Lombok.');
+  setText('.section-header .section-label', 'Read by project need');
+  setText('.section-header .section-title', 'Ideas, numbers, and context');
+  setText('.section-header .section-desc', 'Use these articles as a starting point. Every project still needs a close reading of its site, brief, and budget.');
+  setAll('.journal-filter', ['All', 'Starting a project', 'Cost & budget', 'Tropical design', 'Renovation']);
+  setAll('.journal-card__meta', ['Starting a project - Guide', 'Cost & budget', 'Tropical design', 'Renovation', 'Tropical design', 'Commercial']);
+  setAll('.journal-card__title', [
+    'How to Choose an Architect in Lombok',
+    'Building Costs in Lombok: How to Read an Estimate',
+    'Modern Tropical Interior Design in Lombok',
+    'House Renovation in Mataram and Lombok',
+    "Modern Tropical Homes for Lombok's Climate",
+    'Tropical Cafe and Restaurant Design in Lombok'
+  ]);
+  setAll('.journal-card__excerpt', [
+    'How to evaluate a portfolio, working style, scope, credentials, communication, and fee structure before choosing an architect.',
+    'The components that affect cost per square metre and how to create a more realistic early budget.',
+    'Local materials, colour, lighting, and indoor-outdoor connections for a lighter tropical home.',
+    'Stages, work priorities, estimates, and situations where a renovation benefits from an architect.',
+    'Important design elements for heat, rain, humidity, and everyday comfort.',
+    'How layout, circulation, materials, and atmosphere shape the visitor experience.'
+  ]);
+  setAll('.journal-card__link', ['Read the guide', 'Read the article', 'Read the article', 'Read the article', 'Read the article', 'Read the article']);
+  setText('.cta__left .section-label', 'Need project context?');
+  setText('.cta__title', 'Articles give direction. The site gives the answer.');
+  setText('.cta__desc', 'If you already have a location or a project outline, tell the Atelier Nusa team where you are in the process.');
+  setText('.cta__form-title', 'Start a conversation');
+  setAll('#article-lead-form label', ['Name *', 'WhatsApp *', 'What are you planning to build?']);
+  document.querySelector('#article-name')?.setAttribute('placeholder', 'Your full name');
+  document.querySelector('#article-message')?.setAttribute('placeholder', 'Home, villa, renovation, or commercial space');
+  setLabel('#article-lead-form .cta__submit', 'Send via WhatsApp');
+  setText('#article-success h3', 'Thank you.');
+  setText('#article-success p', 'WhatsApp will open with a summary of your brief.');
+}
+
+function applyLahanEnglish() {
+  setText('.lahan-section .section-label', 'Available land');
+  setText('.lahan-section .section-title', 'Available plots');
+  setAll('.lahan-card__location', ['East Lombok', 'West Lombok']);
+  setAll('.lahan-card__title', ['Labuhan Lombok Productive Land', 'Batu Layar Hillside Land']);
+  setAll('.lahan-card__description', [
+    'A productive 2.5-hectare garden plot with gentle terrain, open green views, and practical road access. Suitable for a garden, retreat, or residential development.',
+    'A 1.7-hectare hillside plot in West Batu Layar with stepped terrain and expansive views. Well suited to a premium villa resort development.'
+  ]);
+  setAll('.lahan-card__spec-label', ['Area', 'Legal status', 'Access', 'Area', 'Legal status', 'Terrain']);
+  setAll('.lahan-card__spec-val', ['2.5 Ha', 'SHM', 'Paved road', '1.7 Ha', 'SHM', 'Stepped']);
+  setAll('.lahan-card__price-label', ['Asking price', 'Asking price']);
+  setAll('.lahan-card .btn--outline', ['View land details', 'View land details']);
+  setText('.lahan-section + .section .section-label', 'Custom sourcing');
+  setText('.lahan-section + .section .section-title', 'Looking for a specific site?');
+  setText('.lahan-section + .section .arch-text--large', 'If you have specific land criteria in Lombok - area, location, budget, or intended use - that is not listed in our catalogue, our consultants can help source suitable land with clear documentation.');
+  setLabel('#btn-custom-lahan', 'Discuss your land requirements');
+}
+
 export function applyLanguage() {
   const language = getPageLanguage();
   document.documentElement.lang = language;
-  if (language !== 'id') return language;
-
   const path = window.location.pathname.replace(/\/+$/, '').replace(/\.html$/, '') || '/';
+  if (language !== 'id') {
+    if (path === '/artikel') applyArtikelEnglish();
+    if (path === '/lahan') applyLahanEnglish();
+    return language;
+  }
+
   if (path === '/') {
     document.title = 'Jasa Arsitek dan Konstruksi di Lombok | Atelier Nusa';
     document.querySelector('meta[name="description"]')?.setAttribute('content', 'Atelier Nusa merancang rumah, villa, dan proyek design-build di Lombok dari konsep hingga konstruksi.');

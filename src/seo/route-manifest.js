@@ -21,7 +21,7 @@ export const routeManifest = [
   { file: 'biaya-arsitek-lombok.html', path: '/biaya-arsitek-lombok', language: 'id', group: 'acquisition', adsEligible: true },
   { file: 'renovasi-rumah-mataram-lombok.html', path: '/renovasi-rumah-mataram-lombok', language: 'id', group: 'acquisition', adsEligible: true },
   { file: 'konsultasi-gratis.html', path: '/konsultasi-gratis', language: 'id', group: 'conversion', adsEligible: true },
-  { file: 'artikel.html', path: '/artikel', language: 'id', group: 'content', adsEligible: false },
+  { file: 'artikel.html', path: '/artikel', language: 'en', group: 'content', adsEligible: false },
   { file: 'tren-desain-interior-lombok.html', path: '/tren-desain-interior-lombok', language: 'id', group: 'content', adsEligible: false },
   { file: 'panduan-memilih-arsitek-lombok.html', path: '/panduan-memilih-arsitek-lombok', language: 'id', group: 'content', adsEligible: false },
   { file: 'blog/biaya-bangun-rumah-lombok-2026.html', path: '/blog/biaya-bangun-rumah-lombok-2026', language: 'id', group: 'content', adsEligible: false },
@@ -31,7 +31,7 @@ export const routeManifest = [
   { file: 'biaya-bangun-rumah-lombok.html', path: '/biaya-bangun-rumah-lombok', language: 'id', group: 'content', adsEligible: true },
   { file: 'estimasi-biaya-bangun-rumah-2-lantai-lombok.html', path: '/estimasi-biaya-bangun-rumah-2-lantai-lombok', language: 'id', group: 'content', adsEligible: true },
   { file: 'portofolio-villa-lombok.html', path: '/portofolio-villa-lombok', language: 'id', group: 'portfolio', adsEligible: false },
-  { file: 'lahan.html', path: '/lahan', language: 'id', group: 'property', adsEligible: false },
+  { file: 'lahan.html', path: '/lahan', language: 'en', group: 'property', adsEligible: false },
   { file: 'tanah-labuhan-lombok.html', path: '/tanah-labuhan-lombok', language: 'id', group: 'property', adsEligible: false },
   { file: 'tanah-batu-layar.html', path: '/tanah-batu-layar', language: 'id', group: 'property', adsEligible: false },
 ];
