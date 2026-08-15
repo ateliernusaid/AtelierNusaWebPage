@@ -29,6 +29,23 @@ function showSuccess(form) {
   }
 }
 
+function showDeliveryError(form) {
+  let error = form.closest('[data-lead-shell]')?.querySelector('[data-lead-error]');
+  if (!error) {
+    error = document.createElement('p');
+    error.dataset.leadError = 'true';
+    error.setAttribute('role', 'alert');
+    error.style.cssText = 'margin-top:12px;color:#f0a6a6;font-size:14px;line-height:1.5;';
+    form.appendChild(error);
+  }
+  error.textContent = form.dataset.errorLabel || (
+    document.documentElement.lang.toLowerCase().startsWith('id')
+      ? 'WhatsApp tidak dapat dibuka. Silakan coba lagi atau hubungi kami melalui email.'
+      : 'We could not open WhatsApp. Please try again or contact us by email.'
+  );
+  error.hidden = false;
+}
+
 function submitToWhatsApp(form) {
   const name = readField(form, 'nama', 'hp-name');
   const phone = readField(form, 'telepon', 'hp-phone');
@@ -47,6 +64,26 @@ function submitToWhatsApp(form) {
     `Sumber: ${source}`,
   ].filter(Boolean);
 
+  const whatsappWindow = window.open(
+    `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`,
+    '_blank'
+  );
+  if (!whatsappWindow) {
+    setBusy(form, false);
+    showDeliveryError(form);
+    trackEvent('lead_delivery_failed', {
+      form_id: form.id || source,
+      form_name: source,
+      page_path: window.location.pathname,
+    });
+    return;
+  }
+  try {
+    whatsappWindow.opener = null;
+  } catch {
+    // Some browsers expose a read-only opener on a newly opened tab.
+  }
+
   trackEvent(ANALYTICS_EVENTS.leadSubmit, {
     form_id: form.id || source,
     form_name: source,
@@ -54,7 +91,7 @@ function submitToWhatsApp(form) {
     project_type: type || 'unspecified',
   });
 
-  // Count the Ads conversion only after the visitor submits a valid lead form.
+  // Count the Ads conversion only after the browser accepts the lead handoff.
   trackEvent('ads_conversion_Contact_1', {
     value: 1.0,
     currency: 'IDR',
@@ -62,7 +99,6 @@ function submitToWhatsApp(form) {
     page_path: window.location.pathname,
   });
 
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener,noreferrer');
   showSuccess(form);
 }
 
