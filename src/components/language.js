@@ -198,6 +198,60 @@ function applyLahanEnglish() {
   setLabel('#btn-custom-lahan', 'Discuss your land requirements');
 }
 
+function applyArtikelIndonesian() {
+  setHtml('.page-hero__title', 'Wawasan untuk <em>membangun lebih baik</em>');
+  setText('.page-hero__subtitle', 'Panduan praktis tentang desain rumah, villa, biaya, material, dan keputusan penting sebelum membangun di Lombok.');
+  setText('.section-header .section-label', 'Baca berdasarkan kebutuhan');
+  setText('.section-header .section-title', 'Ide, angka, dan konteks');
+  setText('.section-header .section-desc', 'Gunakan artikel ini sebagai titik awal. Setiap proyek tetap membutuhkan pembacaan lahan, kebutuhan, dan anggaran yang spesifik.');
+  setAll('.journal-filter', ['Semua', 'Memulai proyek', 'Biaya & anggaran', 'Desain tropis', 'Renovasi']);
+  setAll('.journal-card__meta', ['Memulai proyek - Panduan', 'Biaya & anggaran', 'Desain tropis', 'Renovasi', 'Desain tropis', 'Komersial']);
+  setAll('.journal-card__title', [
+    'Panduan Lengkap Memilih Jasa Arsitek Profesional di Lombok',
+    'Biaya Bangun Rumah di Lombok: Cara Membaca Estimasi',
+    'Tren Desain Interior Tropis Modern di Lombok',
+    'Renovasi Rumah di Mataram dan Lombok',
+    'Desain Rumah Tropis Modern untuk Iklim Lombok',
+    'Desain Cafe dan Restoran Tropis di Lombok'
+  ]);
+  setAll('.journal-card__excerpt', [
+    'Cara mengevaluasi portofolio, kecocokan cara kerja, ruang lingkup, legalitas, komunikasi, dan struktur biaya sebelum memilih arsitek.',
+    'Komponen yang memengaruhi biaya per meter persegi dan cara menyusun anggaran awal dengan lebih realistis.',
+    'Material lokal, warna, pencahayaan, dan hubungan ruang dalam-luar untuk hunian tropis yang terasa ringan.',
+    'Tahapan, prioritas pekerjaan, estimasi, dan situasi ketika renovasi perlu didampingi arsitek.',
+    'Elemen penting untuk menghadapi panas, hujan, kelembapan, dan kebutuhan kenyamanan sehari-hari.',
+    'Bagaimana layout, sirkulasi, material, dan suasana ruang membantu membentuk pengalaman pengunjung.'
+  ]);
+  setAll('.journal-card__link', ['Baca panduan', 'Baca artikel', 'Baca artikel', 'Baca artikel', 'Baca artikel', 'Baca artikel']);
+  setText('.cta__left .section-label', 'Butuh konteks proyek?');
+  setText('.cta__title', 'Artikel memberi arah. Lahan memberi jawabannya.');
+  setText('.cta__desc', 'Jika Anda sudah memiliki lokasi atau gambaran proyek, ceritakan tahapnya kepada tim Atelier Nusa.');
+  setText('.cta__form-title', 'Mulai Percakapan');
+  setAll('#article-lead-form label', ['Nama *', 'WhatsApp *', 'Apa yang ingin Anda bangun?']);
+  document.querySelector('#article-name')?.setAttribute('placeholder', 'Nama lengkap');
+  document.querySelector('#article-message')?.setAttribute('placeholder', 'Rumah, villa, renovasi, atau ruang komersial');
+  setLabel('#article-lead-form .cta__submit', 'Kirim ke WhatsApp');
+  setText('#article-success h3', 'Terima kasih.');
+  setText('#article-success p', 'WhatsApp akan terbuka dengan ringkasan kebutuhan Anda.');
+}
+
+function applyLahanIndonesian() {
+  setHtml('.page-hero__title', 'Investasi Lahan<br>Pilihan di Lombok');
+  setText('.page-hero__subtitle', 'Menyediakan pilihan lahan potensial dengan legalitas bersih untuk pengembangan hunian, villa resort, kebun produktif, atau instrumen investasi jangka panjang Anda.');
+  setText('.lahan-section .section-label', 'Katalog Lahan');
+  setText('.lahan-section .section-title', 'Lahan Tersedia');
+  setAll('.lahan-card__location', ['Lombok Timur', 'Lombok Barat']);
+  setAll('.lahan-card__title', ['Tanah Kebun Labuhan Lombok', 'Tanah Bukit Batu Layar']);
+  setAll('.lahan-card__spec-label', ['Luas', 'Legalitas', 'Akses', 'Luas', 'Legalitas', 'Kontur']);
+  setAll('.lahan-card__spec-val', ['2.5 Ha', 'SHM', 'Jalan Aspal', '1.7 Ha', 'SHM', 'Berundak']);
+  setAll('.lahan-card__price-label', ['Harga Penawaran', 'Harga Penawaran']);
+  setAll('.lahan-card .btn--outline', ['Detail Lahan', 'Detail Lahan']);
+  setText('.lahan-section + .section .section-label', 'Custom Sourcing');
+  setText('.lahan-section + .section .section-title', 'Mencari Lahan Spesifik?');
+  setText('.lahan-section + .section .arch-text--large', 'Jika Anda memiliki kriteria lahan tertentu di Lombok (luas, lokasi, anggaran, atau peruntukan bisnis) yang belum terdaftar di katalog kami, tim konsultan kami siap membantu mencarikan lahan terbaik dengan legalitas yang terjamin aman.');
+  setLabel('#btn-custom-lahan', 'Konsultasi Kebutuhan Lahan');
+}
+
 export function applyLanguage() {
   const language = getPageLanguage();
   document.documentElement.lang = language;
@@ -221,5 +275,7 @@ export function applyLanguage() {
     document.title = 'Proyek Arsitektur di Lombok | Atelier Nusa';
     applyProjectsIndonesian();
   }
+  if (path === '/artikel') applyArtikelIndonesian();
+  if (path === '/lahan') applyLahanIndonesian();
   return language;
 }
