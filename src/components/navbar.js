@@ -31,6 +31,12 @@ export function createNavbar(activePage = 'home') {
   pages.forEach(page => { page.href = localizeCoreHref(page.href); });
 
   const languageUrl = new URL(window.location.href);
+  const normalizedPath = window.location.pathname.replace(/\/+$/, '').replace(/\.html$/, '') || '/';
+  if (!['/', '/services', '/projects', '/artikel', '/lahan'].includes(normalizedPath)) {
+    languageUrl.pathname = '/';
+    languageUrl.search = '';
+    languageUrl.hash = '';
+  }
   languageUrl.searchParams.set('lang', isIndonesian ? 'en' : 'id');
   const languageHref = `${languageUrl.pathname}${languageUrl.search}${languageUrl.hash}`;
   const languageLabel = isIndonesian ? 'EN' : 'ID';
@@ -39,7 +45,7 @@ export function createNavbar(activePage = 'home') {
   nav.innerHTML = `
     <div class="container navbar__inner">
       <a href="/" class="navbar__logo" aria-label="Atelier Nusa Home">
-        <img src="/images/ATN Logo Transparan.png" alt="Atelier Nusa" class="navbar__logo-icon">
+        <img src="/images/responsive/atelier-nusa-logo-200.webp" srcset="/images/responsive/atelier-nusa-logo-200.webp 200w, /images/responsive/atelier-nusa-logo-400.webp 400w, /images/ATN Logo Transparan.webp 1536w" sizes="180px" alt="Atelier Nusa" class="navbar__logo-icon" width="180" height="120" fetchpriority="high" decoding="async">
       </a>
 
       <div class="navbar__menu" id="navMenu">
@@ -48,7 +54,7 @@ export function createNavbar(activePage = 'home') {
         `).join('')}
       </div>
 
-      <a href="${languageHref}" class="navbar__language" aria-label="${languageTitle}" title="${languageTitle}">${languageLabel}</a>
+      <a href="${languageHref}" class="navbar__language" aria-label="${languageLabel} - ${languageTitle}" title="${languageTitle}">${languageLabel}</a>
 
       <button class="navbar__hamburger" id="navHamburger" aria-label="Toggle menu">
         <span></span>

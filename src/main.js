@@ -23,6 +23,15 @@ function getActivePage() {
     return 'home';
 }
 
+function ensureMainLandmark() {
+    if (document.querySelector('main')) return;
+
+    const main = document.createElement('main');
+    main.id = 'main-content';
+    [...document.body.children].forEach((child) => main.appendChild(child));
+    document.body.appendChild(main);
+}
+
 // ========================================
 // WHATSAPP ENGAGEMENT TRACKER
 // Keep WhatsApp clicks measurable even while paid campaigns are paused.
@@ -156,6 +165,7 @@ function initCountUp() {
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     applyLanguage();
+    ensureMainLandmark();
     createNavbar(getActivePage());
     createFooter();
     createWhatsApp();
@@ -168,4 +178,32 @@ document.addEventListener('DOMContentLoaded', () => {
     initLazyImageFade();
     initCountUp();
     initLeadForms();
+});
+
+// Measure social-profile clicks so organic distribution can be compared with leads.
+document.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link || typeof gtag !== 'function') return;
+
+    let host;
+    try {
+        host = new URL(link.href).hostname;
+    } catch {
+        return;
+    }
+
+    const network = host.includes('threads.com')
+        ? 'threads'
+        : host.includes('instagram.com')
+            ? 'instagram'
+            : host.includes('facebook.com')
+                ? 'facebook'
+                : null;
+    if (!network) return;
+
+    gtag('event', 'social_profile_click', {
+        social_network: network,
+        link_url: link.href,
+        page_path: window.location.pathname,
+    });
 });

@@ -664,6 +664,10 @@
     margin-bottom: var(--space-sm);
 }
 
+.stats__number--text {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
 .stats__label {
     font-family: var(--font-body);
     font-size: var(--fs-small);

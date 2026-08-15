@@ -17,13 +17,17 @@
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta property="og:locale" content="en_US">
   <link rel="alternate" hreflang="en" href="https://www.ateliernusa.id/" />
+  <link rel="alternate" hreflang="id" href="https://www.ateliernusa.id/?lang=id" />
   <link rel="alternate" hreflang="x-default" href="https://www.ateliernusa.id/" />
+  <link rel="me" href="https://www.instagram.com/ateliernusa.id/" />
+  <link rel="me" href="https://www.threads.com/@ateliernusa.id" />
   <link rel="preload" as="image" href="/images/Rumah Anastasia.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="/images/responsive/atelier-nusa-logo-200.webp" imagesrcset="/images/responsive/atelier-nusa-logo-200.webp 200w, /images/responsive/atelier-nusa-logo-400.webp 400w, /images/ATN Logo Transparan.webp 1536w" imagesizes="180px" type="image/webp" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap"></noscript>
-  <link rel="icon" type="image/png" href="/images/ATN%20Logo%20Transparan.png?v=2">
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
   <script type="module" src="/src/main.js"></script>
 
   <!-- Structured Data -->
@@ -34,6 +38,11 @@
     "name": "Atelier Nusa",
     "description": "Tropical architecture and construction studio in Lombok, Indonesia. Design and build services for residential, villa, and hospitality projects.",
     "url": "https://www.ateliernusa.id",
+    "sameAs": [
+      "https://www.instagram.com/ateliernusa.id/",
+      "https://www.threads.com/@ateliernusa.id",
+      "https://www.facebook.com/profile.php?id=61586267966385"
+    ],
     "image": "https://www.ateliernusa.id/images/og-image.jpg",
     "telephone": "+6285190645078",
     "email": "marketing@ateliernusa.id",
@@ -87,13 +96,21 @@
   </script>
 
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-8060600341"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-69F6MHRBK5');
       gtag('config', 'AW-8060600341');
+      function loadGoogleTag() {
+        if (document.querySelector('script[data-atn-gtag]')) return;
+        const script = document.createElement('script');
+        script.async = true;
+        script.dataset.atnGtag = 'true';
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=AW-8060600341';
+        document.head.appendChild(script);
+      }
+      (window.requestIdleCallback || function (callback) { setTimeout(callback, 1800); })(loadGoogleTag);
       function trackWAConversion() {
         if (typeof gtag === 'function') {
           gtag('event', 'whatsapp_click', {
@@ -105,11 +122,18 @@
     </script>
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "wotquq4rp4");
+    function loadClarity() {
+      if (document.querySelector('script[data-atn-clarity]')) return;
+      window.clarity = window.clarity || function () {
+        (window.clarity.q = window.clarity.q || []).push(arguments);
+      };
+      const script = document.createElement('script');
+      script.async = true;
+      script.dataset.atnClarity = 'true';
+      script.src = 'https://www.clarity.ms/tag/wotquq4rp4';
+      document.head.appendChild(script);
+    }
+    (window.requestIdleCallback || function (callback) { setTimeout(callback, 2200); })(loadClarity);
   </script>
   <meta name="theme-color" content="#0a0f14"/>
   <meta name="twitter:card" content="summary_large_image"/>
@@ -119,6 +143,8 @@
 </head>
 
 <body>
+
+  <main id="main-content">
 
   <!-- HERO SECTION -->
   <section class="hero" id="hero">
@@ -159,8 +185,10 @@
 
     <div class="hero__visual">
       <div class="hero__image-frame">
-        <img src="/images/projects/concepts/lombok-house-courtyard.webp" alt="Contemporary house concept study for a tropical site in Lombok"
-          loading="eager" fetchpriority="high" width="1024" height="1024">
+        <img src="/images/Rumah Anastasia.webp" alt="Completed tropical residence in Mataram, Lombok"
+          srcset="/images/responsive/rumah-anastasia-480.webp 480w, /images/responsive/rumah-anastasia-768.webp 768w, /images/Rumah Anastasia.webp 960w"
+          sizes="(max-width: 600px) 370px, (max-width: 968px) 350px, 42vw"
+          loading="eager" fetchpriority="high" decoding="async" width="960" height="1088">
       </div>
       <span class="hero__vertical-text">Lombok • Architecture • Luxury Residential</span>
     </div>
@@ -187,7 +215,9 @@
       <div class="services__grid">
         <div class="arch-card reveal reveal-delay-1">
           <img src="/images/projects/concepts/coastal-living-terrace.webp" alt="Coastal living terrace concept study for a Lombok villa"
-            class="arch-card__image" loading="lazy" width="1024" height="1024">
+            srcset="/images/responsive/coastal-living-terrace-480.webp 480w, /images/responsive/coastal-living-terrace-640.webp 640w, /images/responsive/coastal-living-terrace-768.webp 768w, /images/projects/concepts/coastal-living-terrace.webp 1024w"
+            sizes="(max-width: 768px) 320px, 420px"
+            class="arch-card__image" loading="lazy" decoding="async" width="1024" height="736">
           <div class="arch-card__content">
             <h3 class="arch-card__title">Tropical Villa & House Design</h3>
             <p class="arch-card__desc">
@@ -199,7 +229,9 @@
 
         <div class="arch-card reveal reveal-delay-2">
           <img src="/images/projects/concepts/pool-villa-courtyard.webp" alt="Pool courtyard concept study for tropical villa design"
-            class="arch-card__image" loading="lazy" width="1024" height="1024">
+            srcset="/images/responsive/pool-villa-courtyard-480.webp 480w, /images/responsive/pool-villa-courtyard-640.webp 640w, /images/responsive/pool-villa-courtyard-768.webp 768w, /images/projects/concepts/pool-villa-courtyard.webp 1024w"
+            sizes="(max-width: 768px) 320px, 420px"
+            class="arch-card__image" loading="lazy" decoding="async" width="1024" height="771">
           <div class="arch-card__content">
             <h3 class="arch-card__title">Design & Build</h3>
             <p class="arch-card__desc">
@@ -211,7 +243,9 @@
 
         <div class="arch-card reveal reveal-delay-3">
           <img src="/images/projects/concepts/minimal-house-facade.webp" alt="Minimal house facade concept study in a tropical setting"
-            class="arch-card__image" loading="lazy" width="1024" height="1024">
+            srcset="/images/responsive/minimal-house-facade-480.webp 480w, /images/responsive/minimal-house-facade-640.webp 640w, /images/responsive/minimal-house-facade-768.webp 768w, /images/projects/concepts/minimal-house-facade.webp 1024w"
+            sizes="(max-width: 768px) 320px, 420px"
+            class="arch-card__image" loading="lazy" decoding="async" width="1024" height="736">
           <div class="arch-card__content">
             <h3 class="arch-card__title">Contractor & Construction Mataram</h3>
             <p class="arch-card__desc">
@@ -252,8 +286,8 @@
           <span class="stats__label">Projects Designed</span>
         </div>
         <div class="stats__item">
-          <span class="stats__number" data-count="100" data-suffix="%">0%</span>
-          <span class="stats__label">Client Satisfaction</span>
+          <span class="stats__number stats__number--text">Clear</span>
+          <span class="stats__label">Project communication</span>
         </div>
         <div class="stats__item">
           <span class="stats__number" data-count="7" data-suffix="+">0+</span>
@@ -281,7 +315,9 @@
       <div class="showcase__grid reveal">
         <a href="/luxury-residential-mataram" class="project-card project-card--labeled" target="_blank">
           <img src="/images/Rumah Anastasia.webp" alt="Luxury residential design completed in Mataram"
-            class="project-card__image" loading="lazy" width="960" height="1088">
+            srcset="/images/responsive/rumah-anastasia-480.webp 480w, /images/responsive/rumah-anastasia-768.webp 768w, /images/Rumah Anastasia.webp 960w"
+            sizes="(max-width: 768px) calc(100vw - 40px), 480px"
+            class="project-card__image" loading="lazy" decoding="async" width="960" height="1088">
           <div class="project-card__overlay">
             <span class="project-card__badge">Completed</span>
             <h3 class="project-card__title">Luxury Residential</h3>
@@ -311,7 +347,9 @@
 
         <a href="/tropical-villa-senggigi" class="project-card project-card--labeled" target="_blank">
           <img src="/images/projects/concepts/pool-villa-courtyard.webp" alt="Tropical villa courtyard concept study"
-            class="project-card__image" loading="lazy" width="1024" height="1024">
+            srcset="/images/responsive/pool-villa-courtyard-480.webp 480w, /images/responsive/pool-villa-courtyard-768.webp 768w, /images/projects/concepts/pool-villa-courtyard.webp 1024w"
+            sizes="(max-width: 768px) calc(100vw - 40px), 480px"
+            class="project-card__image" loading="lazy" decoding="async" width="1024" height="771">
           <div class="project-card__overlay">
             <span class="project-card__badge">Concept</span>
             <h3 class="project-card__title">Tropical Villa</h3>
@@ -436,7 +474,8 @@
     <div class="container">
       <div class="section-header reveal">
         <span class="section-label">Client Feedback</span>
-        <h2 class="section-title">What Our Clients Say</h2>
+        <h2 class="section-title">Selected Client Feedback</h2>
+        <p class="section-desc">Project type and location are shown with each note so the feedback has useful context.</p>
       </div>
 
       <div class="testimonials__grid reveal">
@@ -594,7 +633,7 @@
         <!-- Paket Desain -->
         <div class="pricing-card">
           <h3 class="pricing-card__title">Architectural Design</h3>
-          <div class="pricing-card__price" style="font-size: 1.5rem; padding-top: 10px;">Contact us</div>
+          <div class="pricing-card__price" style="font-size: 1.5rem; padding-top: 10px;">Rp 150k–350k<span class="pricing-card__unit"> / m²</span></div>
           <ul class="pricing-card__features">
             <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #d4af37)" stroke-width="2" style="flex-shrink:0;margin-top:2px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Design Concept &amp; 3D Render</li>
             <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #d4af37)" stroke-width="2" style="flex-shrink:0;margin-top:2px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Complete Working Drawings (DED)</li>
@@ -608,7 +647,7 @@
         <div class="pricing-card pricing-card--featured">
           <div class="pricing-card__badge">Most Popular</div>
           <h3 class="pricing-card__title">Design &amp; Build</h3>
-          <div class="pricing-card__price" style="font-size: 1.5rem; padding-top: 10px;">Contact us</div>
+          <div class="pricing-card__price" style="font-size: 1.5rem; padding-top: 10px;">Custom proposal</div>
           <ul class="pricing-card__features">
             <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #d4af37)" stroke-width="2" style="flex-shrink:0;margin-top:2px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Architectural Design</li>
             <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #d4af37)" stroke-width="2" style="flex-shrink:0;margin-top:2px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Transparent Material Specifications</li>
@@ -619,8 +658,8 @@
         </div>
       </div>
 
-      <div style="margin-top: 32px; text-align: center; font-size: 0.9rem; color: var(--color-text-secondary); opacity: 0.8;">
-        *Note: The prices displayed above are just examples and may vary depending on the complexity of the design, material selection, and site conditions.
+      <div class="pricing__note" style="margin-top: 32px; text-align: center; font-size: 0.9rem; color: var(--color-text-secondary); opacity: 0.8;">
+        *Design fees vary with scope and complexity. Construction is quoted after a site, brief, and material review.
       </div>
     </div>
   </section>
@@ -786,6 +825,8 @@
       </div>
     </div>
   </section>
+
+  </main>
 
 </body>
 

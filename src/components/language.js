@@ -1,9 +1,37 @@
 // Shared language state and copy for the core brand pages.
 
 export function getPageLanguage() {
-  const requested = new URLSearchParams(window.location.search).get('lang');
-  if (requested === 'id' || requested === 'en') return requested;
-  return document.documentElement.lang.toLowerCase().startsWith('id') ? 'id' : 'en';
+const requested = new URLSearchParams(window.location.search).get('lang');
+if (requested === 'id' || requested === 'en') return requested;
+return document.documentElement.lang.toLowerCase().startsWith('id') ? 'id' : 'en';
+}
+
+function updateLanguageMetadata(language) {
+  const canonical = document.querySelector('link[rel="canonical"]');
+  const englishUrl = new URL(canonical?.href || window.location.href);
+  englishUrl.search = '';
+  englishUrl.hash = '';
+
+  const localizedUrl = new URL(englishUrl);
+  if (language === 'id') localizedUrl.searchParams.set('lang', 'id');
+
+  if (canonical) canonical.href = localizedUrl.href;
+
+  const setAlternate = (languageCode, href) => {
+    let link = document.querySelector(`link[rel="alternate"][hreflang="${languageCode}"]`);
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'alternate';
+      link.hreflang = languageCode;
+      document.head.appendChild(link);
+    }
+    link.href = href;
+  };
+
+  setAlternate('en', englishUrl.href);
+  setAlternate('id', new URL(`${englishUrl.pathname}?lang=id`, englishUrl.origin).href);
+  setAlternate('x-default', englishUrl.href);
+  document.querySelector('meta[property="og:locale"]')?.setAttribute('content', language === 'id' ? 'id_ID' : 'en_US');
 }
 
 function setText(selector, value) {
@@ -51,13 +79,25 @@ function applyHomeIndonesian() {
   setText('#approach .section-label', 'Cara Kami Bekerja');
   setText('#approach .section-title', 'Mulai dari tempatnya');
   setText('.approach__text', 'Setiap proyek di Lombok memiliki kondisi yang berbeda. Lahan pesisir membutuhkan respons yang berbeda dari lereng teduh atau jalan hunian yang ramai. Kami mempelajari matahari, hujan, aliran udara, pemandangan, dan perawatan sejak awal, lalu menggunakannya untuk menentukan posisi ruang, bukaan, naungan, dan area luar.');
-  setAll('.stats__label', ['Proyek yang Dirancang', 'Kepuasan Klien', 'Klien yang Dilayani', 'Area di Lombok']);
+  setText('.stats__number--text', 'Jelas');
+  setAll('.stats__label', ['Proyek yang Dirancang', 'Komunikasi Proyek', 'Klien yang Dilayani', 'Area di Lombok']);
 
   setText('#showcase .section-label', 'Karya Terpilih');
   setText('#showcase .section-title', 'Proyek Terbaru');
   setText('#showcase .section-desc', 'Rumah, villa, dan ruang hospitality di Lombok serta pulau-pulau sekitarnya.');
   setAll('#showcase .project-card__badge', ['Selesai', 'Berjalan', 'Konsep', 'Konsep']);
   setLabel('#showcase .btn--outline', 'Lihat Semua Proyek');
+
+  setText('#testimonials .section-label', 'Feedback Klien');
+  setText('#testimonials .section-title', 'Feedback Klien Terpilih');
+  setText('#testimonials .section-desc', 'Jenis proyek dan lokasi ditampilkan bersama setiap catatan agar konteksnya tetap jelas.');
+
+  setText('#pricing .section-label', 'Investasi');
+  setText('#pricing .section-title', 'Jelas sejak awal');
+  setText('#pricing .section-desc', 'Kami membahas ruang lingkup dan anggaran sejak awal agar pilihan desain tetap realistis.');
+  setHtml('#pricing .pricing-card:nth-child(1) .pricing-card__price', 'Rp 150k–350k<span class="pricing-card__unit"> / m²</span>');
+  setText('#pricing .pricing-card:nth-child(2) .pricing-card__price', 'Proposal khusus');
+  setText('#pricing .pricing__note', '*Biaya desain berubah sesuai ruang lingkup dan kompleksitas. Konstruksi dihitung setelah peninjauan lahan, brief, dan material.');
 
   setText('#roots .section-label', 'Studio');
   setText('#roots .section-title', 'Cara kerja yang praktis');
@@ -253,9 +293,12 @@ function applyLahanIndonesian() {
 }
 
 export function applyLanguage() {
-  const language = getPageLanguage();
-  document.documentElement.lang = language;
+  const requestedLanguage = getPageLanguage();
   const path = window.location.pathname.replace(/\/+$/, '').replace(/\.html$/, '') || '/';
+  const translatedPaths = new Set(['/', '/services', '/projects', '/artikel', '/lahan']);
+  const language = requestedLanguage === 'id' && translatedPaths.has(path) ? 'id' : 'en';
+  document.documentElement.lang = language;
+  updateLanguageMetadata(language);
   if (language !== 'id') {
     if (path === '/artikel') applyArtikelEnglish();
     if (path === '/lahan') applyLahanEnglish();

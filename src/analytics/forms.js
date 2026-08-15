@@ -1,6 +1,5 @@
+import { getAttribution } from './attribution.js';
 import { ANALYTICS_EVENTS, trackEvent } from './events.js';
-
-const WHATSAPP_NUMBER = '6285190645078';
 
 function readField(form, name, fallbackId) {
   return form.elements.namedItem(name)?.value?.trim() ||
@@ -38,51 +37,49 @@ function showDeliveryError(form) {
     error.style.cssText = 'margin-top:12px;color:#f0a6a6;font-size:14px;line-height:1.5;';
     form.appendChild(error);
   }
-  error.textContent = form.dataset.errorLabel || (
+    error.textContent = form.dataset.errorLabel || (
     document.documentElement.lang.toLowerCase().startsWith('id')
-      ? 'WhatsApp tidak dapat dibuka. Silakan coba lagi atau hubungi kami melalui email.'
-      : 'We could not open WhatsApp. Please try again or contact us by email.'
+      ? 'Form tidak dapat dikirim. Silakan coba lagi beberapa saat lagi.'
+      : 'We could not submit the form. Please try again in a moment.'
   );
   error.hidden = false;
 }
 
-function submitToWhatsApp(form) {
+async function submitToAgent(form) {
   const name = readField(form, 'nama', 'hp-name');
   const phone = readField(form, 'telepon', 'hp-phone');
   const email = readField(form, 'email');
   const type = readField(form, 'jenis_proyek', 'hp-type');
   const message = readField(form, 'pesan', 'hp-message');
+  const budget = readField(form, 'anggaran', 'hp-budget');
   const source = form.dataset.formName || window.location.pathname;
+  const attribution = getAttribution();
+  const payload = {
+    source: 'website',
+    name,
+    phone,
+    email,
+    projectType: type,
+    message,
+    budget,
+    page: window.location.pathname,
+    referrer: document.referrer,
+    utm_source: attribution.utm_source,
+    utm_medium: attribution.utm_medium,
+    utm_campaign: attribution.utm_campaign,
+    utm_term: attribution.utm_term,
+    utm_content: attribution.utm_content,
+    gclid: attribution.gclid,
+    fbclid: attribution.fbclid,
+    website: '',
+  };
 
-  const lines = [
-    'Halo Atelier Nusa, saya ingin berkonsultasi tentang proyek saya.',
-    `Nama: ${name}`,
-    `WhatsApp: ${phone}`,
-    email ? `Email: ${email}` : '',
-    type ? `Jenis proyek: ${type}` : '',
-    message ? `Detail: ${message}` : '',
-    `Sumber: ${source}`,
-  ].filter(Boolean);
-
-  const whatsappWindow = window.open(
-    `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`,
-    '_blank'
-  );
-  if (!whatsappWindow) {
-    setBusy(form, false);
-    showDeliveryError(form);
-    trackEvent('lead_delivery_failed', {
-      form_id: form.id || source,
-      form_name: source,
-      page_path: window.location.pathname,
-    });
-    return;
-  }
-  try {
-    whatsappWindow.opener = null;
-  } catch {
-    // Some browsers expose a read-only opener on a newly opened tab.
-  }
+  const response = await fetch('/api/lead', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!response.ok) throw new Error(`Lead submission failed (${response.status})`);
 
   trackEvent(ANALYTICS_EVENTS.leadSubmit, {
     form_id: form.id || source,
@@ -112,7 +109,16 @@ export function initLeadForms(root = document) {
       if (!form.reportValidity()) return;
 
       setBusy(form, true);
-      submitToWhatsApp(form);
+      submitToAgent(form).catch((error) => {
+        console.error('[Atelier Nusa] Lead submission failed:', error);
+        setBusy(form, false);
+        showDeliveryError(form);
+        trackEvent('lead_delivery_failed', {
+          form_id: form.id || form.dataset.formName || window.location.pathname,
+          form_name: form.dataset.formName || window.location.pathname,
+          page_path: window.location.pathname,
+        });
+      });
     });
 
     form.querySelectorAll('input, select, textarea').forEach((field) => {

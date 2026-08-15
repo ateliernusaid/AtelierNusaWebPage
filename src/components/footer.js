@@ -32,7 +32,7 @@ export function createFooter() {
       <div class="footer__top">
         <div class="footer__brand">
           <a href="/" class="footer__logo">
-            <img src="/images/ATN Logo Transparan.png" alt="Atelier Nusa" class="footer__logo-icon">
+            <img src="/images/responsive/atelier-nusa-logo-200.webp" srcset="/images/responsive/atelier-nusa-logo-200.webp 200w, /images/responsive/atelier-nusa-logo-400.webp 400w, /images/ATN Logo Transparan.webp 1536w" sizes="180px" alt="Atelier Nusa" class="footer__logo-icon" width="180" height="120" loading="lazy" decoding="async">
           </a>
           <p class="footer__tagline">Tropical Architecture · Lombok</p>
           <div class="footer__social">
@@ -46,6 +46,11 @@ export function createFooter() {
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+            </a>
+            <a href="https://www.threads.com/@ateliernusa.id" target="_blank" rel="me noopener" class="footer__social-link" aria-label="Threads">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18.2 8.5c-.5-3-2.6-4.7-6-4.7-4.2 0-6.7 2.5-6.7 6.9 0 4.3 2.5 6.9 6.7 6.9 3.5 0 5.7-1.6 5.7-4.2 0-2.3-1.8-3.8-4.8-3.8-2.4 0-3.8.9-3.8 2.4 0 1.2 1 2 2.4 2 1.6 0 2.6-.8 2.6-2.2 0-3.4-2.1-5.3-5.3-5.3"/>
               </svg>
             </a>
             <a href="https://wa.me/6285190645078" target="_blank" rel="noopener" class="footer__social-link" aria-label="WhatsApp">
