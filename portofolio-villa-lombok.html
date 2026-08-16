@@ -163,8 +163,9 @@
             <h2 style="color:white;">Mulai Proyek Anda Bersama Kami</h2>
             <p style="text-align:center;margin-bottom:30px;">Konsultasi gratis. Isi form dan kami akan menghubungi Anda.</p>
             <form id="portfolio-lead-form" data-lead-form data-form-name="portofolio-villa-lombok" style="max-width:500px;margin:0 auto;">
+        <div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;overflow:hidden;"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
                 <input type="text" name="nama" placeholder="Nama Lengkap" required>
-                <input type="tel" name="telepon" placeholder="Nomor WhatsApp" required>
+                <input pattern="[0-9+()\- ]{8,20}" type="tel" name="telepon" placeholder="Nomor WhatsApp" required>
                 <textarea name="pesan" rows="4" placeholder="Ceritakan proyek impian Anda..." required></textarea>
                 <button type="submit">Kirim Sekarang</button>
             </form>
@@ -182,5 +183,7 @@
       import { initLeadForms } from '/src/analytics/forms.js';
       initLeadForms();
     </script>
+
+<div style="background:#0a0f14;color:#8a938f;padding:16px 24px;text-align:center;font-size:13px;line-height:1.8;"><a href="/konsultasi-gratis" style="color:#d9b98a;text-decoration:underline;">Konsultasi Gratis</a> · <a href="/privacy-policy" style="color:inherit;">Kebijakan Privasi</a> · <a href="/terms-of-service" style="color:inherit;">Syarat Layanan</a></div>
 </body>
 </html>

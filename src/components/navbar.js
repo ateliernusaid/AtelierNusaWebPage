@@ -10,35 +10,43 @@ export function createNavbar(activePage = 'home') {
   const isIndonesian = document.documentElement.lang.toLowerCase().startsWith('id');
   const pages = isIndonesian ? [
     { key: 'home', label: 'Beranda', href: '/' },
-    { key: 'about', label: 'Studio', href: '/about.html' },
-    { key: 'projects', label: 'Proyek', href: '/projects.html' },
-    { key: 'services', label: 'Layanan', href: '/services.html' },
-    { key: 'artikel', label: 'Artikel', href: '/artikel.html' },
-    { key: 'lahan', label: 'Lahan', href: '/lahan.html' },
+    { key: 'about', label: 'Studio', href: '/about' },
+    { key: 'projects', label: 'Proyek', href: '/projects' },
+    { key: 'services', label: 'Layanan', href: '/services' },
+    { key: 'artikel', label: 'Artikel', href: '/artikel' },
+    { key: 'lahan', label: 'Lahan', href: '/lahan' },
+    { key: 'consult', label: 'Konsultasi', href: '/konsultasi-gratis' },
   ] : [
     { key: 'home', label: 'Home', href: '/' },
-    { key: 'about', label: 'About', href: '/about.html' },
-    { key: 'projects', label: 'Projects', href: '/projects.html' },
-    { key: 'services', label: 'Services', href: '/services.html' },
-    { key: 'artikel', label: 'Journal', href: '/artikel.html' },
-    { key: 'lahan', label: 'Land', href: '/lahan.html' },
+    { key: 'about', label: 'About', href: '/about' },
+    { key: 'projects', label: 'Projects', href: '/projects' },
+    { key: 'services', label: 'Services', href: '/services' },
+    { key: 'artikel', label: 'Journal', href: '/artikel' },
+    { key: 'lahan', label: 'Land', href: '/lahan' },
+    { key: 'consult', label: 'Consultation', href: '/konsultasi-gratis' },
   ];
 
   const localizeCoreHref = (href) => {
-    if (!isIndonesian || !['/', '/services.html', '/projects.html'].includes(href)) return href;
+    if (!isIndonesian || !['/', '/services', '/projects'].includes(href)) return href;
     return `${href}?lang=id`;
   };
   pages.forEach(page => { page.href = localizeCoreHref(page.href); });
 
-  const languageUrl = new URL(window.location.href);
+  // The language toggle only works on translated pages; elsewhere it would
+  // eject the visitor to the homepage, so it is not rendered at all.
+  const translatedPaths = ['/', '/services', '/projects', '/artikel', '/lahan'];
   const normalizedPath = window.location.pathname.replace(/\/+$/, '').replace(/\.html$/, '') || '/';
-  if (!['/', '/services', '/projects', '/artikel', '/lahan'].includes(normalizedPath)) {
-    languageUrl.pathname = '/';
+  const isTranslatable = translatedPaths.includes(normalizedPath);
+
+  let languageHref = '';
+  if (isTranslatable) {
+    const languageUrl = new URL(window.location.href);
+    languageUrl.pathname = normalizedPath;
     languageUrl.search = '';
     languageUrl.hash = '';
+    languageUrl.searchParams.set('lang', isIndonesian ? 'en' : 'id');
+    languageHref = `${languageUrl.pathname}${languageUrl.search}${languageUrl.hash}`;
   }
-  languageUrl.searchParams.set('lang', isIndonesian ? 'en' : 'id');
-  const languageHref = `${languageUrl.pathname}${languageUrl.search}${languageUrl.hash}`;
   const languageLabel = isIndonesian ? 'EN' : 'ID';
   const languageTitle = isIndonesian ? 'Switch to English' : 'Switch to Indonesian';
 
@@ -54,7 +62,7 @@ export function createNavbar(activePage = 'home') {
         `).join('')}
       </div>
 
-      <a href="${languageHref}" class="navbar__language" aria-label="${languageLabel} - ${languageTitle}" title="${languageTitle}">${languageLabel}</a>
+      ${isTranslatable ? `<a href="${languageHref}" class="navbar__language" aria-label="${languageLabel} - ${languageTitle}" title="${languageTitle}">${languageLabel}</a>` : ''}
 
       <button class="navbar__hamburger" id="navHamburger" aria-label="Toggle menu">
         <span></span>

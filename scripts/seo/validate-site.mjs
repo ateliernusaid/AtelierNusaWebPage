@@ -48,6 +48,12 @@ if (fs.existsSync(sitemapPath)) {
   const sitemap = fs.readFileSync(sitemapPath, 'utf8');
   const sitemapUrls = new Set([...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]));
   for (const route of routeManifest) {
+    const html = fs.readFileSync(path.join(projectRoot, route.file), 'utf8');
+    // noindex pages must stay OUT of the sitemap; skip them in the parity check.
+    if (/name=["']robots["'][^>]*noindex/i.test(html)) {
+      if (sitemapUrls.has(routeCanonical(route))) errors.push(`sitemap.xml: noindex page listed ${routeCanonical(route)}`);
+      continue;
+    }
     if (!sitemapUrls.has(routeCanonical(route))) errors.push(`sitemap.xml: missing ${routeCanonical(route)}`);
   }
 } else {

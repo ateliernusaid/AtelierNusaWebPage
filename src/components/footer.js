@@ -8,22 +8,22 @@ export function createFooter() {
   const isIndonesian = document.documentElement.lang.toLowerCase().startsWith('id');
   const copy = isIndonesian ? {
     navigationTitle: 'Navigasi',
-    navigation: [['Beranda', '/'], ['Studio', '/about.html'], ['Proyek', '/projects.html'], ['Layanan', '/services.html'], ['Artikel', '/artikel.html'], ['Lahan', '/lahan.html']],
+    navigation: [['Beranda', '/'], ['Studio', '/about'], ['Proyek', '/projects'], ['Layanan', '/services'], ['Artikel', '/artikel'], ['Lahan', '/lahan'], ['Konsultasi Gratis', '/konsultasi-gratis']],
     servicesTitle: 'Layanan',
-    services: [['Konsultasi Gratis', '/#konsultasi'], ['Jasa Arsitek Lombok', '/jasa-arsitek-lombok'], ['Arsitek Mataram', '/arsitek-mataram'], ['Desain Interior Lombok', '/desain-interior-lombok'], ['Arsitek Villa Mewah', '/arsitek-villa-mewah-lombok'], ['Biaya Arsitek Lombok', '/biaya-arsitek-lombok'], ['Renovasi Rumah Mataram', '/renovasi-rumah-mataram-lombok'], ['Tren Interior Tropis', '/tren-desain-interior-lombok']],
+    services: [['Konsultasi Gratis', '/konsultasi-gratis'], ['Jasa Arsitek Lombok', '/jasa-arsitek-lombok'], ['Arsitek Mataram', '/arsitek-mataram'], ['Desain Interior Lombok', '/desain-interior-lombok'], ['Arsitek Villa Mewah', '/arsitek-villa-mewah-lombok'], ['Biaya Arsitek Lombok', '/biaya-arsitek-lombok'], ['Renovasi Rumah Mataram', '/renovasi-rumah-mataram-lombok'], ['Tren Interior Tropis', '/tren-desain-interior-lombok']],
     contactTitle: 'Kontak',
     studioTitle: 'Studio',
   } : {
     navigationTitle: 'Explore',
-    navigation: [['Home', '/'], ['About', '/about.html'], ['Projects', '/projects.html'], ['Services', '/services.html'], ['Journal', '/artikel.html'], ['Land', '/lahan.html']],
+    navigation: [['Home', '/'], ['About', '/about'], ['Projects', '/projects'], ['Services', '/services'], ['Journal', '/artikel'], ['Land', '/lahan'], ['Free Consultation', '/konsultasi-gratis']],
     servicesTitle: 'Our Services',
-    services: [['Start a consultation', '/#konsultasi'], ['Architecture & Construction', '/services.html'], ['Architecture Projects', '/projects.html'], ['About the Studio', '/about.html'], ['Read the Journal', '/artikel.html']],
+    services: [['Start a consultation', '/konsultasi-gratis'], ['Architecture & Construction', '/services'], ['Architecture Projects', '/projects'], ['About the Studio', '/about'], ['Read the Journal', '/artikel']],
     contactTitle: 'Contact',
     studioTitle: 'Studio',
   };
 
   const localizeCoreHref = (href) => {
-    if (!isIndonesian || !['/', '/services.html', '/projects.html'].includes(href)) return href;
+    if (!isIndonesian || !['/', '/services', '/projects'].includes(href)) return href;
     return `${href}?lang=id`;
   };
 
@@ -94,9 +94,9 @@ export function createFooter() {
       <div class="footer__bottom">
         <div class="footer__copyright">© ${new Date().getFullYear()} Atelier Nusa. All rights reserved.</div>
         <div class="footer__legal">
-          <a href="/privacy-policy.html" class="footer__link" style="font-size: var(--fs-xs);">Privacy Policy</a>
+          <a href="/privacy-policy" class="footer__link" style="font-size: var(--fs-xs);">Privacy Policy</a>
           <span class="footer__legal-sep">|</span>
-          <a href="/terms-of-service.html" class="footer__link" style="font-size: var(--fs-xs);">Terms of Service</a>
+          <a href="/terms-of-service" class="footer__link" style="font-size: var(--fs-xs);">Terms of Service</a>
         </div>
       </div>
     </div>

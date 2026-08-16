@@ -195,6 +195,7 @@
           <div id="cta-form-content">
             <div class="cta__form-title">Tinggalkan Pesan</div>
             <form id="homepage-lead-form" data-lead-form data-form-name="desain-cafe-restoran-lombok" novalidate>
+        <div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;overflow:hidden;"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
               <div class="cta__form-row">
                 <div class="cta__fg">
                   <label for="hp-name">Nama Anda / Brand *</label>
@@ -202,7 +203,7 @@
                 </div>
                 <div class="cta__fg">
                   <label for="hp-phone">WhatsApp *</label>
-                  <input type="tel" id="hp-phone" placeholder="08123456789" required>
+                  <input pattern="[0-9+()\- ]{8,20}" type="tel" id="hp-phone" placeholder="08123456789" required>
                 </div>
               </div>
               <div class="cta__fg">

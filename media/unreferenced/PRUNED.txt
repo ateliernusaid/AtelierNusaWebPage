@@ -1,0 +1,2 @@
+2026-08-16T14:28:05.801Z
+Moved 79 unreferenced files out of public/ (run scripts/assets/prune-unreferenced-images.mjs to re-scan).

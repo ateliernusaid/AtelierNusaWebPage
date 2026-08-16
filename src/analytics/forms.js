@@ -71,7 +71,7 @@ async function submitToAgent(form) {
     utm_content: attribution.utm_content,
     gclid: attribution.gclid,
     fbclid: attribution.fbclid,
-    website: '',
+    website: form.querySelector('input[name="website"]')?.value?.trim() || '',
   };
 
   const response = await fetch('/api/lead', {
@@ -107,6 +107,12 @@ export function initLeadForms(root = document) {
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       if (!form.reportValidity()) return;
+
+      // Honeypot filled: pretend success and drop the submission silently.
+      if (form.querySelector('input[name="website"]')?.value?.trim()) {
+        showSuccess(form);
+        return;
+      }
 
       setBusy(form, true);
       submitToAgent(form).catch((error) => {
