@@ -9,7 +9,7 @@ export const routeManifest = [
   { file: 'luxury-residential-mataram.html', path: '/luxury-residential-mataram', language: 'en', group: 'portfolio', adsEligible: false },
   { file: 'private-residence-lombok-barat.html', path: '/private-residence-lombok-barat', language: 'en', group: 'portfolio', adsEligible: false },
   { file: 'industrial-residence-mataram.html', path: '/industrial-residence-mataram', language: 'en', group: 'portfolio', adsEligible: false },
-  { file: 'tropical-villa-senggigi.html', path: '/tropical-villa-senggigi', language: 'en', group: 'portfolio', adsEligible: false },
+  { file: 'tropical-villa-senggigi.html', path: '/tropical-villa-senggigi', language: 'id', group: 'portfolio', adsEligible: false },
   { file: 'privacy-policy.html', path: '/privacy-policy', language: 'en', group: 'legal', adsEligible: false },
   { file: 'terms-of-service.html', path: '/terms-of-service', language: 'en', group: 'legal', adsEligible: false },
   { file: 'jasa-arsitek-lombok.html', path: '/jasa-arsitek-lombok', language: 'id', group: 'acquisition', adsEligible: true },

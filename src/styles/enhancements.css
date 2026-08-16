@@ -21,10 +21,7 @@
 }
 
 /* ---- 2. FONT DISPLAY SWAP (prevents invisible text) ---- */
-/* Applied via Google Fonts &display=swap param, but we re-enforce here */
-@font-face {
-    font-display: swap;
-}
+/* Handled via the Google Fonts &display=swap parameter on every <link>. */
 
 /* ---- 3. CURSOR — SINGLE ARCHITECT RING ---- */
 /* Satu ring saja yang mengikuti mouse persis (tanpa lag/double) */
