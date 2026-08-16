@@ -23,11 +23,15 @@ export function createNavbar(activePage = 'home') {
     { key: 'services', label: 'Services', href: '/services' },
     { key: 'artikel', label: 'Journal', href: '/artikel' },
     { key: 'lahan', label: 'Land', href: '/lahan' },
-    { key: 'consult', label: 'Consult', href: '/konsultasi-gratis' },
+    { key: 'consult', label: 'Consultation', href: '/konsultasi-gratis' },
   ];
 
+  // While browsing in Indonesian, every translated page must keep ?lang=id;
+  // dropping it on some links made the site flip back to English mid-visit.
+  const localizedHrefPaths = ['/', '/services', '/projects', '/artikel', '/lahan', '/about',
+    '/tropical-villa-senggigi', '/industrial-residence-mataram', '/luxury-residential-mataram', '/private-residence-lombok-barat'];
   const localizeCoreHref = (href) => {
-    if (!isIndonesian || !['/', '/services', '/projects'].includes(href)) return href;
+    if (!isIndonesian || !localizedHrefPaths.includes(href)) return href;
     return `${href}?lang=id`;
   };
   pages.forEach(page => { page.href = localizeCoreHref(page.href); });
