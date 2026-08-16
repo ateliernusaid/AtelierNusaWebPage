@@ -23,7 +23,7 @@ export function createNavbar(activePage = 'home') {
     { key: 'services', label: 'Services', href: '/services' },
     { key: 'artikel', label: 'Journal', href: '/artikel' },
     { key: 'lahan', label: 'Land', href: '/lahan' },
-    { key: 'consult', label: 'Consultation', href: '/konsultasi-gratis' },
+    { key: 'consult', label: 'Consult', href: '/konsultasi-gratis' },
   ];
 
   const localizeCoreHref = (href) => {

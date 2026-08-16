@@ -33,7 +33,12 @@
     display: flex;
     align-items: center;
     gap: var(--space-sm);
+    flex-shrink: 0; /* never collapse the logo when the menu is crowded */
     z-index: var(--z-overlay);
+}
+
+.navbar__language {
+    flex-shrink: 0;
 }
 
 .navbar__logo-icon {
@@ -161,7 +166,24 @@
 }
 
 /* Mobile menu */
-@media (max-width: 768px) {
+/* Crowded desktop widths: tighten the menu before anything overflows */
+@media (min-width: 1025px) and (max-width: 1359px) {
+    .navbar__menu {
+        gap: var(--space-sm);
+    }
+
+    .navbar__link {
+        padding: var(--space-xs) var(--space-xs);
+        letter-spacing: var(--ls-wide, 0.05em);
+    }
+
+    .navbar__logo-icon {
+        width: 140px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 1024px) {
     .navbar__hamburger {
         display: flex;
         z-index: 9999; /* Ensure hamburger is above full-screen menu to allow closing */
