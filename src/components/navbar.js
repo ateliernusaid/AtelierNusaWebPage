@@ -34,7 +34,8 @@ export function createNavbar(activePage = 'home') {
 
   // The language toggle only works on translated pages; elsewhere it would
   // eject the visitor to the homepage, so it is not rendered at all.
-  const translatedPaths = ['/', '/services', '/projects', '/artikel', '/lahan'];
+  const translatedPaths = ['/', '/services', '/projects', '/artikel', '/lahan', '/about',
+    '/tropical-villa-senggigi', '/industrial-residence-mataram', '/luxury-residential-mataram', '/private-residence-lombok-barat'];
   const normalizedPath = window.location.pathname.replace(/\/+$/, '').replace(/\.html$/, '') || '/';
   const isTranslatable = translatedPaths.includes(normalizedPath);
 

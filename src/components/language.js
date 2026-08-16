@@ -292,11 +292,145 @@ function applyLahanIndonesian() {
   setLabel('#btn-custom-lahan', 'Konsultasi Kebutuhan Lahan');
 }
 
+function applyAboutIndonesian() {
+  document.title = 'Tentang Atelier Nusa | Studio Arsitektur Tropis di Lombok';
+  document.querySelector('meta[name="description"]')?.setAttribute('content', 'Atelier Nusa adalah studio arsitektur dan konstruksi tropis di Lombok yang merancang rumah, villa, dan ruang hospitality berdasarkan iklim, budaya, dan tempatnya.');
+
+  setText('.page-hero .section-label', 'Tentang Studio');
+  setHtml('.page-hero__title', 'Studio kecil yang<br>bekerja dari Lombok');
+  setText('.page-hero__subtitle', 'Kami merancang rumah, villa, dan ruang hospitality di Lombok. Kami memulai dari lahan, cuaca, anggaran, dan cara bangunan akan digunakan — lalu menentukan langkah berikutnya yang perlu dilakukan.');
+
+  setText('.about-intro .arch-card h2', 'Mengapa studio ini ada');
+  setAll('.about-intro .arch-text p', [
+    'Banyak proyek dimulai dari gambar referensi. Itu berguna, tetapi bukan merupakan brief desain. Rumah di lahan sempit Mataram, villa di lereng bukit, dan restoran pesisir memiliki masalah yang sangat berbeda untuk dipecahkan.',
+    'Atelier Nusa hadir untuk menimbang perbedaan itu dengan saksama. Kami menjadikan referensi sebagai titik awal, lalu menyesuaikan denah, bukaan, material, dan anggaran dengan tempat nyata dan orang-orang yang akan menggunakannya.'
+  ]);
+
+  setText('.philosophy .section-label', 'Cara Kami Bekerja');
+  setHtml('.philosophy .section-title', 'Keputusan yang berguna<br>didahulukan');
+  setAll('.philosophy .arch-card h3', [
+    'Referensi lokal, kehidupan masa kini',
+    'Material dipilih sesuai tempatnya',
+    'Desain harus selamat dari proses pembangunan',
+    'Biarkan iklim mengerjakan sebagian tugas'
+  ]);
+  setAll('.philosophy .arch-card p', [
+    'Bangunan tradisional memberi pelajaran berharga tentang naungan, aliran udara, transisi ruang, dan ruang bersama. Kami tidak menyalinnya sebagai hiasan. Kami menimbang gagasan mana yang tetap masuk akal untuk rumah keluarga, villa sewa, atau proyek hospitality masa kini.',
+    'Opsi termurah tidak selalu paling hemat dalam jangka panjang. Kami menimbang udara asin, kelembapan, paparan UV, pembersihan, penggantian, dan ketersediaan lokal sebelum menetapkan sebuah finishing. Tujuannya adalah bangunan yang bisa dirawat tanpa mengimpor setiap solusi dari tempat lain.',
+    'Gambar hanya berguna bila tim di lokasi bisa membaca dan membangun darinya. Kami mengawasi dimensi, sambungan material, dan urutan pekerjaan agar desain tetap jelas setelah meninggalkan layar.',
+    'Teritis, teras beratap, ventilasi silang, dan posisi jendela dapat membuat ruangan lebih nyaman sebelum sistem mekanis ditambahkan. Keputusan ini sederhana, tetapi harus diambil sejak awal.'
+  ]);
+
+  setText('.about-team .arch-card h2', 'Kerja di balik pekerjaan');
+  setAll('.about-team .arch-text p', [
+    'Bangunan dibentuk oleh lebih dari fasadnya. Denah, potongan, contoh material, anggaran, dan percakapan di lokasi semuanya meninggalkan jejak pada hasil akhir.',
+    'Kami menjaga bagian-bagian proses itu tetap terhubung. Bukan dengan menambah lapisan, melainkan membuat keputusan penting terlihat selagi masih ada waktu untuk mengubahnya.'
+  ]);
+
+  setText('.about-vision .section-label', 'Yang Kami Perhatikan');
+  setHtml('.about-vision .section-title', 'Menambahkan bangunan yang baik<br>tanpa menghapus karakter tempatnya');
+  setText('.about-vision .arch-text--large', 'Lombok berubah dengan cepat. Proyek hospitality, rumah kedua, dan pengembangan hunian membawa lebih banyak perhatian ke pulau ini. Pertumbuhan pasti terjadi; pembangunan yang sembarangan tidak harus.');
+  setText('.about-vision .arch-text', 'Kami ingin proyek kami bermanfaat, tahan lama, dan nyaman dihuni. Jika sebuah bangunan dapat melakukannya sambil menjaga rasa tempatnya, kami menganggap pekerjaan ini sepadan.');
+
+  setText('.about-gallery .section-label', 'Studi Desain');
+  setText('.about-gallery .section-title', 'Gagasan sebelum menjadi bangunan');
+  setText('.about-gallery .arch-text--large', 'Sebuah pilihan studi hunian dan hospitality yang mengeksplorasi naungan, proporsi, material, serta hubungan antara dalam dan luar.');
+  setAll('.gallery-title', ['Studi Rumah Taman', 'Studi Villa Kolam', 'Studi Rumah Modern', 'Studi Teras Pesisir']);
+
+  setText('.contact .contact__title', 'Punya tempat dalam pikiran?');
+  setText('.contact .contact__desc', 'Jika Anda masih mengumpulkan referensi, sedang mencari lahan, atau siap mendiskusikan proyek, kirimkan yang Anda miliki. Percakapan pertama yang berguna biasanya dimulai dari pertanyaan yang masih terbuka.');
+  setAll('.contact .contact__info-label', ['Email', 'Telepon / WhatsApp']);
+  setLabel('.contact .btn--primary', 'Mulai Percakapan');
+}
+
+const PROJECT_PAGE_TRANSLATIONS = {
+  '/tropical-villa-senggigi': {
+    title: 'Villa Tropis di Senggigi | Desain Konsep | Atelier Nusa',
+    description: 'Konsep villa tropis di lereng Senggigi dengan pemandangan laut panorama, atap berbidang lebar, dan hubungan dalam-luar yang terbuka.',
+    client: 'Desain Konsep',
+    paragraphs: [
+      'Berada di kontur perbukitan Senggigi yang rimbun, konsep Tropical Villa merupakan eksplorasi hunian lereng yang bekerja selaras dengan lingkungannya. Desainnya mengutamakan keterikatan mendalam pada lanskap, menawarkan pemandangan laut panorama sekaligus ruang tinggal yang intim dan terlindung.',
+      'Bahasa arsitekturnya ditentukan oleh atap berbidang lebar yang dirancang menahan guyuran hujan monsun serta memberi naungan penting dari matahari ekuatorial. Palet material hangat berupa kayu lokal, dinding penahan bertekstur, dan beton polish menjadi fondasi visual rumah, memastikan bangunan terasa lahir dari lerengnya, bukan diletakkan di atasnya.',
+      'Inti konsep ini adalah menghapus batas antara dalam dan luar. Ruang utama menggunakan sistem kaca dari lantai ke plafon yang dapat digeser seluruhnya, membuka inti interior menuju dek kayu luas dan kolam tepi infinity. Konfigurasi terbuka ini memaksimalkan ventilasi silang, membiarkan angin pesisir mendinginkan rumah secara alami tanpa bergantung berlebihan pada pendingin udara.',
+      'Tata ruangnya mengikuti kontur alami lahan secara berundak, menciptakan zona tersendiri untuk berkumpul, makan, dan bersantai privat. Tropical Villa menghadirkan kemewahan barefoot: arsitektur yang berkelas, responsif terhadap lingkungan, dan mengikuti ritme santai kehidupan pulau.'
+    ],
+    credit: 'Arsitektur Konsep oleh Atelier Nusa.',
+    ctaTitle: 'Sedang merencanakan proyek villa?',
+    ctaDesc: 'Baik lahan berlereng menantang maupun petak pesisir datar, mari rancang hunian yang disesuaikan dengan lahan Anda.'
+  },
+  '/industrial-residence-mataram': {
+    title: 'Residensial Industrial Mataram | Desain Konsep | Atelier Nusa',
+    description: 'Konsep hunian dengan beton ekspos dan estetika industrial yang tetap menerapkan prinsip desain tropis di Mataram.',
+    client: 'Desain Konsep',
+    paragraphs: [
+      'Dirancang sebagai pernyataan arsitektur yang mencolok di lanskap urban Mataram, konsep Industrial Residence merangkul materialitas mentah dan bentuk yang polos. Desain ini menantang norma hunian konvensional dengan berani memamerkan elemen struktural yang biasanya disembunyikan.',
+      'Karakter utamanya adalah penggunaan luas beton ekspos cetak papan. Material kokoh ini tidak hanya memberi integritas struktural, tetapi juga menghadirkan estetika brutalis yang konkret, menambatkan rumah dengan mantap pada lahannya. Nada abu-abu alami beton diimbangi oleh rangka baja hitam dan panel kaca berperforma tinggi yang luas.',
+      'Meski sarat pengaruh industrial, hunian ini tetap berakar pada prinsip desain tropis. Teritis lebar dan orientasi yang cermat melindungi area kaca besar dari panas matahari langsung sambil tetap memasukkan cahaya alami berlimpah. Desainnya menyatukan teras hidup luar ruang dan kolam refleksi, mengaburkan batas antara kenyamanan interior dan relaksasi outdoor.',
+      'Penataan ruang interiornya mengutamakan konsep open-plan, menciptakan kesan volume dan fluiditas. Dengan mengurangi ornamen yang tidak perlu, Industrial Residence membiarkan kemurnian material serta permainan cahaya dan bayangan menentukan pengalaman huniannya.'
+    ],
+    credit: 'Arsitektur Konsep oleh Atelier Nusa.',
+    ctaTitle: 'Tertarik dengan konsep ini?',
+    ctaDesc: 'Mari diskusikan bagaimana estetika industrial ini dapat kami adaptasikan untuk lahan Anda.'
+  },
+  '/luxury-residential-mataram': {
+    title: 'Hunian Mewah Mataram | Desain Selesai | Atelier Nusa',
+    description: 'Rumah mewah modern di kawasan premium pusat Mataram yang menyeimbangkan keanggunan dengan kelayakan huni tropis.',
+    client: 'Desain Selesai',
+    paragraphs: [
+      'Berlokasi di kawasan hunian premium di pusat Mataram, proyek ini dirancang sebagai rumah mewah modern yang menyeimbangkan keanggunan dengan kelayakan huni tropis. Programnya mengakomodasi ruang tinggal yang luas dengan penekanan pada kenyamanan, cahaya alami, dan estetika kontemporer.',
+      'Desainnya menampilkan bentuk geometris bersih dengan aksen kayu hangat, menciptakan kontras halus antara minimalisme modern dan kehangatan alami. Elemen vertikal serta lapisan fasad menambah kedalaman dan daya tarik visual pada sisi menghadap jalan.',
+      'Pemilihan material mencerminkan pendekatan yang matang terhadap konteks tropis urbannya: memadukan beton ekspos, pelapis kayu, dan kaca untuk menyeimbangkan privasi dan keterbukaan. Balkon tertanam dengan rak tanaman terintegrasi menghadirkan unsur hijau ke dalam komposisi vertikal.',
+      'Pencahayaan aksen LED menonjolkan garis-garis arsitektur di malam hari, mengubah hunian ini menjadi kehadiran yang mencolok di lingkungannya. Setiap detail, dari kanopi masuk hingga elemen screen berperforasi, dipikirkan dengan saksama.',
+      'Tahap desain telah diselesaikan oleh Atelier Nusa, dan proyek ini mencerminkan komitmen kami menghadirkan arsitektur yang ekspresif sekaligus berpijak pada konteksnya.'
+    ],
+    credit: 'Arsitektur oleh Atelier Nusa.',
+    ctaTitle: 'Tertarik dengan proyek serupa?',
+    ctaDesc: 'Kami ingin mendengar visi Anda. Mari diskusikan apa yang mungkin untuk rumah Anda.'
+  },
+  '/private-residence-lombok-barat': {
+    title: 'Residensial Privat Lombok Barat | Konstruksi Berjalan | Atelier Nusa',
+    description: 'Renovasi strategis di Lombok Barat yang mempertahankan struktur utama, menghemat biaya, dan meningkatkan kualitas hunian.',
+    client: 'Konstruksi Berjalan',
+    paragraphs: [
+      'Proyek ini berawal dari permintaan renovasi. Sejak awal, klien memiliki satu kekhawatiran yang jelas: mereka tidak ingin pembongkaran total yang dapat meningkatkan biaya konstruksi secara signifikan.',
+      'Sebagai arsitek sekaligus pelaksana, kami menyikapinya sebagai peluang desain strategis, bukan keterbatasan. Kami melakukan penilaian menyeluruh terhadap struktur dan konfigurasi ruang yang ada, mengidentifikasi elemen mana yang dapat dipertahankan dan dioptimalkan alih-alih dibangun ulang.',
+      'Alih-alih mulai dari nol, kami berfokus mempertahankan sistem struktur utama sebanyak mungkin. Dengan mempertahankan fondasi dan rangka utama yang ada, kami terhindar dari perubahan struktural yang tidak perlu dan mencegah pembengkakan biaya.',
+      'Intervensi diarahkan pada rekonfigurasi ruang, peningkatan fungsi, dan penyempurnaan arsitektural. Penyesuaian tata ruang dirancang saksama untuk meningkatkan kejelasan, efisiensi, dan kualitas hunian secara keseluruhan dengan tetap menghormati integritas bangunan yang ada.',
+      'Metodologi ini mencerminkan komitmen inti Atelier Nusa: menghadirkan arsitektur yang penuh pertimbangan, bertanggung jawab, dan dapat dibangun. Kami percaya desain yang baik bukan soal berlebihan, melainkan ketepatan — mengambil keputusan strategis yang menyeimbangkan estetika, fungsi, keterbangunan, dan disiplin anggaran.',
+      'Proyek ini saat ini dalam tahap konstruksi, dengan tim kami mengelola proses pembangunan untuk memastikan maksud desain terlaksana dengan setia di lokasi.'
+    ],
+    credit: 'Arsitektur & Konstruksi oleh Atelier Nusa.',
+    ctaTitle: 'Tertarik dengan proyek serupa?',
+    ctaDesc: 'Renovasi maupun bangunan baru, kami senang mendiskusikan kemungkinannya. Mari bicarakan proyek Anda.'
+  }
+};
+
+function applyProjectDetailIndonesian(config) {
+  document.title = config.title;
+  document.querySelector('meta[name="description"]')?.setAttribute('content', config.description);
+  setLabel('.project-detail__back', 'Kembali ke Proyek');
+  setText('.project-detail__client', config.client);
+  setAll('.project-description__content p:not(.project-description__credit)', config.paragraphs);
+  setText('.project-description__credit', config.credit);
+  setText('.cta__title', config.ctaTitle);
+  setText('.cta__desc', config.ctaDesc);
+  setLabel('.cta .btn--primary', 'Mulai Percakapan');
+}
+
 export function applyLanguage() {
   const requestedLanguage = getPageLanguage();
   const path = window.location.pathname.replace(/\/+$/, '').replace(/\.html$/, '') || '/';
-  const translatedPaths = new Set(['/', '/services', '/projects', '/artikel', '/lahan']);
-  const language = requestedLanguage === 'id' && translatedPaths.has(path) ? 'id' : 'en';
+  const translatedPaths = new Set([
+    '/', '/services', '/projects', '/artikel', '/lahan', '/about',
+    ...Object.keys(PROJECT_PAGE_TRANSLATIONS)
+  ]);
+  // Single-language pages keep their own document language and metadata
+  // untouched — rewriting them here would mislabel Indonesian SEO pages
+  // as English and announce hreflang pairs that do not exist.
+  if (!translatedPaths.has(path)) {
+    return document.documentElement.lang.toLowerCase().startsWith('id') ? 'id' : 'en';
+  }
+  const language = requestedLanguage === 'id' ? 'id' : 'en';
   document.documentElement.lang = language;
   updateLanguageMetadata(language);
   if (language !== 'id') {
@@ -318,7 +452,9 @@ export function applyLanguage() {
     document.title = 'Proyek Arsitektur di Lombok | Atelier Nusa';
     applyProjectsIndonesian();
   }
+  if (path === '/about') applyAboutIndonesian();
   if (path === '/artikel') applyArtikelIndonesian();
   if (path === '/lahan') applyLahanIndonesian();
+  if (PROJECT_PAGE_TRANSLATIONS[path]) applyProjectDetailIndonesian(PROJECT_PAGE_TRANSLATIONS[path]);
   return language;
 }
