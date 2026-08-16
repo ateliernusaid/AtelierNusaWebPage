@@ -95,7 +95,7 @@ function applyHomeIndonesian() {
   setText('#pricing .section-label', 'Investasi');
   setText('#pricing .section-title', 'Jelas sejak awal');
   setText('#pricing .section-desc', 'Kami membahas ruang lingkup dan anggaran sejak awal agar pilihan desain tetap realistis.');
-  setHtml('#pricing .pricing-card:nth-child(1) .pricing-card__price', 'Rp 150k–350k<span class="pricing-card__unit"> / m²</span>');
+  setHtml('#pricing .pricing-card:nth-child(1) .pricing-card__price', 'Rp 150k sampai 350k<span class="pricing-card__unit"> / m²</span>');
   setText('#pricing .pricing-card:nth-child(2) .pricing-card__price', 'Proposal khusus');
   setText('#pricing .pricing__note', '*Biaya desain berubah sesuai ruang lingkup dan kompleksitas. Konstruksi dihitung setelah peninjauan lahan, brief, dan material.');
 
