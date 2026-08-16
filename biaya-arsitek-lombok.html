@@ -31,8 +31,6 @@
     gtag('config', 'AW-8060600341');
   </script>
 
-  <!-- Clarity -->
-  <script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","wotquq4rp4");</script>
 
   <!-- Article Schema -->
   <script type="application/ld+json">
@@ -143,6 +141,27 @@
       .nav-links a{font-size:18px}
     }
   </style>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    /* atn-clarity-guard */
+    (function () {
+      var host = window.location.hostname;
+      if (!host || host === 'localhost' || /^(127\.|10\.|192\.168\.|169\.254\.|172\.(1[6-9]|2\d|3[01])\.)/.test(host)) return;
+      function loadClarity() {
+        if (document.querySelector('script[data-atn-clarity]')) return;
+        window.clarity = window.clarity || function () {
+          (window.clarity.q = window.clarity.q || []).push(arguments);
+        };
+        var script = document.createElement('script');
+        script.async = true;
+        script.dataset.atnClarity = 'true';
+        script.src = 'https://www.clarity.ms/tag/wotquq4rp4';
+        document.head.appendChild(script);
+      }
+      (window.requestIdleCallback || function (callback) { setTimeout(callback, 2200); })(loadClarity);
+    })();
+  </script>
 </head>
 <body>
   <nav>

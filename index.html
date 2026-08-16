@@ -120,26 +120,32 @@
         }
       }
     </script>
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    function loadClarity() {
-      if (document.querySelector('script[data-atn-clarity]')) return;
-      window.clarity = window.clarity || function () {
-        (window.clarity.q = window.clarity.q || []).push(arguments);
-      };
-      const script = document.createElement('script');
-      script.async = true;
-      script.dataset.atnClarity = 'true';
-      script.src = 'https://www.clarity.ms/tag/wotquq4rp4';
-      document.head.appendChild(script);
-    }
-    (window.requestIdleCallback || function (callback) { setTimeout(callback, 2200); })(loadClarity);
-  </script>
   <meta name="theme-color" content="#0a0f14"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Atelier Nusa | Tropical Architecture Studio in Lombok"/>
   <meta name="twitter:description" content="A tropical architecture and construction studio for homes, villas, hospitality, and design-build projects in Lombok."/>
   <meta name="twitter:image" content="https://www.ateliernusa.id/images/og-image.jpg"/>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    /* atn-clarity-guard */
+    (function () {
+      var host = window.location.hostname;
+      if (!host || host === 'localhost' || /^(127\.|10\.|192\.168\.|169\.254\.|172\.(1[6-9]|2\d|3[01])\.)/.test(host)) return;
+      function loadClarity() {
+        if (document.querySelector('script[data-atn-clarity]')) return;
+        window.clarity = window.clarity || function () {
+          (window.clarity.q = window.clarity.q || []).push(arguments);
+        };
+        var script = document.createElement('script');
+        script.async = true;
+        script.dataset.atnClarity = 'true';
+        script.src = 'https://www.clarity.ms/tag/wotquq4rp4';
+        document.head.appendChild(script);
+      }
+      (window.requestIdleCallback || function (callback) { setTimeout(callback, 2200); })(loadClarity);
+    })();
+  </script>
 </head>
 
 <body>

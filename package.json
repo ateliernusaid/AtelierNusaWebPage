@@ -11,6 +11,7 @@
         "validate:seo": "node scripts/seo/validate-site.mjs",
         "generate:sitemap": "node scripts/seo/generate-sitemap.mjs",
         "validate:build": "node scripts/validation/verify-build.mjs",
+        "sync:clarity": "node scripts/analytics/sync-clarity.mjs",
         "optimize:images": "node scripts/assets/optimize-images.mjs"
     },
     "devDependencies": {
