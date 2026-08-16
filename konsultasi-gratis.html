@@ -571,14 +571,15 @@
                         <p class="form-subtitle">Lengkapi formulir di bawah ini, tim arsitek kami akan segera menghubungi Anda melalui WhatsApp.</p>
                         
                         <form id="consultation-form" novalidate>
+                            <div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;overflow:hidden;"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
                             <div class="form-group">
                                 <label class="form-label" for="lead-name">Nama Lengkap</label>
                                 <input type="text" id="lead-name" class="form-input" placeholder="Masukkan nama lengkap Anda" required>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label" for="lead-phone">Nomor WhatsApp</label>
-                                <input type="tel" id="lead-phone" class="form-input" placeholder="Contoh: 08123456789" required>
+                                <input type="tel" id="lead-phone" class="form-input" placeholder="Contoh: 08123456789" pattern="[0-9+()\- ]{8,20}" required>
                             </div>
 
                             <div class="form-group">
@@ -632,15 +633,18 @@
     </div>
 
     <script>
-        // Form Submission Logic
-        document.getElementById('consultation-form').addEventListener('submit', function(e) {
+        // Form Submission Logic — records the lead via /api/lead (with UTM
+        // attribution) before handing off to WhatsApp, so the consultation
+        // team sees the lead even if the visitor never sends the message.
+        document.getElementById('consultation-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+
             var nameEl = document.getElementById('lead-name');
             var phoneEl = document.getElementById('lead-phone');
             var projectEl = document.getElementById('lead-project');
             var locationEl = document.getElementById('lead-location');
             var messageEl = document.getElementById('lead-message');
+            var honeypotEl = document.querySelector('#consultation-form input[name="website"]');
             var submitBtn = document.getElementById('submit-btn');
 
             // Reset field borders
@@ -654,7 +658,7 @@
                 nameEl.style.borderColor = '#ff4d4d';
                 valid = false;
             }
-            if (!phoneEl.value.trim()) {
+            if (!/^[0-9+()\- ]{8,20}$/.test(phoneEl.value.trim())) {
                 phoneEl.style.borderColor = '#ff4d4d';
                 valid = false;
             }
@@ -665,7 +669,17 @@
 
             if (!valid) return;
 
-            // Update UI state to loading
+            var showSuccess = function() {
+                document.getElementById('input-view').style.display = 'none';
+                document.getElementById('success-view').style.display = 'block';
+            };
+
+            // Honeypot filled: drop the submission silently.
+            if (honeypotEl && honeypotEl.value.trim()) {
+                showSuccess();
+                return;
+            }
+
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<span>Memproses...</span>';
 
@@ -680,26 +694,69 @@
             ].filter(Boolean);
             var whatsappUrl = 'https://wa.me/6285190645078?text=' + encodeURIComponent(lines.join('\n'));
 
-            if (typeof gtag === 'function') {
-                gtag('event', 'lead_submit', {
-                    ...(window.atelierNusaAttribution ? window.atelierNusaAttribution() : {}),
+            var attribution = (typeof window.atelierNusaAttribution === 'function')
+                ? window.atelierNusaAttribution()
+                : {};
+            var fire = function(name, params) {
+                if (typeof gtag === 'function') gtag('event', name, Object.assign({}, attribution, params || {}));
+                if (typeof window.clarity === 'function') window.clarity('event', name);
+            };
+
+            // Open the handoff window synchronously inside the user gesture so
+            // popup blockers do not kill it, then navigate it after the API call.
+            var waWindow = window.open('', '_blank');
+
+            try {
+                var response = await fetch('/api/lead', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        source: 'website',
+                        name: nameEl.value.trim(),
+                        phone: phoneEl.value.trim(),
+                        projectType: projectEl.value || '',
+                        message: messageEl.value.trim(),
+                        location: locationEl.value.trim(),
+                        page: window.location.pathname,
+                        referrer: document.referrer,
+                        utm_source: attribution.utm_source,
+                        utm_medium: attribution.utm_medium,
+                        utm_campaign: attribution.utm_campaign,
+                        utm_term: attribution.utm_term,
+                        utm_content: attribution.utm_content,
+                        gclid: attribution.gclid,
+                        fbclid: attribution.fbclid,
+                        website: honeypotEl ? honeypotEl.value.trim() : ''
+                    })
+                });
+                if (!response.ok) throw new Error('lead API responded ' + response.status);
+
+                fire('lead_submit', {
                     event_category: 'lead',
                     event_label: 'konsultasi-gratis',
                     project_type: projectEl.value || 'unspecified'
                 });
-                gtag('event', 'ads_conversion_Contact_1', {
+                fire('ads_conversion_Contact_1', {
                     value: 1.0,
                     currency: 'IDR',
-                    event_label: 'konsultasi-gratis',
-                    project_type: projectEl.value || 'unspecified'
+                    event_label: 'konsultasi-gratis'
+                });
+            } catch (error) {
+                // API unavailable: still hand off via WhatsApp so the lead is not lost.
+                console.error('[Atelier Nusa] Lead submission failed:', error);
+                fire('lead_delivery_failed', {
+                    event_category: 'lead',
+                    event_label: 'konsultasi-gratis'
                 });
             }
 
-            var whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-            if (!whatsappWindow) window.location.href = whatsappUrl;
+            if (waWindow) {
+                waWindow.location.href = whatsappUrl;
+            } else {
+                window.location.href = whatsappUrl;
+            }
 
-            document.getElementById('input-view').style.display = 'none';
-            document.getElementById('success-view').style.display = 'block';
+            showSuccess();
         });
     </script>
 </body>
