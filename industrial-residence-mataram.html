@@ -38,22 +38,29 @@
 
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
-    /* atn-clarity-guard */
+    /* atn-clarity-v2 */
     (function () {
+      window.clarity = window.clarity || function () {
+        (window.clarity.q = window.clarity.q || []).push(arguments);
+      };
+      document.addEventListener('click', function (e) {
+        var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+        if (!a) return;
+        var href = a.getAttribute('href') || '';
+        if (/wa\.me|whatsapp/i.test(href)) window.clarity('event', 'whatsapp_click');
+        else if (href.indexOf('tel:') === 0) window.clarity('event', 'phone_click');
+        else if (href.indexOf('mailto:') === 0) window.clarity('event', 'email_click');
+      });
       var host = window.location.hostname;
       if (!host || host === 'localhost' || /^(127\.|10\.|192\.168\.|169\.254\.|172\.(1[6-9]|2\d|3[01])\.)/.test(host)) return;
-      function loadClarity() {
+      (window.requestIdleCallback || function (callback) { setTimeout(callback, 2200); })(function loadClarity() {
         if (document.querySelector('script[data-atn-clarity]')) return;
-        window.clarity = window.clarity || function () {
-          (window.clarity.q = window.clarity.q || []).push(arguments);
-        };
         var script = document.createElement('script');
         script.async = true;
         script.dataset.atnClarity = 'true';
         script.src = 'https://www.clarity.ms/tag/wotquq4rp4';
         document.head.appendChild(script);
-      }
-      (window.requestIdleCallback || function (callback) { setTimeout(callback, 2200); })(loadClarity);
+      });
     })();
   </script>
 </head>

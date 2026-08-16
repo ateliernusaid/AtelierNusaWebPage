@@ -9,6 +9,13 @@ export const ANALYTICS_EVENTS = Object.freeze({
 });
 
 export function trackEvent(name, parameters = {}) {
-  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return;
-  window.gtag('event', name, { ...getAttribution(), ...parameters });
+  if (typeof window === 'undefined') return;
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', name, { ...getAttribution(), ...parameters });
+  }
+  // Mirror funnel events into Microsoft Clarity so session recordings
+  // can be filtered by conversion stage (smart events dashboard).
+  if (typeof window.clarity === 'function') {
+    window.clarity('event', name);
+  }
 }

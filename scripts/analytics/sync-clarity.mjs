@@ -14,7 +14,7 @@ import { fileURLToPath } from 'url';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const CLARITY_PROJECT_ID = 'wotquq4rp4';
-const CANONICAL_MARKER = 'atn-clarity-guard';
+const CANONICAL_MARKER = 'atn-clarity-v2';
 
 // Matches the minified stock snippet: (function(c,l,a,r,i,t,y){...})(window,document,"clarity","script","ID");
 const STOCK_SNIPPET_RE = new RegExp(
@@ -26,26 +26,36 @@ const STOCK_SNIPPET_RE = new RegExp(
 // Matches the older deferred variant in index.html (comment through first closing script tag).
 const DEFERRED_VARIANT_RE = /[ \t]*<!--\s*Microsoft Clarity\s*-->[\s\S]*?loadClarity[\s\S]*?<\/script>[ \t]*\r?\n?/;
 
+// Matches the v1 canonical block injected by a previous run of this script.
+const V1_CANONICAL_RE = /[ \t]*<!--\s*Microsoft Clarity\s*-->[\s\S]*?atn-clarity-guard[\s\S]*?<\/script>[ \t]*\r?\n?/;
+
 function buildSnippet(eol) {
     const snippet = `
   <!-- Microsoft Clarity -->
   <script type="text/javascript">
     /* ${CANONICAL_MARKER} */
     (function () {
+      window.clarity = window.clarity || function () {
+        (window.clarity.q = window.clarity.q || []).push(arguments);
+      };
+      document.addEventListener('click', function (e) {
+        var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+        if (!a) return;
+        var href = a.getAttribute('href') || '';
+        if (/wa\\.me|whatsapp/i.test(href)) window.clarity('event', 'whatsapp_click');
+        else if (href.indexOf('tel:') === 0) window.clarity('event', 'phone_click');
+        else if (href.indexOf('mailto:') === 0) window.clarity('event', 'email_click');
+      });
       var host = window.location.hostname;
       if (!host || host === 'localhost' || /^(127\\.|10\\.|192\\.168\\.|169\\.254\\.|172\\.(1[6-9]|2\\d|3[01])\\.)/.test(host)) return;
-      function loadClarity() {
+      (window.requestIdleCallback || function (callback) { setTimeout(callback, 2200); })(function loadClarity() {
         if (document.querySelector('script[data-atn-clarity]')) return;
-        window.clarity = window.clarity || function () {
-          (window.clarity.q = window.clarity.q || []).push(arguments);
-        };
         var script = document.createElement('script');
         script.async = true;
         script.dataset.atnClarity = 'true';
         script.src = 'https://www.clarity.ms/tag/${CLARITY_PROJECT_ID}';
         document.head.appendChild(script);
-      }
-      (window.requestIdleCallback || function (callback) { setTimeout(callback, 2200); })(loadClarity);
+      });
     })();
   </script>
 `;
@@ -85,7 +95,10 @@ for (const page of collectPages()) {
 
     let next = html
         .replace(STOCK_SNIPPET_RE, '')
-        .replace(DEFERRED_VARIANT_RE, '');
+        .replace(DEFERRED_VARIANT_RE, '')
+        .replace(V1_CANONICAL_RE, '')
+        // Collapse the stray blank line a removed block may leave before </head>.
+        .replace(/\r?\n[ \t]*(<\/head>)/i, '$1');
 
     if (!/<\/head>/i.test(next)) {
         failed.push(page);
