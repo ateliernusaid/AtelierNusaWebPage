@@ -23,6 +23,14 @@
         inset 0 -1px 0 rgba(255, 255, 255, 0.03);
 }
 
+/* The nav row spans the full viewport width instead of the centered
+   content column, so the logo hugs the left edge on wide screens */
+.navbar .container {
+    max-width: none;
+    padding-left: clamp(1.25rem, 2.5vw, 3rem);
+    padding-right: clamp(1.25rem, 2.5vw, 3rem);
+}
+
 .navbar__inner {
     display: flex;
     align-items: center;
