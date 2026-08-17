@@ -32,9 +32,10 @@
 }
 
 .navbar__inner {
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
 }
 
 .navbar__logo {
@@ -79,13 +80,24 @@
     display: flex;
     align-items: center;
     gap: var(--space-sm);
-    margin-left: var(--space-lg);
+}
+
+/* Desktop: the menu sits exactly on the navbar's horizontal center so the
+   row reads symmetric (logo left, menu center, language toggle right).
+   Same boundary value as the mobile block below — at the exact width both
+   match and the later mobile block wins, so no fractional viewport can
+   fall into a gap between the two queries */
+@media (min-width: 1199.5px) {
+    .navbar__menu {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }
 
 @media (min-width: 1520px) {
     .navbar__menu {
         gap: var(--space-lg);
-        margin-left: var(--space-xl);
     }
 }
 
@@ -191,9 +203,9 @@
     transform: translateY(-8px) rotate(-45deg);
 }
 
-/* Mobile menu */
-/* Mobile menu */
-@media (max-width: 1024px) {
+/* Mobile menu — below ~1200px the centered desktop menu would collide with
+   the logo, so the row collapses into the hamburger overlay */
+@media (max-width: 1199.5px) {
     .navbar__hamburger {
         display: flex;
         z-index: 9999; /* Ensure hamburger is above full-screen menu to allow closing */
