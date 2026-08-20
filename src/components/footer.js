@@ -11,13 +11,17 @@ export function createFooter() {
     navigation: [['Beranda', '/'], ['Studio', '/about'], ['Proyek', '/projects'], ['Layanan', '/services'], ['Artikel', '/artikel'], ['Lahan', '/lahan'], ['Konsultasi Gratis', '/konsultasi-gratis']],
     servicesTitle: 'Layanan',
     services: [['Konsultasi Gratis', '/konsultasi-gratis'], ['Jasa Arsitek Lombok', '/jasa-arsitek-lombok'], ['Arsitek Mataram', '/arsitek-mataram'], ['Desain Interior Lombok', '/desain-interior-lombok'], ['Arsitek Villa Mewah', '/arsitek-villa-mewah-lombok'], ['Biaya Arsitek Lombok', '/biaya-arsitek-lombok'], ['Renovasi Rumah Mataram', '/renovasi-rumah-mataram-lombok'], ['Tren Interior Tropis', '/tren-desain-interior-lombok']],
+    areasTitle: 'Area Layanan',
+    areas: [['Kuta Mandalika', '/arsitek-kuta-mandalika'], ['Senggigi', '/jasa-arsitek-senggigi'], ['Mataram', '/arsitek-mataram'], ['Rumah Tropis NTB', '/desain-rumah-tropis-ntb'], ['Cafe & Restoran', '/desain-cafe-restoran-lombok'], ['Tips Pilih Arsitek', '/tips-memilih-arsitek-mataram']],
     contactTitle: 'Kontak',
     studioTitle: 'Studio',
   } : {
     navigationTitle: 'Explore',
     navigation: [['Home', '/'], ['About', '/about'], ['Projects', '/projects'], ['Services', '/services'], ['Journal', '/artikel'], ['Land', '/lahan'], ['Free Consultation', '/konsultasi-gratis']],
     servicesTitle: 'Our Services',
-    services: [['Start a consultation', '/konsultasi-gratis'], ['Architecture & Construction', '/services'], ['Architecture Projects', '/projects'], ['About the Studio', '/about'], ['Read the Journal', '/artikel']],
+    services: [['Free Consultation', '/konsultasi-gratis'], ['Architect Lombok', '/jasa-arsitek-lombok'], ['Architect Mataram', '/arsitek-mataram'], ['Interior Design Lombok', '/desain-interior-lombok'], ['Luxury Villa Architect', '/arsitek-villa-mewah-lombok'], ['Architect Fees Lombok', '/biaya-arsitek-lombok'], ['Home Renovation Mataram', '/renovasi-rumah-mataram-lombok']],
+    areasTitle: 'Areas We Serve',
+    areas: [['Kuta Mandalika', '/arsitek-kuta-mandalika'], ['Senggigi', '/jasa-arsitek-senggigi'], ['Mataram', '/arsitek-mataram'], ['Tropical House NTB', '/desain-rumah-tropis-ntb'], ['Cafe & Restaurant', '/desain-cafe-restoran-lombok'], ['Choosing an Architect', '/panduan-memilih-arsitek-lombok']],
     contactTitle: 'Contact',
     studioTitle: 'Studio',
   };
@@ -70,6 +74,11 @@ export function createFooter() {
           <div class="footer__col">
             <div class="footer__col-title">${copy.servicesTitle}</div>
             ${copy.services.map(([label, href], index) => `<a href="${localizeCoreHref(href)}" class="footer__link"${index === 0 ? ' style="color: var(--color-accent); font-weight: var(--fw-medium);"' : ''}>${label}</a>`).join('')}
+          </div>
+
+          <div class="footer__col">
+            <div class="footer__col-title">${copy.areasTitle}</div>
+            ${copy.areas.map(([label, href]) => `<a href="${localizeCoreHref(href)}" class="footer__link">${label}</a>`).join('')}
           </div>
 
           <div class="footer__col">
