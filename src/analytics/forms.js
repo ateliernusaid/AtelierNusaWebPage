@@ -95,6 +95,12 @@ async function submitToAgent(form) {
     form_id: form.id || source,
     page_path: window.location.pathname,
   });
+  // Google Ads conversion — WhatsApp/Contact lead (AW-17872287905)
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', 'conversion', {
+      send_to: 'AW-17872287905/HE4GCImO_uYcEKHxlcpC'
+    });
+  }
 
   showSuccess(form);
 }

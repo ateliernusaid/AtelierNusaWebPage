@@ -27,6 +27,10 @@ export function createWhatsApp() {
     waLink.addEventListener('click', () => {
         if (typeof window.gtag === 'function') {
             window.gtag('event', 'whatsapp_click', { event_category: 'lead', event_label: 'floating-button' });
+            // Google Ads conversion — WhatsApp Lead (AW-17872287905/HE4GCImO_uYcEKHxlcpC)
+            window.gtag('event', 'conversion', {
+                send_to: 'AW-17872287905/HE4GCImO_uYcEKHxlcpC'
+            });
         }
         if (typeof window.clarity === 'function') window.clarity('event', 'whatsapp_click');
     });

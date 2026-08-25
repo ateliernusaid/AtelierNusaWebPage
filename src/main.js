@@ -48,6 +48,10 @@ document.addEventListener('click', (e) => {
             event_category: 'lead',
             event_label: window.location.pathname
         });
+        // Google Ads conversion — WhatsApp Lead (AW-17872287905/HE4GCImO_uYcEKHxlcpC)
+        gtag('event', 'conversion', {
+            send_to: 'AW-17872287905/HE4GCImO_uYcEKHxlcpC'
+        });
     }
 
     // Navigate after brief delay so gtag has time to fire

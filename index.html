@@ -105,6 +105,8 @@
       gtag('js', new Date());
       gtag('config', 'G-69F6MHRBK5');
       gtag('config', 'AW-8060600341');
+      // Google Ads conversion tag — WhatsApp lead (installed 2026-08-26)
+      gtag('config', 'AW-17872287905');
       function loadGoogleTag() {
         if (document.querySelector('script[data-atn-gtag]')) return;
         const script = document.createElement('script');
@@ -119,6 +121,10 @@
           gtag('event', 'whatsapp_click', {
             event_category: 'lead',
             event_label: window.location.pathname
+          });
+          // Google Ads conversion — WhatsApp Lead
+          gtag('event', 'conversion', {
+            send_to: 'AW-17872287905/HE4GCImO_uYcEKHxlcpC'
           });
         }
       }
