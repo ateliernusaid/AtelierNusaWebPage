@@ -24,16 +24,9 @@ export function createWhatsApp() {
         <span class="whatsapp-float__label">Free Consultation</span>
     `;
 
-    waLink.addEventListener('click', () => {
-        if (typeof window.gtag === 'function') {
-            window.gtag('event', 'whatsapp_click', { event_category: 'lead', event_label: 'floating-button' });
-            // Google Ads conversion — WhatsApp Lead (AW-17872287905/HE4GCImO_uYcEKHxlcpC)
-            window.gtag('event', 'conversion', {
-                send_to: 'AW-17872287905/HE4GCImO_uYcEKHxlcpC'
-            });
-        }
-        if (typeof window.clarity === 'function') window.clarity('event', 'whatsapp_click');
-    });
+    // Tracking + in-app-browser safe navigation is handled by the global wa.me
+    // listener in main.js. Only the label is set here so events stay attributable.
+    waLink.dataset.waLabel = 'floating-button';
 
     document.body.appendChild(waLink);
 }

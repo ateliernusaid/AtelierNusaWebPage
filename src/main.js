@@ -34,36 +34,31 @@ function ensureMainLandmark() {
 
 // ========================================
 // WHATSAPP ENGAGEMENT TRACKER
-// Keep WhatsApp clicks measurable even while paid campaigns are paused.
+// Facebook/Instagram in-app browsers (41% of sessions) block window.open() once the
+// click gesture ends, so the old 350ms tracking delay silently dropped WhatsApp leads.
+// Open inside the gesture, then track — gtag uses sendBeacon and survives navigation.
 // ========================================
 document.addEventListener('click', (e) => {
-    const link = e.target.closest('a');
-    if (!link || !link.href || !link.href.includes('wa.me')) return;
+    const link = e.target?.closest?.('a[href*="wa.me"]');
+    if (!link) return;
 
-    e.preventDefault();
+    if ((link.target || '_self') === '_blank') {
+        e.preventDefault();
+        window.open(link.href, '_blank', 'noopener');
+    }
 
-    // Track the intent separately from a qualified form submission.
     if (typeof gtag === 'function') {
         gtag('event', 'whatsapp_click', {
             event_category: 'lead',
-            event_label: window.location.pathname
+            event_label: link.dataset.waLabel || window.location.pathname
         });
         // Google Ads conversion — WhatsApp Lead (AW-17872287905/HE4GCImO_uYcEKHxlcpC)
         gtag('event', 'conversion', {
             send_to: 'AW-17872287905/HE4GCImO_uYcEKHxlcpC'
         });
     }
-
-    // Navigate after brief delay so gtag has time to fire
-    const destination = link.href;
-    const target = link.target || '_self';
-    setTimeout(() => {
-        if (target === '_blank') {
-            window.open(destination, '_blank');
-        } else {
-            window.location.href = destination;
-        }
-    }, 350);
+    // Clarity whatsapp_click is emitted by the inline atn-clarity-v2 snippet on every
+    // page, so firing it here too would double-count the event.
 });
 
 // ========================================

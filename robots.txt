@@ -1,4 +1,43 @@
 User-agent: *
 Allow: /
 
+# Clarity 31 Jul–29 Aug 2026: 87 of 181 sessions were bots (48%), which distorts
+# scroll depth, session counts, and conversion-rate reporting. SEO/AI crawlers that
+# add no leads are declined; Google, Bing, and social preview bots stay allowed.
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: SerpstatBot
+Disallow: /
+
+User-agent: MegaIndex
+Disallow: /
+
+User-agent: ZoominfoBot
+Disallow: /
+
+User-agent: magpie-crawler
+Disallow: /
+
 Sitemap: https://www.ateliernusa.id/sitemap.xml
