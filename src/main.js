@@ -10,6 +10,7 @@ import { initAnimations } from './components/animations.js';
 import { initLightbox } from './components/lightbox.js';
 import { initLeadForms } from './analytics/forms.js';
 import { applyLanguage } from './components/language.js';
+import './analytics/leadTracker.js';
 
 // Determine active page
 function getActivePage() {
@@ -34,32 +35,10 @@ function ensureMainLandmark() {
 
 // ========================================
 // WHATSAPP ENGAGEMENT TRACKER
-// Facebook/Instagram in-app browsers (41% of sessions) block window.open() once the
-// click gesture ends, so the old 350ms tracking delay silently dropped WhatsApp leads.
-// Open inside the gesture, then track — gtag uses sendBeacon and survives navigation.
+// Lives in analytics/leadTracker.js so static landing pages that never bundle main.js
+// still report the Ads conversion. Importing it here keeps behaviour identical for
+// bundled pages while guaranteeing exactly one report per click.
 // ========================================
-document.addEventListener('click', (e) => {
-    const link = e.target?.closest?.('a[href*="wa.me"]');
-    if (!link) return;
-
-    if ((link.target || '_self') === '_blank') {
-        e.preventDefault();
-        window.open(link.href, '_blank', 'noopener');
-    }
-
-    if (typeof gtag === 'function') {
-        gtag('event', 'whatsapp_click', {
-            event_category: 'lead',
-            event_label: link.dataset.waLabel || window.location.pathname
-        });
-        // Google Ads conversion — WhatsApp Lead (AW-17872287905/HE4GCImO_uYcEKHxlcpC)
-        gtag('event', 'conversion', {
-            send_to: 'AW-17872287905/HE4GCImO_uYcEKHxlcpC'
-        });
-    }
-    // Clarity whatsapp_click is emitted by the inline atn-clarity-v2 snippet on every
-    // page, so firing it here too would double-count the event.
-});
 
 // ========================================
 // ARCHITECT CURSOR — SINGLE RING
