@@ -25,11 +25,6 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);font-size:
 img{max-width:100%;display:block}
 a{text-decoration:none;color:inherit}
 
-/* === PRELOADER === */
-.preloader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;transition:opacity .6s,visibility .6s}
-.preloader.done{opacity:0;visibility:hidden;pointer-events:none}
-.preloader span{font-family:var(--font-d);font-size:clamp(1.6rem,4vw,2.4rem);color:var(--gold);letter-spacing:.3em;text-transform:uppercase;animation:preloadPulse 1.5s ease infinite}
-@keyframes preloadPulse{0%,100%{opacity:.3}50%{opacity:1}}
 
 /* === NAV === */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:20px 48px;display:flex;align-items:center;justify-content:space-between;transition:all .5s var(--ease)}
@@ -172,9 +167,19 @@ nav.scrolled .logo-img{height:34px}
 @keyframes waFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
 /* === REVEAL === */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
-.reveal.visible{opacity:1;transform:translateY(0)}
+/* These start hidden and are shown by an IntersectionObserver at the end of the page.
+   The observer is not a guarantee: if the inline script fails, or the observer never
+   fires, the content stays invisible forever. So the reveal carries the same CSS
+   fallback used in base.css — a keyframe that forces the final state after 1.5s
+   regardless of JavaScript — and `.visible` cancels it when the observer does its job. */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease);animation:revealFallback .8s ease 1.5s forwards}
+.reveal.visible{opacity:1;transform:translateY(0);animation:none}
+@keyframes revealFallback{to{opacity:1;transform:translateY(0)}}
 .rd1{transition-delay:.1s}.rd2{transition-delay:.2s}.rd3{transition-delay:.3s}.rd4{transition-delay:.4s}
+
+/* The first section sits in the opening viewport on mobile, where it gates first paint.
+   Nothing above the fold should wait on a scroll reveal to become visible. */
+.statement.reveal{opacity:1;transform:none;animation:none}
 
 /* === RESPONSIVE === */
 @media(max-width:968px){
@@ -201,6 +206,15 @@ nav.scrolled .logo-img{height:34px}
   .fg-row{grid-template-columns:1fr}
   .svc-scroll{padding:0 20px}
   .svc-card{flex:0 0 85vw}
+}
+
+@media(max-width:600px){
+  /* Both of these sit inside the opening viewport and loop forever. While anything on
+     screen keeps moving the pixels never settle, so Speed Index keeps climbing well after
+     the network has gone quiet. The float is decorative; the scroll line is redundant on
+     touch, where scrolling is the obvious affordance. */
+  .wa-sticky{animation:none}
+  .hero-cin__scroll{display:none}
 }
 
 /* --- Mobile Hamburger Menu --- */
