@@ -41,8 +41,8 @@
       // and bots are not charged for the container while a real visitor's first
       // interaction still triggers it instantly above.
       function armIdleLoad() {
-        var idle = window.requestIdleCallback || function (cb) { return setTimeout(cb, 3000); };
-        idle(loadGoogleTag, { timeout: 3000 });
+        var idle = window.requestIdleCallback || function (cb) { return setTimeout(cb, 8000); };
+        idle(loadGoogleTag, { timeout: 8000 });
       }
       if (document.readyState === 'complete') armIdleLoad();
       else window.addEventListener('load', armIdleLoad, { once: true });
