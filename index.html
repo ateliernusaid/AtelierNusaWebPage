@@ -21,7 +21,7 @@
   <link rel="alternate" hreflang="x-default" href="https://www.ateliernusa.id/" />
   <link rel="me" href="https://www.instagram.com/ateliernusa.id/" />
   <link rel="me" href="https://www.threads.com/@ateliernusa.id" />
-  <link rel="preload" as="image" href="/images/Rumah Anastasia.webp" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="image" href="/images/responsive/rumah-anastasia-480.webp" imagesrcset="/images/responsive/rumah-anastasia-480.webp 480w, /images/responsive/rumah-anastasia-768.webp 768w, /images/Rumah Anastasia.webp 960w" imagesizes="(max-width: 600px) 370px, (max-width: 968px) 350px, 42vw" type="image/webp" fetchpriority="high">
   <link rel="preload" as="image" href="/images/responsive/atelier-nusa-logo-200.webp" imagesrcset="/images/responsive/atelier-nusa-logo-200.webp 200w, /images/responsive/atelier-nusa-logo-400.webp 400w, /images/ATN Logo Transparan.webp 1536w" imagesizes="180px" type="image/webp" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -114,7 +114,11 @@
         script.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17872287905';
         document.head.appendChild(script);
       }
-      (window.requestIdleCallback || function (callback) { setTimeout(callback, 1800); })(loadGoogleTag);
+      ['pointerdown', 'touchstart', 'keydown', 'scroll'].forEach(function (evt) {
+        window.addEventListener(evt, loadGoogleTag, { once: true, passive: true, capture: true });
+      });
+      /* atn-gtag-defer-v1 */
+      (window.requestIdleCallback || function (callback) { setTimeout(callback, 2000); })(loadGoogleTag);
       function trackWAConversion() {
         if (typeof gtag === 'function') {
           gtag('event', 'whatsapp_click', {

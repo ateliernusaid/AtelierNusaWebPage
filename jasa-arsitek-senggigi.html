@@ -45,7 +45,26 @@
 </script>
 
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17872287905"></script>
+  <script>
+    /* atn-gtag-defer-v1 — container loads on first interaction or idle; gtag() stub stays synchronous */
+    (function () {
+      var requested = false;
+      function loadGoogleTag() {
+        if (requested || document.querySelector('script[data-atn-gtag]')) return;
+        requested = true;
+        var s = document.createElement('script');
+        s.async = true;
+        s.dataset.atnGtag = 'true';
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17872287905';
+        document.head.appendChild(s);
+      }
+      ['pointerdown', 'touchstart', 'keydown', 'scroll'].forEach(function (evt) {
+        window.addEventListener(evt, loadGoogleTag, { once: true, passive: true, capture: true });
+      });
+      (window.requestIdleCallback || function (cb) { setTimeout(cb, 2000); })(loadGoogleTag);
+    })();
+  </script>
+
   <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-69F6MHRBK5'); gtag('config', 'AW-17872287905');</script>
 
   <style>
