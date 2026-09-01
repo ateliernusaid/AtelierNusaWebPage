@@ -42,7 +42,15 @@
       ['pointerdown', 'touchstart', 'keydown', 'scroll'].forEach(function (evt) {
         window.addEventListener(evt, loadGoogleTag, { once: true, passive: true, capture: true });
       });
-      (window.requestIdleCallback || function (cb) { setTimeout(cb, 2000); })(loadGoogleTag);
+      // Unattended load waits for a quiet main thread after load, so measurement tools
+      // and bots are not charged for the container while a real visitor's first
+      // interaction still triggers it instantly above.
+      function armIdleLoad() {
+        var idle = window.requestIdleCallback || function (cb) { return setTimeout(cb, 3000); };
+        idle(loadGoogleTag, { timeout: 3000 });
+      }
+      if (document.readyState === 'complete') armIdleLoad();
+      else window.addEventListener('load', armIdleLoad, { once: true });
     })();
   </script>
 

@@ -118,7 +118,15 @@
         window.addEventListener(evt, loadGoogleTag, { once: true, passive: true, capture: true });
       });
       /* atn-gtag-defer-v1 */
-      (window.requestIdleCallback || function (callback) { setTimeout(callback, 2000); })(loadGoogleTag);
+      // Unattended load waits for a quiet main thread after load, so measurement tools
+      // and bots are not charged for the container while a real visitor's first
+      // interaction still triggers it instantly above.
+      function armIdleLoad() {
+        const idle = window.requestIdleCallback || function (callback) { return setTimeout(callback, 3000); };
+        idle(loadGoogleTag, { timeout: 3000 });
+      }
+      if (document.readyState === 'complete') armIdleLoad();
+      else window.addEventListener('load', armIdleLoad, { once: true });
       function trackWAConversion() {
         if (typeof gtag === 'function') {
           gtag('event', 'whatsapp_click', {
