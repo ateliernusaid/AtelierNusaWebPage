@@ -281,3 +281,43 @@ img[loading="lazy"].loaded {
 .portfolio-img {
     background: var(--color-bg-secondary, #111820);
 }
+
+/* ---- 15. ABOVE-THE-FOLD PAINT PRIORITY ---- */
+/* Two measured problems on mobile, both fixed here in CSS only so nothing depends on
+   JavaScript having executed:
+
+   a) Everything in the hero was hidden behind an entry animation. `.hero__title`,
+      `.hero__subtitle`, `.hero__actions` and `.hero__image-frame` each started at
+      `opacity: 0` with `both` fill and delays up to 1.2s, so the largest element on the
+      screen could not paint until its delay elapsed. Those keyframes now animate
+      transform only (see hero.css), which is what First Contentful Paint and Largest
+      Contentful Paint were waiting on.
+
+   b) Decorative `infinite` animations inside the first viewport mean the pixels never
+      settle, so Speed Index keeps climbing. Observed lastVisualChange was 4.3s while the
+      last network response finished under 1s.
+
+   The scroll reveal in base.css is deliberately left alone: it keeps its 1.5s CSS
+   fallback, so content still appears even if the JS bundle never runs. Only the first
+   section is exempted, because that is the part that gates first paint. */
+
+/* The hero is above the fold on every viewport: never gate it behind a scroll reveal. */
+.hero .reveal,
+.hero .arch-reveal {
+    opacity: 1;
+    transform: none;
+    animation: none;
+}
+
+@media (max-width: 600px) {
+    /* Decorative loops sitting in the mobile viewport keep Speed Index from settling. */
+    .hero__badge::before,
+    .hero__scroll-hint {
+        animation: none;
+    }
+
+    /* Redundant on touch, and it occupies the first screen. */
+    .hero__scroll-hint {
+        display: none;
+    }
+}
