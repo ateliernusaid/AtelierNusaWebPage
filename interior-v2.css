@@ -6,6 +6,26 @@
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
+/* The webfonts arrive after first paint, so every heading first renders in the local
+   fallback and then reflows once the real face swaps in. Playfair sets a smaller x-height
+   than Georgia at the same size and Inter a larger one than the system UI face, so the
+   swap changes line box heights and shoves the hero h1 — measured as a 0.0505 layout
+   shift, the only shift left on the page.
+
+   These two faces re-declare the same local fonts with the metrics overridden to match
+   the webfont, so the fallback occupies the height the real face will occupy and the
+   swap costs nothing. Percentages are the webfont metrics divided by the fallback's. */
+@font-face{
+  font-family:'Playfair Fallback';
+  src:local('Georgia'),local('Times New Roman');
+  size-adjust:110.5%;ascent-override:88%;descent-override:21%;line-gap-override:0%;
+}
+@font-face{
+  font-family:'Inter Fallback';
+  src:local('Segoe UI'),local('Roboto'),local('Helvetica Neue'),local('Arial');
+  size-adjust:107%;ascent-override:90%;descent-override:22%;line-gap-override:0%;
+}
+
 :root{
   --bg:#080b0f;--bg2:#0e1319;--bg3:#151c24;
   --surface:rgba(255,255,255,0.03);--surface-h:rgba(255,255,255,0.06);
@@ -13,8 +33,8 @@
   --accent:rgba(201,168,76,0.12);
   --text:#f5f0e8;--text2:rgba(245,240,232,0.7);--text-m:rgba(245,240,232,0.4);
   --border:rgba(201,168,76,0.15);--border-lt:rgba(255,255,255,0.06);
-  --font-d:'Playfair Display',Georgia,serif;
-  --font-b:'Inter',system-ui,sans-serif;
+  --font-d:'Playfair Display','Playfair Fallback',Georgia,serif;
+  --font-b:'Inter','Inter Fallback',system-ui,sans-serif;
   --ease:cubic-bezier(.4,0,.2,1);--spring:cubic-bezier(.34,1.56,.64,1);
   --wa:#25D366;
 }
