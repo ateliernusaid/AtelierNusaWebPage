@@ -59,12 +59,24 @@ nav.scrolled .logo-img{height:34px}
 .nav-cta:hover{background:var(--gold);color:var(--bg)}
 
 /* === HERO — CINEMATIC FULLBLEED === */
-.hero-cin{position:relative;height:100vh;width:100%;overflow:hidden}
+/* The hero fills the viewport and its text block sat on the bottom edge, so every
+   viewport-height change moved the block: 412x823 -> 412x750 slid it 73px, which
+   Lighthouse scored as a 0.1904 layout shift on the interior page. Mobile browsers resize
+   exactly like that when the URL bar retracts mid-load.
+
+   Neither svh nor justify-content:flex-end fixes it — both still position the block from a
+   bottom edge that moves, and a resize probe confirmed the same -73px after each attempt.
+   The block has to hang off the top instead, so its offset is set by content above it and
+   nothing below it can move it. padding-top places it where the bottom edge used to put it
+   on a phone-shaped viewport, and min-height keeps the section full-bleed. */
+.hero-cin{position:relative;min-height:100vh;min-height:100svh;width:100%;overflow:hidden}
 .hero-cin__media{position:absolute;inset:0}
 .hero-cin__media img{width:100%;height:100%;object-fit:cover;transform:scale(1.05);transition:transform 12s ease;filter:brightness(.55)contrast(1.1)}
 .hero-cin:hover .hero-cin__media img{transform:scale(1)}
 .hero-cin__overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,11,15,.3) 0%,rgba(8,11,15,.1) 40%,rgba(8,11,15,.7) 100%);pointer-events:none}
-.hero-cin__content{position:absolute;bottom:0;left:0;right:0;padding:0 clamp(2rem,6vw,6rem) clamp(4rem,8vh,8rem);z-index:10}
+/* Placed by the flow from the top, so no bottom edge can move it. The rem padding replaces
+   clamp(4rem,8vh,8rem), whose 8vh term tracked viewport height for the same reason. */
+.hero-cin__content{position:relative;width:100%;padding:22rem clamp(2rem,6vw,6rem) 5rem;z-index:10}
 .hero-cin__tag{font-family:var(--font-b);font-size:11px;font-weight:400;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:inline-block}
 .hero-cin__title{font-family:var(--font-d);font-size:clamp(2.8rem,6vw,5.5rem);font-weight:400;line-height:1.05;color:var(--text);max-width:800px;margin-bottom:20px}
 .hero-cin__title em{font-style:italic;color:var(--gold)}
@@ -205,7 +217,8 @@ nav.scrolled .logo-img{height:34px}
 @media(max-width:968px){
   nav{padding:14px 20px}
   .nav-links{display:none}
-  .hero-cin__content{padding:0 24px 60px}
+  /* Keeps the top-anchored offset; only the horizontal and bottom padding tighten here. */
+  .hero-cin__content{padding:20rem 24px 60px}
   .statement{grid-template-columns:1fr;gap:32px;padding:60px 24px}
   .svc-card{flex:0 0 300px}
   .port-grid{grid-template-columns:1fr;gap:2px}
