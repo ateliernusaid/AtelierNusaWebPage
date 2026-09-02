@@ -58,6 +58,91 @@
 
 
 
+<!-- Structured Data — same @id as the homepage so Google merges this into the one
+     canonical business entity instead of treating it as a second, competing one. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": ["LocalBusiness", "Architect", "GeneralContractor"],
+  "@id": "https://www.ateliernusa.id/#business",
+  "name": "Atelier Nusa",
+  "description": "Jasa arsitek di Lombok untuk desain rumah tropis, villa, dan hospitality, dari konsep hingga konstruksi.",
+  "url": "https://www.ateliernusa.id/jasa-arsitek-lombok",
+  "sameAs": [
+    "https://www.instagram.com/ateliernusa.id/",
+    "https://www.threads.com/@ateliernusa.id",
+    "https://www.facebook.com/profile.php?id=61586267966385"
+  ],
+  "image": "https://www.ateliernusa.id/images/og-image.jpg",
+  "telephone": "+6285190645078",
+  "email": "marketing@ateliernusa.id",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Jl. Jend. Sudirman No.34, Rembiga",
+    "addressLocality": "Mataram",
+    "addressRegion": "Nusa Tenggara Barat",
+    "postalCode": "83124",
+    "addressCountry": "ID"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -8.5642571,
+    "longitude": 116.1174039
+  },
+  "hasMap": "https://www.google.com/maps?q=Atelier+Nusa,+Jl.+Jend.+Sudirman+No.34,+Gegutu,+Rembiga,+Kec.+Selaparang,+Kota+Mataram",
+  "openingHours": "Mo-Sa 08:00-17:00",
+  "areaServed": ["Lombok", "Mataram", "Senggigi", "Kuta Lombok", "Gili Islands", "NTB"],
+  "priceRange": "$$",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Layanan Arsitek Lombok",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Desain Rumah Tropis",
+          "description": "Desain rumah tropis yang merespons iklim, orientasi matahari, dan aliran angin di Lombok.",
+          "areaServed": "Lombok",
+          "provider": {"@id": "https://www.ateliernusa.id/#business"}
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Villa & Hospitality",
+          "description": "Desain villa dan bangunan hospitality untuk lahan di Lombok, dari konsep hingga dokumen konstruksi.",
+          "areaServed": "Lombok",
+          "provider": {"@id": "https://www.ateliernusa.id/#business"}
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Design-Build & Renovasi",
+          "description": "Satu tim menangani desain sekaligus konstruksi, termasuk renovasi bangunan yang sudah ada.",
+          "areaServed": "Lombok",
+          "provider": {"@id": "https://www.ateliernusa.id/#business"}
+        }
+      }
+    ]
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ateliernusa.id/"},
+    {"@type": "ListItem", "position": 2, "name": "Jasa Arsitek Lombok", "item": "https://www.ateliernusa.id/jasa-arsitek-lombok"}
+  ]
+}
+</script>
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",

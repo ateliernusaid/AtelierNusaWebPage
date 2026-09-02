@@ -29,10 +29,55 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap"></noscript>
 
-  <!-- Schema.org: LocalBusiness + ArchitecturalService + FAQ -->
-  
-  
+  <!-- Schema.org: LocalBusiness + ArchitecturalService + FAQ
+       Same @id as the homepage so Google merges this into the one canonical
+       business entity rather than treating it as a second, competing one. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": ["LocalBusiness", "Architect", "GeneralContractor"],
+  "@id": "https://www.ateliernusa.id/#business",
+  "name": "Atelier Nusa",
+  "description": "Jasa arsitek dan konstruksi di Mataram, Lombok. Desain rumah, villa, dan proyek design-build.",
+  "url": "https://www.ateliernusa.id/arsitek-mataram",
+  "sameAs": [
+    "https://www.instagram.com/ateliernusa.id/",
+    "https://www.threads.com/@ateliernusa.id",
+    "https://www.facebook.com/profile.php?id=61586267966385"
+  ],
+  "image": "https://www.ateliernusa.id/images/og-image.jpg",
+  "telephone": "+6285190645078",
+  "email": "marketing@ateliernusa.id",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Jl. Jend. Sudirman No.34, Rembiga",
+    "addressLocality": "Mataram",
+    "addressRegion": "Nusa Tenggara Barat",
+    "postalCode": "83124",
+    "addressCountry": "ID"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -8.5642571,
+    "longitude": 116.1174039
+  },
+  "hasMap": "https://www.google.com/maps?q=Atelier+Nusa,+Jl.+Jend.+Sudirman+No.34,+Gegutu,+Rembiga,+Kec.+Selaparang,+Kota+Mataram",
+  "openingHours": "Mo-Sa 08:00-17:00",
+  "areaServed": ["Mataram", "Lombok", "Nusa Tenggara Barat"],
+  "priceRange": "$$"
+}
+</script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.ateliernusa.id/"},
+    {"@type": "ListItem", "position": 2, "name": "Arsitek Mataram", "item": "https://www.ateliernusa.id/arsitek-mataram"}
+  ]
+}
+</script>
 
 <script type="application/ld+json">
 {
