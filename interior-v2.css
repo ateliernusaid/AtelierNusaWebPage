@@ -215,6 +215,15 @@ nav.scrolled .logo-img{height:34px}
      touch, where scrolling is the obvious affordance. */
   .wa-sticky{animation:none}
   .hero-cin__scroll{display:none}
+
+  /* The hero image is the LCP element. brightness()+contrast() force a filter pass over a
+     full-viewport raster, and the scale(1.05)+12s transition keeps it on the compositor,
+     so on throttled mobile the paint lands ~0.8s late. The hover zoom the transition
+     exists for is unreachable on touch, and the darkening duplicates what the overlay
+     gradient above it already does, so neither earns its cost here. The overlay absorbs
+     the lost brightness so the text keeps the same contrast against the photo. */
+  .hero-cin__media img{filter:none;transform:none;transition:none}
+  .hero-cin__overlay{background:linear-gradient(180deg,rgba(8,11,15,.55) 0%,rgba(8,11,15,.42) 40%,rgba(8,11,15,.8) 100%)}
 }
 
 /* --- Mobile Hamburger Menu --- */
