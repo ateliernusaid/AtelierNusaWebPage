@@ -19,9 +19,24 @@ function priority(group, pathname) {
   return '0.8';
 }
 
-const urls = routeManifest.map((route) => `  <url>\n    <loc>${routeCanonical(route)}</loc>\n    <lastmod>${date}</lastmod>\n    <changefreq>${changeFrequency(route.group, route.path)}</changefreq>\n    <priority>${priority(route.group, route.path)}</priority>\n  </url>`).join('\n');
+// Keep noindex pages OUT of the sitemap — mirrors validator logic.
+async function isIndexable(route) {
+  try {
+    const html = await fs.readFile(path.join(root, route.file), 'utf8');
+    return !/name=["']robots["'][^>]*noindex/i.test(html);
+  } catch {
+    // Missing file: build verification will surface it; include anyway.
+    return true;
+  }
+}
+
+const indexable = [];
+for (const route of routeManifest) {
+  if (await isIndexable(route)) indexable.push(route);
+}
+
+const urls = indexable.map((route) => `  <url>\n    <loc>${routeCanonical(route)}</loc>\n    <lastmod>${date}</lastmod>\n    <changefreq>${changeFrequency(route.group, route.path)}</changefreq>\n    <priority>${priority(route.group, route.path)}</priority>\n  </url>`).join('\n');
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 
 await fs.writeFile(output, sitemap, 'utf8');
-console.log(`Generated sitemap with ${routeManifest.length} routes: ${path.relative(root, output)}`);
-
+console.log(`Generated sitemap with ${indexable.length} indexable routes (excluded ${routeManifest.length - indexable.length} noindex): ${path.relative(root, output)}`);
