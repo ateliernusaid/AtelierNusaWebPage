@@ -19,6 +19,8 @@
     <meta name="twitter:image" content="https://www.ateliernusa.id/images/og-image.jpg">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.ateliernusa.id/konsultasi-gratis">
+    <link rel="alternate" hreflang="id" href="https://www.ateliernusa.id/konsultasi-gratis">
+    
     <link rel="icon" type="image/png" sizes="64x64" href="/images/favicon.png?v=4">
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png?v=4">
     <meta name="theme-color" content="#0a0f14"/>
@@ -452,7 +454,7 @@
         var s = document.createElement('script');
         s.async = true;
         s.dataset.atnGtag = 'true';
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17872287905';
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-69F6MHRBK5&id=AW-17872287905';
         document.head.appendChild(s);
       }
       ['pointerdown', 'touchstart', 'keydown', 'scroll'].forEach(function (evt) {
@@ -508,10 +510,11 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
+  "@type": ["LocalBusiness", "Architect", "GeneralContractor"],
+  "@id": "https://www.ateliernusa.id/konsultasi-gratis/#business",
   "name": "Atelier Nusa",
   "description": "Free architectural consultation in Lombok",
-  "url": "https://www.ateliernusa.id/konsultasi-gratis",
+  "url": "https://www.ateliernusa.id",
   "telephone": "+6285190645078",
   "address": {
     "@type": "PostalAddress",
@@ -791,6 +794,13 @@
                     value: 1.0,
                     currency: 'IDR',
                     event_label: 'konsultasi-gratis'
+                });
+                // Google Ads conversion — Leads (same action id as WhatsApp handoff)
+                fire('conversion', {
+                    send_to: 'AW-17872287905/HE4GCImO_uYcEKHxlcpC',
+                    value: 1.0,
+                    currency: 'IDR',
+                    transaction_id: 'konsultasi-gratis'
                 });
             } catch (error) {
                 // API unavailable: still hand off via WhatsApp so the lead is not lost.

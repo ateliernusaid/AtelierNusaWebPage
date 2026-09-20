@@ -8,6 +8,8 @@
   <meta name="description" content="Arsitek spesialis villa dan properti mewah di Lombok. Desain eksklusif, material premium, manajemen proyek profesional."/>
   <meta name="keywords" content="lombok luxury architect, luxury villa architect lombok, arsitek villa mewah lombok, jasa arsitek premium ntb"/>
   <link rel="canonical" href="https://www.ateliernusa.id/arsitek-villa-mewah-lombok"/>
+    <link rel="alternate" hreflang="id" href="https://www.ateliernusa.id/arsitek-villa-mewah-lombok">
+    
   <meta property="og:title" content="Arsitek Spesialis Villa & Properti Mewah di Lombok | Atelier Nusa"/>
   <meta property="og:description" content="Arsitek spesialis villa dan properti mewah di Lombok. Konsultasi gratis."/>
   <meta property="og:image" content="https://www.ateliernusa.id/images/og-image.jpg"/>
@@ -32,7 +34,7 @@
         var s = document.createElement('script');
         s.async = true;
         s.dataset.atnGtag = 'true';
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17872287905';
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-69F6MHRBK5&id=AW-17872287905';
         document.head.appendChild(s);
       }
       ['pointerdown', 'touchstart', 'keydown', 'scroll'].forEach(function (evt) {
@@ -80,6 +82,59 @@
     })();
   </script>
   <script type="module" src="/src/analytics/leadTracker.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": [
+    "LocalBusiness",
+    "Architect",
+    "GeneralContractor"
+  ],
+  "@id": "https://www.ateliernusa.id/arsitek-villa-mewah-lombok/#business",
+  "name": "Atelier Nusa",
+  "description": "Arsitek spesialis villa dan properti mewah di Lombok. Desain eksklusif, material premium, manajemen proyek profesional.",
+  "url": "https://www.ateliernusa.id",
+  "sameAs": [
+    "https://www.instagram.com/ateliernusa.id/",
+    "https://www.threads.com/@ateliernusa.id",
+    "https://www.facebook.com/profile.php?id=61586267966385"
+  ],
+  "image": "https://www.ateliernusa.id/images/og-image.jpg",
+  "telephone": "+6285190645078",
+  "email": "marketing@ateliernusa.id",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Mataram",
+    "addressRegion": "NTB",
+    "addressCountry": "ID"
+  },
+  "areaServed": [
+    "Lombok",
+    "Mataram",
+    "Senggigi"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.ateliernusa.id/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Arsitek Villa Mewah Lombok",
+      "item": "https://www.ateliernusa.id/arsitek-villa-mewah-lombok"
+    }
+  ]
+}
+</script>
 </head><body>
 
 <!-- NAV -->
@@ -309,12 +364,42 @@ document.getElementById('lead-form-el').addEventListener('submit',async function
   const full=['[LP: arsitek-villa-mewah]','Tipe: '+type,loc?'Lokasi: '+loc:'',lahan?'Lahan: '+lahan:'',budget?'Budget: '+budget:'',msg?'Pesan: '+msg:''].filter(Boolean).join(' | ');
   const whatsappMessage=['Halo Atelier Nusa, saya ingin berkonsultasi tentang proyek saya.',`Nama: ${name}`,`WhatsApp: ${phone}`,full].filter(Boolean).join('\\n');
   const whatsappUrl=`https://wa.me/6285190645078?text=${encodeURIComponent(whatsappMessage)}`;
-  const whatsappWindow=window.open(whatsappUrl,'_blank','noopener,noreferrer');
-  if(!whatsappWindow) window.location.href=whatsappUrl;
-  if(typeof gtag==='function'){
-    gtag('event', 'lead_submit', { ...(window.atelierNusaAttribution ? window.atelierNusaAttribution() : {}), event_category:'lead', event_label:'arsitek-villa-mewah-lombok', project_type:type || 'unspecified' });
-    gtag('event', 'ads_conversion_Contact_1', { value:1.0, currency:'IDR', event_label:'arsitek-villa-mewah-lombok' });
+  const attribution=(typeof window.atelierNusaAttribution==='function')?window.atelierNusaAttribution():{};
+  const fire=function(ev,params){ if(typeof gtag==='function') gtag('event',ev,Object.assign({},attribution,params||{})); };
+
+  // Open handoff synchronously inside the user gesture so popup blockers do not kill it.
+  const waWindow=window.open('','_blank');
+
+  try {
+    const response=await fetch('/api/lead',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        source:'website', name, phone,
+        projectType:type,
+        message:[loc?'Lokasi: '+loc:'',lahan?'Lahan: '+lahan:'',budget?'Budget: '+budget:'',msg].filter(Boolean).join(' | '),
+        page:window.location.pathname, referrer:document.referrer,
+        utm_source:attribution.utm_source, utm_medium:attribution.utm_medium,
+        utm_campaign:attribution.utm_campaign, utm_term:attribution.utm_term,
+        utm_content:attribution.utm_content,
+        gclid:attribution.gclid, fbclid:attribution.fbclid,
+        website:document.querySelector('#lead-form-el input[name="website"]')?.value?.trim()||''
+      })
+    });
+    if(!response.ok) throw new Error('lead API responded '+response.status);
+    fire('lead_submit',{event_category:'lead',event_label:'arsitek-villa-mewah-lombok',project_type:type||'unspecified'});
+    fire('ads_conversion_Contact_1',{value:1.0,currency:'IDR',event_label:'arsitek-villa-mewah-lombok'});
+    fire('conversion',{send_to:'AW-17872287905/HE4GCImO_uYcEKHxlcpC',value:1.0,currency:'IDR',transaction_id:'arsitek-villa-mewah'});
+  } catch(error) {
+    // API unavailable: still report events and hand off via WhatsApp so the lead is not lost.
+    console.error('[Atelier Nusa] Lead submission failed:',error);
+    if(typeof gtag==='function'){
+      gtag('event','lead_submit',{...(window.atelierNusaAttribution?window.atelierNusaAttribution():{}),event_category:'lead',event_label:'arsitek-villa-mewah-lombok',project_type:type||'unspecified'});
+      gtag('event','ads_conversion_Contact_1',{value:1.0,currency:'IDR',event_label:'arsitek-villa-mewah-lombok'});
+    }
   }
+
+  if(waWindow){waWindow.location.href=whatsappUrl;}else{window.location.href=whatsappUrl;}
   document.getElementById('form-content').style.display='none';
   document.getElementById('success-msg').style.display='block';
   // Hamburger toggle
