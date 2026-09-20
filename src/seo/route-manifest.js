@@ -39,6 +39,12 @@ export const routeManifest = [
   { file: 'lahan.html', path: '/lahan', language: 'en', group: 'property', adsEligible: false },
   { file: 'tanah-labuhan-lombok.html', path: '/tanah-labuhan-lombok', language: 'id', group: 'property', adsEligible: false },
   { file: 'tanah-batu-layar.html', path: '/tanah-batu-layar', language: 'id', group: 'property', adsEligible: false },
+  { file: 'arsitek-villa-senggigi.html', path: '/arsitek-villa-senggigi', language: 'id', group: 'acquisition', adsEligible: true },
+  { file: 'arsitek-selong-belanak.html', path: '/arsitek-selong-belanak', language: 'id', group: 'acquisition', adsEligible: true },
+  { file: 'arsitek-gili-trawangan.html', path: '/arsitek-gili-trawangan', language: 'id', group: 'acquisition', adsEligible: true },
+  { file: 'arsitek-rumah-2-lantai-mataram.html', path: '/arsitek-rumah-2-lantai-mataram', language: 'id', group: 'acquisition', adsEligible: true },
+  { file: 'arsitek-hotel-lombok.html', path: '/arsitek-hotel-lombok', language: 'id', group: 'acquisition', adsEligible: true },
+  { file: 'arsitek-bangun-rumah-lombok.html', path: '/arsitek-bangun-rumah-lombok', language: 'id', group: 'acquisition', adsEligible: true },
 ];
 
 export const routeByFile = new Map(routeManifest.map((route) => [route.file, route]));
