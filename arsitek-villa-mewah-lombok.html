@@ -252,17 +252,17 @@
     <h2 class="svc-title" style="margin-bottom:20px">Wujudkan villa impian Anda</h2>
     <p>Ceritakan proyek villa atau properti premium yang Anda rencanakan. Tim kami merespon dalam kurang dari 1 jam.</p>
   </div>
-  <div class="form-box reveal">
-    <div id="form-content">
+  <div class="form-box reveal" data-lead-shell>
+    <div id="form-content" data-lead-content>
       <div class="form-title">Mulai Konsultasi</div>
       <div class="form-sub">Isi form, kami hubungi via WhatsApp</div>
-      <form id="lead-form-el" novalidate>
+      <form id="lead-form-el" data-lead-form data-form-name="arsitek-villa-mewah-lombok" data-loading-label="Mengirim..." novalidate>
         <div class="fg-row">
-          <div class="fg"><label>Nama</label><input type="text" id="f-name" placeholder="Nama lengkap" required/></div>
-          <div class="fg"><label>WhatsApp</label><input type="tel" id="f-phone" placeholder="08123456789" required/></div>
+          <div class="fg"><label>Nama</label><input type="text" id="f-name" name="nama" placeholder="Nama lengkap" required/></div>
+          <div class="fg"><label>WhatsApp</label><input type="tel" id="f-phone" name="telepon" placeholder="08123456789" required/></div>
         </div>
         <div class="fg-row">
-<div class="fg"><label>Tipe proyek</label><select id="f-type" required>
+<div class="fg"><label>Tipe proyek</label><select id="f-type" name="jenis_proyek" required>
           <option value="">Pilih tipe proyek</option>
           <option>Villa pribadi</option>
           <option>Boutique resort / hotel</option>
@@ -270,7 +270,7 @@
           <option>Rumah mewah</option>
           <option>Lainnya</option>
         </select></div>
-          <div class="fg"><label>Status Lahan</label><select id="f-lahan" required>
+          <div class="fg"><label>Status Lahan</label><select id="f-lahan" name="tahap" required>
             <option value="">Pilih status lahan</option>
             <option>Sudah ada lahan</option>
             <option>Masih proses pencarian/beli</option>
@@ -278,22 +278,22 @@
           </select></div>
 </div>
         <div class="fg-row">
-          <div class="fg"><label>Lokasi</label><select id="f-location">
+          <div class="fg"><label>Lokasi</label><select id="f-location" name="lokasi">
             <option value="">Pilih lokasi</option>
             <option>Senggigi</option><option>Kuta Mandalika</option><option>Selong Belanak</option>
             <option>Mataram</option><option>Gili Islands</option><option>Lombok Barat</option><option>Lokasi lain</option>
           </select></div>
-          <div class="fg"><label>Budget</label><select id="f-budget">
+          <div class="fg"><label>Budget</label><select id="f-budget" name="anggaran">
             <option value="">Estimasi budget</option>
             <option>Rp 500 juta - 1 miliar</option><option>Rp 1 - 3 miliar</option>
             <option>Rp 3 - 5 miliar</option><option>Di atas Rp 5 miliar</option><option>Diskusi dulu</option>
           </select></div>
         </div>
-        <div class="fg"><label>Detail proyek</label><textarea id="f-message" placeholder="Contoh: Villa 4 kamar di Selong Belanak untuk investasi rental..."></textarea></div>
+        <div class="fg"><label>Detail proyek</label><textarea id="f-message" name="pesan" placeholder="Contoh: Villa 4 kamar di Selong Belanak untuk investasi rental..."></textarea></div>
         <button type="submit" class="form-submit" id="submit-btn">Kirim Konsultasi Gratis</button>
       </form>
     </div>
-    <div class="success-msg" id="success-msg" style="display:none;text-align:center;padding:36px 20px">
+    <div class="success-msg" id="success-msg" data-lead-success hidden style="display:none;text-align:center;padding:36px 20px">
       <div style="font-family:var(--font-d);font-size:24px;color:var(--text);margin-bottom:10px">Terima kasih!</div>
       <p style="font-size:14px;color:var(--text2);line-height:1.65">Tim Atelier Nusa akan menghubungi via WhatsApp dalam <strong>kurang dari 1 jam</strong>.</p>
     </div>
@@ -354,58 +354,15 @@ window.addEventListener('scroll',()=>{document.getElementById('main-nav').classL
 // Reveal
 const ro=new IntersectionObserver((e)=>{e.forEach(en=>{if(en.isIntersecting){en.target.classList.add('visible');ro.unobserve(en.target)}})},{threshold:0.1});
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+  </script>
 
-// Form
-document.getElementById('lead-form-el').addEventListener('submit',async function(e){
-  e.preventDefault();
-  if (!this.checkValidity()) { this.reportValidity(); return; }
-  const btn=document.getElementById('submit-btn');btn.disabled=true;btn.textContent='Mengirim...';
-  const name=document.getElementById('f-name').value.trim(),phone=document.getElementById('f-phone').value.trim(),type=document.getElementById('f-type').value,loc=document.getElementById('f-location').value,budget=document.getElementById('f-budget').value,lahan=document.getElementById('f-lahan')?document.getElementById('f-lahan').value:'',msg=document.getElementById('f-message').value.trim();
-  const full=['[LP: arsitek-villa-mewah]','Tipe: '+type,loc?'Lokasi: '+loc:'',lahan?'Lahan: '+lahan:'',budget?'Budget: '+budget:'',msg?'Pesan: '+msg:''].filter(Boolean).join(' | ');
-  const whatsappMessage=['Halo Atelier Nusa, saya ingin berkonsultasi tentang proyek saya.',`Nama: ${name}`,`WhatsApp: ${phone}`,full].filter(Boolean).join('\\n');
-  const whatsappUrl=`https://wa.me/6285190645078?text=${encodeURIComponent(whatsappMessage)}`;
-  const attribution=(typeof window.atelierNusaAttribution==='function')?window.atelierNusaAttribution():{};
-  const fire=function(ev,params){ if(typeof gtag==='function') gtag('event',ev,Object.assign({},attribution,params||{})); };
-
-  // Open handoff synchronously inside the user gesture so popup blockers do not kill it.
-  const waWindow=window.open('','_blank');
-
-  try {
-    const response=await fetch('/api/lead',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        source:'website', name, phone,
-        projectType:type,
-        message:[loc?'Lokasi: '+loc:'',lahan?'Lahan: '+lahan:'',budget?'Budget: '+budget:'',msg].filter(Boolean).join(' | '),
-        page:window.location.pathname, referrer:document.referrer,
-        utm_source:attribution.utm_source, utm_medium:attribution.utm_medium,
-        utm_campaign:attribution.utm_campaign, utm_term:attribution.utm_term,
-        utm_content:attribution.utm_content,
-        gclid:attribution.gclid, fbclid:attribution.fbclid,
-        website:document.querySelector('#lead-form-el input[name="website"]')?.value?.trim()||''
-      })
-    });
-    if(!response.ok) throw new Error('lead API responded '+response.status);
-    fire('lead_submit',{event_category:'lead',event_label:'arsitek-villa-mewah-lombok',project_type:type||'unspecified'});
-    fire('ads_conversion_Contact_1',{value:1.0,currency:'IDR',event_label:'arsitek-villa-mewah-lombok'});
-    fire('conversion',{send_to:'AW-17872287905/HE4GCImO_uYcEKHxlcpC',value:1.0,currency:'IDR',transaction_id:'arsitek-villa-mewah'});
-  } catch(error) {
-    // API unavailable: still report events and hand off via WhatsApp so the lead is not lost.
-    console.error('[Atelier Nusa] Lead submission failed:',error);
-    if(typeof gtag==='function'){
-      gtag('event','lead_submit',{...(window.atelierNusaAttribution?window.atelierNusaAttribution():{}),event_category:'lead',event_label:'arsitek-villa-mewah-lombok',project_type:type||'unspecified'});
-      gtag('event','ads_conversion_Contact_1',{value:1.0,currency:'IDR',event_label:'arsitek-villa-mewah-lombok'});
-    }
-  }
-
-  if(waWindow){waWindow.location.href=whatsappUrl;}else{window.location.href=whatsappUrl;}
-  document.getElementById('form-content').style.display='none';
-  document.getElementById('success-msg').style.display='block';
-  // Hamburger toggle
+<script type="module">
+  import { initLeadForms } from '/src/analytics/forms.js';
+  initLeadForms();
+</script>
+<script>
   const hb=document.getElementById('hamburger'),nl=document.querySelector('.nav-links');
   if(hb&&nl){hb.addEventListener('click',()=>{hb.classList.toggle('open');nl.classList.toggle('open');document.body.style.overflow=nl.classList.contains('open')?'hidden':''})}
-});
 </script>
 
 <div style="background:#0a0f14;color:#8a938f;padding:16px 24px;text-align:center;font-size:13px;line-height:1.8;"><a href="/konsultasi-gratis" style="color:#d9b98a;text-decoration:underline;">Konsultasi Gratis</a></div>

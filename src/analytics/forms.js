@@ -21,10 +21,18 @@ function setBusy(form, busy) {
 }
 
 function showSuccess(form) {
-  const success = form.closest('[data-lead-shell]')?.querySelector('[data-lead-success]');
+  const shell = form.closest('[data-lead-shell]');
+  const success = shell?.querySelector('[data-lead-success]');
   if (success) {
-    form.hidden = true;
+    const content = shell.querySelector('[data-lead-content]');
+    if (content) {
+      content.hidden = true;
+      content.style.display = 'none';
+    } else {
+      form.hidden = true;
+    }
     success.hidden = false;
+    success.style.display = 'block';
   }
 }
 
@@ -36,9 +44,9 @@ function buildWhatsAppHandoff(fields) {
     ? ['Halo Atelier Nusa, saya ingin konsultasi proyek.']
     : ['Hi Atelier Nusa, I would like to discuss a project.'];
   const label = isId
-    ? { name: 'Nama', phone: 'WhatsApp', type: 'Jenis proyek', budget: 'Anggaran', message: 'Detail' }
-    : { name: 'Name', phone: 'WhatsApp', type: 'Project type', budget: 'Budget', message: 'Details' };
-  for (const key of ['name', 'phone', 'type', 'budget', 'message']) {
+    ? { name: 'Nama', phone: 'WhatsApp', type: 'Jenis proyek', location: 'Lokasi', stage: 'Tahap proyek', budget: 'Anggaran', message: 'Detail' }
+    : { name: 'Name', phone: 'WhatsApp', type: 'Project type', location: 'Location', stage: 'Project stage', budget: 'Budget', message: 'Details' };
+  for (const key of ['name', 'phone', 'type', 'location', 'stage', 'budget', 'message']) {
     if (fields[key]) lines.push(`${label[key]}: ${fields[key]}`);
   }
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`;
@@ -84,13 +92,15 @@ function readLeadFields(form) {
     phone: readField(form, 'telepon', 'hp-phone'),
     email: readField(form, 'email'),
     type: readField(form, 'jenis_proyek', 'hp-type'),
+    location: readField(form, 'lokasi', 'hp-location'),
+    stage: readField(form, 'tahap', 'hp-stage'),
     message: readField(form, 'pesan', 'hp-message'),
     budget: readField(form, 'anggaran', 'hp-budget'),
   };
 }
 
-async function submitToAgent(form, fields) {
-  const { name, phone, email, type, message, budget } = fields;
+async function submitToAgent(form, fields, waWindow) {
+  const { name, phone, email, type, location, stage, message, budget } = fields;
   const source = form.dataset.formName || window.location.pathname;
   const attribution = getAttribution();
   const payload = {
@@ -99,6 +109,8 @@ async function submitToAgent(form, fields) {
     phone,
     email,
     projectType: type,
+    location,
+    stage,
     message,
     budget,
     page: window.location.pathname,
@@ -125,6 +137,12 @@ async function submitToAgent(form, fields) {
     form_name: source,
     page_path: window.location.pathname,
     project_type: type || 'unspecified',
+    project_location: location || 'unspecified',
+  });
+  trackEvent(ANALYTICS_EVENTS.consultationRequested, {
+    form_id: form.id || source,
+    form_name: source,
+    page_path: window.location.pathname,
   });
 
   // Count the Ads conversion only after the browser accepts the lead handoff.
@@ -141,7 +159,48 @@ async function submitToAgent(form, fields) {
     });
   }
 
+  if (waWindow) {
+    waWindow.location.href = buildWhatsAppHandoff(fields);
+  } else {
+    window.location.href = buildWhatsAppHandoff(fields);
+  }
   showSuccess(form);
+}
+
+function adaptLegacyForm(form) {
+  const shell = form.closest('[data-lead-shell], .lead-form, .form-box, .form-card') || form.parentElement;
+  const content = form.closest('[data-lead-content], #form-content, #input-view') || form.parentElement;
+  const success = shell?.querySelector('#success-msg');
+  if (!shell || !success) return false;
+
+  shell.dataset.leadShell = 'true';
+  content.dataset.leadContent = 'true';
+  success.dataset.leadSuccess = 'true';
+  form.dataset.leadForm = 'true';
+  form.dataset.formName = form.dataset.formName || window.location.pathname.replace(/^\/+|\/+$/g, '') || 'legacy-landing';
+  form.dataset.loadingLabel = form.dataset.loadingLabel || (document.documentElement.lang.toLowerCase().startsWith('id') ? 'Mengirim...' : 'Sending...');
+
+  const fields = {
+    nama: 'f-name',
+    telepon: 'f-phone',
+    jenis_proyek: 'f-type',
+    lokasi: 'f-location',
+    tahap: 'f-stage',
+    anggaran: 'f-budget',
+    pesan: 'f-message',
+  };
+  for (const [name, id] of Object.entries(fields)) {
+    const field = form.querySelector(`#${id}`);
+    if (field && !field.name) field.name = name;
+  }
+  const landStatus = form.querySelector('#f-lahan');
+  if (landStatus && !form.elements.namedItem('tahap')) landStatus.name = 'tahap';
+  return true;
+}
+
+export function initLegacyLeadForms(root = document) {
+  root.querySelectorAll('form#lead-form-el:not([data-lead-form])').forEach(adaptLegacyForm);
+  initLeadForms(root);
 }
 
 export function initLeadForms(root = document) {
@@ -151,8 +210,8 @@ export function initLeadForms(root = document) {
 
     form.addEventListener('submit', (event) => {
       event.preventDefault();
+      event.stopImmediatePropagation();
       if (!form.reportValidity()) return;
-
       // Honeypot filled: pretend success and drop the submission silently.
       if (form.querySelector('input[name="website"]')?.value?.trim()) {
         showSuccess(form);
@@ -160,9 +219,11 @@ export function initLeadForms(root = document) {
       }
 
       const fields = readLeadFields(form);
+      const waWindow = window.open('', '_blank', 'noopener,noreferrer');
       setBusy(form, true);
-      submitToAgent(form, fields).catch((error) => {
+      submitToAgent(form, fields, waWindow).catch((error) => {
         console.error('[Atelier Nusa] Lead submission failed:', error);
+        if (waWindow && !waWindow.closed) waWindow.close();
         setBusy(form, false);
         showDeliveryError(form, fields);
         trackEvent('lead_delivery_failed', {
@@ -171,13 +232,15 @@ export function initLeadForms(root = document) {
           page_path: window.location.pathname,
         });
       });
-    });
+    }, true);
 
-    form.querySelectorAll('input, select, textarea').forEach((field) => {
-      field.addEventListener('focus', () => trackEvent(ANALYTICS_EVENTS.consultationStart, {
+    form.addEventListener('focusin', () => {
+      const context = {
         form_id: form.id || form.dataset.formName || window.location.pathname,
         page_path: window.location.pathname,
-      }), { once: true });
-    });
+      };
+      trackEvent(ANALYTICS_EVENTS.consultationStart, context);
+      trackEvent(ANALYTICS_EVENTS.leadFormStart, context);
+    }, { once: true });
   });
 }

@@ -767,14 +767,6 @@
         gtag('event', 'cta_click', { event_category: 'engagement', event_label: location });
       }
     }
-    function fireGoogleAdsConversion() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'ads_conversion_Contact_1', { value: 1.0, currency: 'IDR' });
-      }
-    }
-    function fireFBPixel() {
-      if (typeof fbq === 'function') fbq('track', 'Lead', { campaign: 'villa-designer-lombok' });
-    }
 
     // NAV SCROLL
     window.addEventListener('scroll', function () {
@@ -791,47 +783,6 @@
       });
       if (!isOpen) { btn.classList.add('open'); answer.style.maxHeight = answer.scrollHeight + 'px'; }
     }
-
-    // FORM SUBMIT
-    document.getElementById('lead-form-el').addEventListener('submit', async function (e) {
-      e.preventDefault();
-      if (!this.checkValidity()) { this.reportValidity(); return; }
-      const btn = document.getElementById('submit-btn');
-      btn.disabled = true;
-      btn.textContent = 'Sending…';
-      const name = document.getElementById('f-name').value.trim(),
-        phone = document.getElementById('f-phone').value.trim(),
-        type = document.getElementById('f-type').value,
-        loc = document.getElementById('f-location').value,
-        budget = document.getElementById('f-budget').value,
-        msg = document.getElementById('f-message').value.trim(),
-        utm = window._utmData || {};
-      const fullMessage = [
-        '[Landing: villa-designer-lombok]',
-        utm.source !== 'direct' ? `[UTM: ${utm.source}/${utm.medium}/${utm.campaign}/${utm.term}]` : '',
-        `Type: ${type}`,
-        loc ? `Location: ${loc}` : '',
-        budget ? `Budget: ${budget}` : '',
-        msg ? `Message: ${msg}` : ''
-      ].filter(Boolean).join(' | ');
-      const whatsappMessage = [
-        'Hello Atelier Nusa, I would like to consult about my project.',
-        `Name: ${name}`,
-        `WhatsApp: ${phone}`,
-        fullMessage
-      ].filter(Boolean).join('\n');
-      const whatsappUrl = `https://wa.me/6285190645078?text=${encodeURIComponent(whatsappMessage)}`;
-      const whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-      if (!whatsappWindow) window.location.href = whatsappUrl;
-      if (typeof gtag === 'function') gtag('event', 'lead_submit', {
-        ...(window.atelierNusaAttribution ? window.atelierNusaAttribution() : {}),
-        event_category: 'lead', event_label: 'villa-designer-lombok', project_type: type || 'unspecified'
-      });
-      fireGoogleAdsConversion(); fireFBPixel();
-      document.getElementById('form-content').style.display = 'none';
-      document.getElementById('success-msg').style.display = 'block';
-      document.getElementById('exit-popup').classList.remove('show');
-    });
 
     // EXIT INTENT
     (function () {
@@ -857,6 +808,10 @@
     document.getElementById('exit-popup').addEventListener('click', function (e) {
       if (e.target === this) closePopup();
     });
+  </script>
+  <script type="module">
+    import { initLegacyLeadForms } from '/src/analytics/forms.js';
+    initLegacyLeadForms();
   </script>
 </body>
 </html>

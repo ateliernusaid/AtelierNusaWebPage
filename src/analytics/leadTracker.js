@@ -1,27 +1,21 @@
+import { getAttribution } from './attribution.js';
 // ========================================
-// UNIVERSAL LEAD TRACKER
-// Standalone, no imports. Loaded by EVERY page (including static landing pages that
-// do not bundle main.js) so a WhatsApp click always reports the Ads conversion.
-//
-// Why this file exists: /arsitek-villa-mewah-lombok and /biaya-arsitek-lombok ship their
-// own bundles and never loaded main.js, so clicks there fired ZERO conversions. Ads then
-// had no signal to optimise on, which is fatal for Performance Max Smart Bidding.
-//
-// Idempotent: main.js also tracks wa.me clicks. A shared flag keeps exactly one report
-// per click even when both are present.
+// UNIVERSAL CONTACT TRACKER
+// Standalone, no imports. Loaded by static pages that do not bundle main.js.
+// A click is a micro-conversion; a qualified form submission is the lead conversion.
 // ========================================
 
-const ADS_CONVERSION = 'AW-17872287905/HE4GCImO_uYcEKHxlcpC';
 
-function reportLead(label) {
+function reportContact(label, type) {
     if (typeof window.gtag !== 'function') return;
-    window.gtag('event', 'whatsapp_click', {
+    const attribution = getAttribution();
+    window.gtag('event', type, {
+        ...attribution,
         event_category: 'lead',
-        event_label: label
+        event_label: label,
+        page_path: window.location.pathname,
     });
-    window.gtag('event', 'conversion', {
-        send_to: ADS_CONVERSION
-    });
+    if (typeof window.clarity === 'function') window.clarity('event', type);
 }
 
 if (!window.__atnLeadTracker) {
@@ -43,6 +37,7 @@ if (!window.__atnLeadTracker) {
             window.open(link.href, '_blank', 'noopener');
         }
 
-        reportLead(link.dataset.waLabel || window.location.pathname);
+        const isPhone = link.getAttribute('href')?.startsWith('tel:');
+        reportContact(link.dataset.waLabel || window.location.pathname, isPhone ? 'phone_click' : 'whatsapp_click');
     }, true);
 }

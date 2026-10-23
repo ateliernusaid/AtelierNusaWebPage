@@ -609,16 +609,16 @@
         <div class="form-point"><svg style="flex:none;width:18px;height:18px;stroke:#25d366;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg><div><b>Fast response</b>We reply on WhatsApp within 1 hour on working days.</div></div>
         <div class="form-point"><svg style="flex:none;width:18px;height:18px;stroke:#25d366;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /></svg><div><b>English &amp; Bahasa</b>Clear communication with expats, investors and local clients.</div></div>
       </div>
-      <div class="lead-form">
-        <div id="form-content">
+      <div class="lead-form" data-lead-shell>
+        <div id="form-content" data-lead-content>
           <div class="form-title">Start Your Project in Lombok</div>
           <div class="form-sub">Fill the form, we reach out on WhatsApp</div>
-          <form id="lead-form-el" novalidate>
+          <form id="lead-form-el" data-lead-form data-form-name="architect-lombok" data-loading-label="Sending…" novalidate>
             <div class="fg-row">
-              <div class="fg"><label>Full name *</label><input type="text" id="f-name" placeholder="John Smith" required /></div>
-              <div class="fg"><label>WhatsApp number *</label><input type="tel" id="f-phone" placeholder="+62 812 3456 789" required /></div>
+              <div class="fg"><label>Full name *</label><input type="text" id="f-name" name="nama" placeholder="John Smith" required /></div>
+              <div class="fg"><label>WhatsApp number *</label><input type="tel" id="f-phone" name="telepon" placeholder="+62 812 3456 789" required /></div>
             </div>
-            <div class="fg"><label>Project type *</label><select id="f-type" required>
+            <div class="fg"><label>Project type *</label><select id="f-type" name="jenis_proyek" required>
                 <option value="">Select project type</option>
                 <option>Residential house</option>
                 <option>Villa / holiday home</option>
@@ -627,8 +627,15 @@
                 <option>Hospitality / resort</option>
                 <option>Other</option>
               </select></div>
+            <div class="fg"><label>Project stage</label><select id="f-stage" name="tahap">
+                <option value="">Select project stage</option>
+                <option>Exploring the idea</option>
+                <option>Land secured</option>
+                <option>Ready for design</option>
+                <option>Ready for construction</option>
+              </select></div>
             <div class="fg-row">
-              <div class="fg"><label>Project location</label><select id="f-location">
+              <div class="fg"><label>Project location</label><select id="f-location" name="lokasi">
                   <option value="">Select location</option>
                   <option>Mataram</option>
                   <option>Senggigi</option>
@@ -638,7 +645,7 @@
                   <option>Gili Islands</option>
                   <option>Other</option>
                 </select></div>
-              <div class="fg"><label>Estimated budget</label><select id="f-budget">
+              <div class="fg"><label>Estimated budget</label><select id="f-budget" name="anggaran">
                   <option value="">Select estimate</option>
                   <option>Under Rp 200 million</option>
                   <option>Rp 200-500 million</option>
@@ -647,12 +654,12 @@
                   <option>Open to discussion</option>
                 </select></div>
             </div>
-            <div class="fg"><label>Tell us about your project</label><textarea id="f-message" placeholder="Example: I want to build a 2-storey villa near Senggigi, 500 m2 land, for a private family…"></textarea></div>
+            <div class="fg"><label>Tell us about your project</label><textarea id="f-message" name="pesan" placeholder="Example: I want to build a 2-storey villa near Senggigi, 500 m2 land, for a private family…"></textarea></div>
             <button type="submit" class="form-submit" id="submit-btn">SEND TO START MY PROJECT</button>
             <p class="form-privacy">Your details are never shared with anyone. See our <a href="/privacy-policy">Privacy Policy</a> and <a href="/terms-of-service">Terms of Service</a>.</p>
           </form>
         </div>
-        <div class="success-msg" id="success-msg">
+        <div class="success-msg" id="success-msg" data-lead-success hidden>
           <div class="s-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg></div>
           <div class="s-title">Thank you!</div>
           <p class="s-desc">Your message was received. The Atelier Nusa team will contact you on WhatsApp in <strong>under 1 hour</strong>.<br /><br />While you wait, browse our portfolio.</p>
@@ -767,14 +774,6 @@
         gtag('event', 'cta_click', { event_category: 'engagement', event_label: location });
       }
     }
-    function fireGoogleAdsConversion() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'ads_conversion_Contact_1', { value: 1.0, currency: 'IDR' });
-      }
-    }
-    function fireFBPixel() {
-      if (typeof fbq === 'function') fbq('track', 'Lead', { campaign: 'architect-lombok' });
-    }
 
     // NAV SCROLL
     window.addEventListener('scroll', function () {
@@ -791,48 +790,14 @@
       });
       if (!isOpen) { btn.classList.add('open'); answer.style.maxHeight = answer.scrollHeight + 'px'; }
     }
+  </script>
 
-    // FORM SUBMIT
-    document.getElementById('lead-form-el').addEventListener('submit', async function (e) {
-      e.preventDefault();
-      if (!this.checkValidity()) { this.reportValidity(); return; }
-      const btn = document.getElementById('submit-btn');
-      btn.disabled = true;
-      btn.textContent = 'Sending…';
-      const name = document.getElementById('f-name').value.trim(),
-        phone = document.getElementById('f-phone').value.trim(),
-        type = document.getElementById('f-type').value,
-        loc = document.getElementById('f-location').value,
-        budget = document.getElementById('f-budget').value,
-        msg = document.getElementById('f-message').value.trim(),
-        utm = window._utmData || {};
-      const fullMessage = [
-        '[Landing: architect-lombok]',
-        utm.source !== 'direct' ? `[UTM: ${utm.source}/${utm.medium}/${utm.campaign}/${utm.term}]` : '',
-        `Type: ${type}`,
-        loc ? `Location: ${loc}` : '',
-        budget ? `Budget: ${budget}` : '',
-        msg ? `Message: ${msg}` : ''
-      ].filter(Boolean).join(' | ');
-      const whatsappMessage = [
-        'Hello Atelier Nusa, I would like to consult about my project.',
-        `Name: ${name}`,
-        `WhatsApp: ${phone}`,
-        fullMessage
-      ].filter(Boolean).join('\n');
-      const whatsappUrl = `https://wa.me/6285190645078?text=${encodeURIComponent(whatsappMessage)}`;
-      const whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-      if (!whatsappWindow) window.location.href = whatsappUrl;
-      if (typeof gtag === 'function') gtag('event', 'lead_submit', {
-        ...(window.atelierNusaAttribution ? window.atelierNusaAttribution() : {}),
-        event_category: 'lead', event_label: 'architect-lombok', project_type: type || 'unspecified'
-      });
-      fireGoogleAdsConversion(); fireFBPixel();
-      document.getElementById('form-content').style.display = 'none';
-      document.getElementById('success-msg').style.display = 'block';
-      document.getElementById('exit-popup').classList.remove('show');
-    });
+  <script type="module">
+    import { initLeadForms } from '/src/analytics/forms.js';
+    initLeadForms();
+  </script>
 
+  <script>
     // EXIT INTENT
     (function () {
       let shown = false, timeOnPage = 0;

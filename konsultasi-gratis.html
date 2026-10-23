@@ -578,13 +578,13 @@
             <div class="grid-split">
                 <!-- Value Proposition (Left Column) -->
                 <div class="val-prop">
-                    <span class="badge" id="promo-badge">Sesi Konsultasi Gratis</span>
+                    <span class="badge" id="promo-badge">Project Feasibility Call</span>
                     <h1 class="headline">
-                        Dapatkan Konsultasi
-                        <span>Konsep Desain Gratis</span>
+                        Dapatkan Arahan Awal
+                        <span>Untuk Proyek Lombok Anda</span>
                     </h1>
                     <p class="lead-text">
-                        Rencanakan villa atau rumah tropis Anda di Lombok bersama tim arsitek kami. Diskusi pertama gratis dan tanpa komitmen apa pun.
+                        Punya lahan atau rencana rumah, villa, dan hospitality di Lombok? Kirim brief singkat untuk mendapatkan arahan awal tentang lokasi, tahap desain, dan langkah berikutnya bersama tim arsitek kami.
                     </p>
 
                     <ul class="features-list">
@@ -619,46 +619,72 @@
                 </div>
 
                 <!-- Form Capture Card (Right Column) -->
-                <div class="form-card" id="form-container">
-                    <div id="input-view">
+                <div class="form-card" id="form-container" data-lead-shell>
+                    <div id="input-view" data-lead-content>
                         <h2 class="form-title">Mulai Konsultasi Gratis</h2>
-                        <p class="form-subtitle">Lengkapi formulir di bawah ini, tim arsitek kami akan segera menghubungi Anda melalui WhatsApp.</p>
+                        <p class="form-subtitle">Ceritakan lokasi, jenis proyek, dan tahap rencana Anda. Kami akan menilai langkah awal yang paling masuk akal lalu menghubungi Anda melalui WhatsApp maksimal 1x24 jam kerja.</p>
                         
-                        <form id="consultation-form" novalidate>
+                        <form id="consultation-form" data-lead-form data-form-name="konsultasi-gratis" data-loading-label="Mengirim..." novalidate>
                             <div aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;overflow:hidden;"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
                             <div class="form-group">
                                 <label class="form-label" for="lead-name">Nama Lengkap</label>
-                                <input type="text" id="lead-name" class="form-input" placeholder="Masukkan nama lengkap Anda" required>
+                                <input type="text" id="lead-name" name="nama" class="form-input" placeholder="Masukkan nama lengkap Anda" autocomplete="name" required>
                             </div>
 
                             <div class="form-group">
                                 <label class="form-label" for="lead-phone">Nomor WhatsApp</label>
-                                <input type="tel" id="lead-phone" class="form-input" placeholder="Contoh: 08123456789" pattern="[0-9+()\- ]{8,20}" required>
+                                <input type="tel" id="lead-phone" name="telepon" class="form-input" placeholder="Contoh: 08123456789" autocomplete="tel" pattern="[0-9+()\- ]{8,20}" required>
                             </div>
 
                             <div class="form-group">
                                 <label class="form-label" for="lead-project">Tipe Proyek</label>
-                                <select id="lead-project" class="form-select">
+                                <select id="lead-project" name="jenis_proyek" class="form-select">
+                                    <option value="">Pilih tipe proyek</option>
                                     <option value="Villa Mewah">Villa Mewah</option>
                                     <option value="Rumah Tinggal">Rumah Tinggal</option>
                                     <option value="Desain Interior">Desain Interior</option>
                                     <option value="Renovasi dan Pembangunan">Renovasi atau Pembangunan Fisik</option>
+                                    <option value="Bangunan Komersial">Bangunan Komersial / Hospitality</option>
                                     <option value="Lainnya">Tipe Proyek Lainnya</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label class="form-label" for="lead-location">Lokasi Rencana Proyek</label>
-                                <input type="text" id="lead-location" class="form-input" placeholder="Contoh: Senggigi, Kuta Lombok, Mataram, dsb." required>
+                                <input type="text" id="lead-location" name="lokasi" class="form-input" placeholder="Contoh: Senggigi, Kuta Lombok, Mataram" autocomplete="address-level2" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="lead-stage">Tahap Proyek</label>
+                                <select id="lead-stage" name="tahap" class="form-select">
+                                    <option value="">Pilih tahap proyek</option>
+                                    <option value="Eksplorasi">Baru eksplorasi</option>
+                                    <option value="Sudah punya lahan">Sudah punya lahan</option>
+                                    <option value="Siap desain">Siap mulai desain</option>
+                                    <option value="Siap konstruksi">Siap konstruksi</option>
+                                    <option value="Renovasi berjalan">Renovasi sedang berjalan</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="lead-budget">Perkiraan Anggaran</label>
+                                <select id="lead-budget" name="anggaran" class="form-select">
+                                    <option value="">Pilih kisaran anggaran (opsional)</option>
+                                    <option value="Di bawah Rp500 juta">Di bawah Rp500 juta</option>
+                                    <option value="Rp500 juta–Rp1 miliar">Rp500 juta–Rp1 miliar</option>
+                                    <option value="Rp1–3 miliar">Rp1–3 miliar</option>
+                                    <option value="Di atas Rp3 miliar">Di atas Rp3 miliar</option>
+                                    <option value="Belum tahu">Belum tahu</option>
+                                </select>
                             </div>
 
                             <div class="form-group">
                                 <label class="form-label" for="lead-message">Pesan / Deskripsi Proyek</label>
-                                <textarea id="lead-message" class="form-textarea" placeholder="Tuliskan gambaran singkat rencana proyek Anda (opsional)"></textarea>
+                                <textarea id="lead-message" name="pesan" class="form-textarea" placeholder="Luas lahan/bangunan, kebutuhan ruang, atau target mulai proyek (opsional)"></textarea>
                             </div>
 
                             <button type="submit" class="btn-submit" id="submit-btn">
-                                <span>Kirim Permintaan Konsultasi</span>
+                                <span>Kirim Brief Proyek</span>
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                             </button>
                         </form>
@@ -670,7 +696,7 @@
                     </div>
 
                     <!-- AJAX Success View -->
-                    <div class="success-view" id="success-view">
+                    <div class="success-view" id="success-view" data-lead-success hidden>
                         <div class="success-icon">
                             <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         </div>
@@ -686,140 +712,6 @@
         </main>
     </div>
 
-    <script>
-        // Form Submission Logic — records the lead via /api/lead (with UTM
-        // attribution) before handing off to WhatsApp, so the consultation
-        // team sees the lead even if the visitor never sends the message.
-        document.getElementById('consultation-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            var nameEl = document.getElementById('lead-name');
-            var phoneEl = document.getElementById('lead-phone');
-            var projectEl = document.getElementById('lead-project');
-            var locationEl = document.getElementById('lead-location');
-            var messageEl = document.getElementById('lead-message');
-            var honeypotEl = document.querySelector('#consultation-form input[name="website"]');
-            var submitBtn = document.getElementById('submit-btn');
-
-            // Reset field borders
-            [nameEl, phoneEl, locationEl].forEach(function(el) {
-                el.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-            });
-
-            // Simple validation
-            var valid = true;
-            if (!nameEl.value.trim()) {
-                nameEl.style.borderColor = '#ff4d4d';
-                valid = false;
-            }
-            if (!/^[0-9+()\- ]{8,20}$/.test(phoneEl.value.trim())) {
-                phoneEl.style.borderColor = '#ff4d4d';
-                valid = false;
-            }
-            if (!locationEl.value.trim()) {
-                locationEl.style.borderColor = '#ff4d4d';
-                valid = false;
-            }
-
-            if (!valid) return;
-
-            var showSuccess = function() {
-                document.getElementById('input-view').style.display = 'none';
-                document.getElementById('success-view').style.display = 'block';
-            };
-
-            // Honeypot filled: drop the submission silently.
-            if (honeypotEl && honeypotEl.value.trim()) {
-                showSuccess();
-                return;
-            }
-
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span>Memproses...</span>';
-
-            var lines = [
-                'Halo Atelier Nusa, saya ingin berkonsultasi tentang proyek saya.',
-                'Nama: ' + nameEl.value.trim(),
-                'WhatsApp: ' + phoneEl.value.trim(),
-                projectEl.value ? 'Jenis proyek: ' + projectEl.value : '',
-                'Lokasi: ' + locationEl.value.trim(),
-                messageEl.value.trim() ? 'Detail: ' + messageEl.value.trim() : '',
-                'Sumber: konsultasi-gratis'
-            ].filter(Boolean);
-            var whatsappUrl = 'https://wa.me/6285190645078?text=' + encodeURIComponent(lines.join('\n'));
-
-            var attribution = (typeof window.atelierNusaAttribution === 'function')
-                ? window.atelierNusaAttribution()
-                : {};
-            var fire = function(name, params) {
-                if (typeof gtag === 'function') gtag('event', name, Object.assign({}, attribution, params || {}));
-                if (typeof window.clarity === 'function') window.clarity('event', name);
-            };
-
-            // Open the handoff window synchronously inside the user gesture so
-            // popup blockers do not kill it, then navigate it after the API call.
-            var waWindow = window.open('', '_blank');
-
-            try {
-                var response = await fetch('/api/lead', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        source: 'website',
-                        name: nameEl.value.trim(),
-                        phone: phoneEl.value.trim(),
-                        projectType: projectEl.value || '',
-                        message: messageEl.value.trim(),
-                        location: locationEl.value.trim(),
-                        page: window.location.pathname,
-                        referrer: document.referrer,
-                        utm_source: attribution.utm_source,
-                        utm_medium: attribution.utm_medium,
-                        utm_campaign: attribution.utm_campaign,
-                        utm_term: attribution.utm_term,
-                        utm_content: attribution.utm_content,
-                        gclid: attribution.gclid,
-                        fbclid: attribution.fbclid,
-                        website: honeypotEl ? honeypotEl.value.trim() : ''
-                    })
-                });
-                if (!response.ok) throw new Error('lead API responded ' + response.status);
-
-                fire('lead_submit', {
-                    event_category: 'lead',
-                    event_label: 'konsultasi-gratis',
-                    project_type: projectEl.value || 'unspecified'
-                });
-                fire('ads_conversion_Contact_1', {
-                    value: 1.0,
-                    currency: 'IDR',
-                    event_label: 'konsultasi-gratis'
-                });
-                // Google Ads conversion — Leads (same action id as WhatsApp handoff)
-                fire('conversion', {
-                    send_to: 'AW-17872287905/HE4GCImO_uYcEKHxlcpC',
-                    value: 1.0,
-                    currency: 'IDR',
-                    transaction_id: 'konsultasi-gratis'
-                });
-            } catch (error) {
-                // API unavailable: still hand off via WhatsApp so the lead is not lost.
-                console.error('[Atelier Nusa] Lead submission failed:', error);
-                fire('lead_delivery_failed', {
-                    event_category: 'lead',
-                    event_label: 'konsultasi-gratis'
-                });
-            }
-
-            if (waWindow) {
-                waWindow.location.href = whatsappUrl;
-            } else {
-                window.location.href = whatsappUrl;
-            }
-
-            showSuccess();
-        });
-    </script>
 
   
 <section style="padding:48px clamp(1.5rem,8vw,6rem);background:var(--bg);border-top:1px solid var(--border-lt)">

@@ -34,10 +34,10 @@ function ensureMainLandmark() {
 }
 
 // ========================================
-// WHATSAPP ENGAGEMENT TRACKER
-// Lives in analytics/leadTracker.js so static landing pages that never bundle main.js
-// still report the Ads conversion. Importing it here keeps behaviour identical for
-// bundled pages while guaranteeing exactly one report per click.
+// CONTACT ENGAGEMENT TRACKER
+// Lives in analytics/leadTracker.js so static pages that never bundle main.js
+// still report WhatsApp/phone micro-conversions. Qualified form submissions
+// are tracked separately as lead_submit/consultation_requested.
 // ========================================
 
 // ========================================

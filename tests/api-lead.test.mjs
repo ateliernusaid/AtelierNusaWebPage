@@ -73,8 +73,17 @@ test('rejects invalid email formats (400)', async () => {
   assert.equal(result.statusCode, 400);
 });
 
-test('accepts a valid lead and forwards it with the webhook key', async () => {
-  const { req, res } = setup({ body: { name: 'Andi', phone: '+62 851-9064-5078', message: 'Villa di Senggigi', utm_source: 'google' }, forwardedFor: '198.51.100.4' });
+test('accepts a valid lead and forwards qualification and attribution fields', async () => {
+  const { req, res } = setup({ body: {
+    name: 'Andi',
+    phone: '+62 851-9064-5078',
+    message: 'Villa di Senggigi',
+    location: 'Senggigi',
+    stage: 'Sudah punya lahan',
+    projectType: 'Villa / Premium',
+    budget: 'Rp1–3 miliar',
+    utm_source: 'instagram',
+  }, forwardedFor: '198.51.100.4' });
   const result = await handler(req, res);
   assert.equal(result.statusCode, 200);
   assert.deepEqual(result.body, { success: true });
@@ -83,7 +92,11 @@ test('accepts a valid lead and forwards it with the webhook key', async () => {
   assert.equal(fetchCalls[0].init.headers['X-Webhook-Key'], 'test-key');
   const sent = JSON.parse(fetchCalls[0].init.body);
   assert.equal(sent.name, 'Andi');
-  assert.equal(sent.utm_source, 'google');
+  assert.equal(sent.location, 'Senggigi');
+  assert.equal(sent.stage, 'Sudah punya lahan');
+  assert.equal(sent.projectType, 'Villa / Premium');
+  assert.equal(sent.budget, 'Rp1–3 miliar');
+  assert.equal(sent.utm_source, 'instagram');
   assert.equal(sent.source, 'website');
 });
 

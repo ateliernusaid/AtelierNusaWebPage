@@ -4,7 +4,10 @@ export const ANALYTICS_EVENTS = Object.freeze({
   whatsappClick: 'whatsapp_click',
   phoneClick: 'phone_click',
   consultationStart: 'consultation_start',
+  leadFormStart: 'lead_form_start',
   leadSubmit: 'lead_submit',
+  consultationRequested: 'consultation_requested',
+  consultationBooked: 'consultation_booked',
   portfolioView: 'portfolio_view',
 });
 

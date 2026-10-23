@@ -47,6 +47,7 @@ export default async function handler(req, res) {
     message: trimField(body.message),
     budget: trimField(body.budget),
     location: trimField(body.location),
+    stage: trimField(body.stage),
     projectType: trimField(body.projectType),
     page: trimField(body.page),
     referrer: trimField(body.referrer),

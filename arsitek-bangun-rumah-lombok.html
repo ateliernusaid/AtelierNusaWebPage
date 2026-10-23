@@ -608,16 +608,16 @@
         <div class="form-point"><svg style="flex:none;width:18px;height:18px;stroke:#25d366;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg><div><b>Respon cepat</b>Kami membalas di WhatsApp dalam 1 jam pada hari kerja.</div></div>
         <div class="form-point"><svg style="flex:none;width:18px;height:18px;stroke:#25d366;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /></svg><div><b>Bahasa Indonesia &amp; Inggris</b>Komunikasi jelas dengan klien lokal, ekspat, dan investor.</div></div>
       </div>
-      <div class="lead-form">
-        <div id="form-content">
+      <div class="lead-form" data-lead-shell>
+        <div id="form-content" data-lead-content>
           <div class="form-title">Mulai Proyek Anda di Lombok</div>
           <div class="form-sub">Isi formulir, kami hubungi Anda di WhatsApp</div>
-          <form id="lead-form-el" novalidate>
+          <form id="lead-form-el" data-lead-form data-form-name="arsitek-bangun-rumah-lombok" data-loading-label="Mengirim..." novalidate>
             <div class="fg-row">
-              <div class="fg"><label>Nama lengkap *</label><input type="text" id="f-name" placeholder="Nama Anda" required /></div>
-              <div class="fg"><label>Nomor WhatsApp *</label><input type="tel" id="f-phone" placeholder="+62 812 3456 789" required /></div>
+              <div class="fg"><label>Nama lengkap *</label><input type="text" id="f-name" name="nama" placeholder="Nama Anda" required /></div>
+              <div class="fg"><label>Nomor WhatsApp *</label><input type="tel" id="f-phone" name="telepon" placeholder="+62 812 3456 789" required /></div>
             </div>
-            <div class="fg"><label>Jenis proyek *</label><select id="f-type" required>
+            <div class="fg"><label>Jenis proyek *</label><select id="f-type" name="jenis_proyek" required>
                 <option value="">Pilih jenis proyek</option>
                 <option>Rumah tinggal</option>
                 <option>Villa / rumah liburan</option>
@@ -626,8 +626,15 @@
                 <option>Hotel / resort</option>
                 <option>Lainnya</option>
               </select></div>
+            <div class="fg"><label>Tahap proyek</label><select id="f-stage" name="tahap">
+                <option value="">Pilih tahap proyek</option>
+                <option>Baru eksplorasi</option>
+                <option>Sudah punya lahan</option>
+                <option>Siap mulai desain</option>
+                <option>Siap konstruksi</option>
+              </select></div>
             <div class="fg-row">
-              <div class="fg"><label>Lokasi proyek</label><select id="f-location">
+              <div class="fg"><label>Lokasi proyek</label><select id="f-location" name="lokasi">
                   <option value="">Pilih lokasi</option>
                   <option>Mataram</option>
                   <option>Senggigi</option>
@@ -637,7 +644,7 @@
                   <option>Gili Islands</option>
                   <option>Lainnya</option>
                 </select></div>
-              <div class="fg"><label>Perkiraan anggaran</label><select id="f-budget">
+              <div class="fg"><label>Perkiraan anggaran</label><select id="f-budget" name="anggaran">
                   <option value="">Pilih perkiraan</option>
                   <option>Di bawah Rp 200 juta</option>
                   <option>Rp 200-500 juta</option>
@@ -646,12 +653,12 @@
                   <option>Buka diskusi</option>
                 </select></div>
             </div>
-            <div class="fg"><label>Ceritakan proyek Anda</label><textarea id="f-message" placeholder="Contoh: Saya ingin membangun villa 2 lantai dekat Senggigi, lahan 500 m2, untuk keluarga pribadi..."></textarea></div>
+            <div class="fg"><label>Ceritakan proyek Anda</label><textarea id="f-message" name="pesan" placeholder="Contoh: Saya ingin membangun villa 2 lantai dekat Senggigi, lahan 500 m2, untuk keluarga pribadi..."></textarea></div>
             <button type="submit" class="form-submit" id="submit-btn">KIRIM DAN MULAI PROYEK</button>
             <p class="form-privacy">Data Anda tidak pernah dibagikan. Lihat <a href="/privacy-policy">Kebijakan Privasi</a> dan <a href="/terms-of-service">Syarat Layanan</a>.</p>
           </form>
         </div>
-        <div class="success-msg" id="success-msg">
+        <div class="success-msg" id="success-msg" data-lead-success hidden>
           <div class="s-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg></div>
           <div class="s-title">Terima kasih!</div>
           <p class="s-desc">Pesan Anda telah diterima. Tim Atelier Nusa akan menghubungi Anda di WhatsApp dalam <strong>kurang dari 1 jam</strong>.<br /><br />Sambil menunggu, lihat portofolio kami.</p>
@@ -766,14 +773,6 @@
         gtag('event', 'cta_click', { event_category: 'engagement', event_label: location });
       }
     }
-    function fireGoogleAdsConversion() {
-      if (typeof gtag === 'function') {
-        gtag('event', 'ads_conversion_Contact_1', { value: 1.0, currency: 'IDR' });
-      }
-    }
-    function fireFBPixel() {
-      if (typeof fbq === 'function') fbq('track', 'Lead', { campaign: 'arsitek-bangun-rumah-lombok' });
-    }
 
     // NAV SCROLL
     window.addEventListener('scroll', function () {
@@ -790,48 +789,14 @@
       });
       if (!isOpen) { btn.classList.add('open'); answer.style.maxHeight = answer.scrollHeight + 'px'; }
     }
+  </script>
 
-    // FORM SUBMIT
-    document.getElementById('lead-form-el').addEventListener('submit', async function (e) {
-      e.preventDefault();
-      if (!this.checkValidity()) { this.reportValidity(); return; }
-      const btn = document.getElementById('submit-btn');
-      btn.disabled = true;
-      btn.textContent = 'Mengirim...';
-      const name = document.getElementById('f-name').value.trim(),
-        phone = document.getElementById('f-phone').value.trim(),
-        type = document.getElementById('f-type').value,
-        loc = document.getElementById('f-location').value,
-        budget = document.getElementById('f-budget').value,
-        msg = document.getElementById('f-message').value.trim(),
-        utm = window._utmData || {};
-      const fullMessage = [
-        '[Landing: arsitek-bangun-rumah-lombok]',
-        utm.source !== 'direct' ? `[UTM: ${utm.source}/${utm.medium}/${utm.campaign}/${utm.term}]` : '',
-        `Tipe: ${type}`,
-        loc ? `Lokasi: ${loc}` : '',
-        budget ? `Anggaran: ${budget}` : '',
-        msg ? `Pesan: ${msg}` : ''
-      ].filter(Boolean).join(' | ');
-      const whatsappMessage = [
-        'Halo Atelier Nusa, saya ingin berkonsultasi tentang proyek saya.',
-        `Nama: ${name}`,
-        `WhatsApp: ${phone}`,
-        fullMessage
-      ].filter(Boolean).join('\n');
-      const whatsappUrl = `https://wa.me/6285190645078?text=${encodeURIComponent(whatsappMessage)}`;
-      const whatsappWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-      if (!whatsappWindow) window.location.href = whatsappUrl;
-      if (typeof gtag === 'function') gtag('event', 'lead_submit', {
-        ...(window.atelierNusaAttribution ? window.atelierNusaAttribution() : {}),
-        event_category: 'lead', event_label: 'arsitek-bangun-rumah-lombok', project_type: type || 'unspecified'
-      });
-      fireGoogleAdsConversion(); fireFBPixel();
-      document.getElementById('form-content').style.display = 'none';
-      document.getElementById('success-msg').style.display = 'block';
-      document.getElementById('exit-popup').classList.remove('show');
-    });
+  <script type="module">
+    import { initLeadForms } from '/src/analytics/forms.js';
+    initLeadForms();
+  </script>
 
+  <script>
     // EXIT INTENT
     (function () {
       let shown = false, timeOnPage = 0;

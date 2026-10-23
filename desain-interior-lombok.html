@@ -329,26 +329,9 @@ const ro=new IntersectionObserver((e)=>{e.forEach(en=>{if(en.isIntersecting){en.
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
 // Form
-document.getElementById('lead-form-el').addEventListener('submit',async function(e){
-  e.preventDefault();
-  if (!this.checkValidity()) { this.reportValidity(); return; }
-  const btn=document.getElementById('submit-btn');btn.disabled=true;btn.textContent='Mengirim...';
-  const name=document.getElementById('f-name').value.trim(),phone=document.getElementById('f-phone').value.trim(),type=document.getElementById('f-type').value,loc=document.getElementById('f-location').value,budget=document.getElementById('f-budget').value,msg=document.getElementById('f-message').value.trim();
-  const full=['[LP: desain-interior-lombok]','Tipe: '+type,loc?'Lokasi: '+loc:'',budget?'Budget: '+budget:'',msg?'Pesan: '+msg:''].filter(Boolean).join(' | ');
-  const whatsappMessage=['Halo Atelier Nusa, saya ingin berkonsultasi tentang proyek saya.',`Nama: ${name}`,`WhatsApp: ${phone}`,full].filter(Boolean).join('\\n');
-  const whatsappUrl=`https://wa.me/6285190645078?text=${encodeURIComponent(whatsappMessage)}`;
-  const whatsappWindow=window.open(whatsappUrl,'_blank','noopener,noreferrer');
-  if(!whatsappWindow) window.location.href=whatsappUrl;
-  if(typeof gtag==='function'){
-    gtag('event', 'lead_submit', { ...(window.atelierNusaAttribution ? window.atelierNusaAttribution() : {}), event_category:'lead', event_label:'desain-interior-lombok', project_type:type || 'unspecified' });
-    gtag('event', 'ads_conversion_Contact_1', { value:1.0, currency:'IDR', event_label:'desain-interior-lombok' });
-  }
-  document.getElementById('form-content').style.display='none';
-  document.getElementById('success-msg').style.display='block';
-  // Hamburger toggle
+// Hamburger toggle
   const hb=document.getElementById('hamburger'),nl=document.querySelector('.nav-links');
   if(hb&&nl){hb.addEventListener('click',()=>{hb.classList.toggle('open');nl.classList.toggle('open');document.body.style.overflow=nl.classList.contains('open')?'hidden':''})}
-});
 </script>
 
 <div style="background:#0a0f14;color:#8a938f;padding:16px 24px;text-align:center;font-size:13px;line-height:1.8;"><a href="/konsultasi-gratis" style="color:#d9b98a;text-decoration:underline;">Konsultasi Gratis</a></div>
@@ -411,5 +394,9 @@ document.getElementById('lead-form-el').addEventListener('submit',async function
       </nav>
     </div>
   </section>
+  <script type="module">
+    import { initLegacyLeadForms } from '/src/analytics/forms.js';
+    initLegacyLeadForms();
+  </script>
 </body>
 </html>
