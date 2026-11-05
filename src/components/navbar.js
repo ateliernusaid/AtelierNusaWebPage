@@ -63,7 +63,7 @@ export function createNavbar(activePage = 'home') {
 
       <div class="navbar__menu" id="navMenu">
         ${pages.map(p => `
-          <a href="${p.href}" class="navbar__link ${activePage === p.key ? 'active' : ''}">${p.label}</a>
+          <a href="${p.href}" class="navbar__link ${activePage === p.key ? 'active' : ''}"${p.key === 'consult' ? ' data-cta-id="nav_consultation"' : ''}>${p.label}</a>
         `).join('')}
       </div>
 

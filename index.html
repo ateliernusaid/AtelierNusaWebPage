@@ -190,11 +190,11 @@
       <h1 class="hero__title">Planning a home or villa in Lombok? <span class="hero__title-sub">Start with the land.</span></h1>
       <p class="hero__subtitle">Before we draw, we look at the plot, access, sun, rain, budget, and how the building will be used. If you already have a location or a rough idea, tell us what you know.</p>
       <div class="hero__actions">
-        <a href="https://wa.me/6285190645078?text=Hi%20Atelier%20Nusa.%20I%20would%20like%20to%20discuss%20a%20home%20or%20villa%20project%20in%20Lombok." target="_blank" rel="noopener" class="btn btn--primary" data-wa-label="hero-wa">
+        <a href="https://wa.me/6285190645078?text=Hi%20Atelier%20Nusa.%20I%20would%20like%20to%20discuss%20a%20home%20or%20villa%20project%20in%20Lombok." target="_blank" rel="noopener" class="btn btn--primary" data-wa-label="hero-wa" data-cta-id="homepage_hero_whatsapp">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
           Talk through your project
         </a>
-        <a href="/projects" class="btn btn--outline">
+        <a href="/projects" class="btn btn--outline" data-cta-id="homepage_hero_projects">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
           </svg>
@@ -372,7 +372,7 @@
       </div>
 
       <div class="text-center reveal" style="margin-top: var(--space-xl);">
-        <a href="/projects" class="btn btn--outline">See all projects</a>
+        <a href="/projects" class="btn btn--outline" data-cta-id="homepage_projects_after_featured">See all projects</a>
       </div>
     </div>
   </section>
@@ -598,7 +598,7 @@
             <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #d4af37)" stroke-width="2" style="flex-shrink:0;margin-top:2px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Cost estimate</li>
             <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #d4af37)" stroke-width="2" style="flex-shrink:0;margin-top:2px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Material discussion</li>
           </ul>
-          <a href="#konsultasi" class="btn btn--outline" style="width:100%;text-align:center;">Talk through your project</a>
+          <a href="#konsultasi" class="btn btn--outline" style="width:100%;text-align:center;" data-cta-id="homepage_pricing_design">Talk through your project</a>
         </div>
 
         <div class="pricing-card pricing-card--featured">
@@ -611,7 +611,7 @@
             <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #d4af37)" stroke-width="2" style="flex-shrink:0;margin-top:2px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Site coordination</li>
             <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent, #d4af37)" stroke-width="2" style="flex-shrink:0;margin-top:2px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Construction scope agreed before work begins</li>
           </ul>
-          <a href="#konsultasi" class="btn btn--primary" style="width:100%;text-align:center;">Talk through your project</a>
+          <a href="#konsultasi" class="btn btn--primary" style="width:100%;text-align:center;" data-cta-id="homepage_pricing_design_build">Talk through your project</a>
         </div>
       </div>
 
@@ -693,9 +693,9 @@
           </div>
 
           <div class="cta__links" style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem;">
-          <a href="/jasa-arsitek-lombok" class="btn btn--outline" style="font-size: 0.9rem;">Architecture services</a>
-          <a href="/biaya-bangun-rumah-lombok" class="btn btn--outline" style="font-size: 0.9rem;">Building cost guide</a>
-          <a href="/projects" class="btn btn--outline" style="font-size: 0.9rem;">See all projects</a>
+          <a href="/jasa-arsitek-lombok" class="btn btn--outline" style="font-size: 0.9rem;" data-cta-id="homepage_services_link">Architecture services</a>
+          <a href="/biaya-bangun-rumah-lombok" class="btn btn--outline" style="font-size: 0.9rem;" data-cta-id="homepage_cost_guide_link">Building cost guide</a>
+          <a href="/projects" class="btn btn--outline" style="font-size: 0.9rem;" data-cta-id="homepage_projects_link">See all projects</a>
           </div>
           <div class="cta__trust">
             <div class="cta__trust-item">
@@ -773,7 +773,7 @@
                 <label for="hp-message">Tell us what you know</label>
                 <textarea id="hp-message" name="pesan" placeholder="Tell us about the plot, the building, or the question you are trying to answer."></textarea>
               </div>
-              <button type="submit" class="btn btn--primary cta__submit" id="hp-submit">Send project details</button>
+              <button type="submit" class="btn btn--primary cta__submit" id="hp-submit" data-cta-id="homepage_form_submit">Send project details</button>
             </form>
           </div>
           <div id="cta-success" data-lead-success hidden style="text-align:center; padding: 48px 24px;">

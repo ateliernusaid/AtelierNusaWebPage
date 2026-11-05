@@ -9,6 +9,7 @@ export const ANALYTICS_EVENTS = Object.freeze({
   consultationRequested: 'consultation_requested',
   consultationBooked: 'consultation_booked',
   portfolioView: 'portfolio_view',
+  ctaClick: 'cta_click',
 });
 
 export function trackEvent(name, parameters = {}) {

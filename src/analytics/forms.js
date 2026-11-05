@@ -98,6 +98,9 @@ function readLeadFields(form) {
     budget: readField(form, 'anggaran', 'hp-budget'),
   };
 }
+function getFormCtaId(form) {
+  return form.dataset.ctaId || form.querySelector('[type="submit"][data-cta-id]')?.dataset.ctaId || '';
+}
 
 async function submitToAgent(form, fields, waWindow) {
   const { name, phone, email, type, location, stage, message, budget } = fields;
@@ -132,12 +135,14 @@ async function submitToAgent(form, fields, waWindow) {
   });
   if (!response.ok) throw new Error(`Lead submission failed (${response.status})`);
 
+  const ctaId = getFormCtaId(form);
   const funnelContext = {
     form_id: form.id || source,
     form_name: source,
     page_path: window.location.pathname || '/',
     project_type: type || 'unspecified',
     project_location: location || 'unspecified',
+    ...(ctaId ? { cta_id: ctaId } : {}),
   };
   trackEvent(ANALYTICS_EVENTS.leadSubmit, funnelContext);
   trackEvent(ANALYTICS_EVENTS.consultationRequested, funnelContext);
@@ -226,6 +231,7 @@ export function initLeadForms(root = document) {
           form_id: form.id || form.dataset.formName || window.location.pathname,
           form_name: form.dataset.formName || window.location.pathname,
           page_path: window.location.pathname || '/',
+          ...(getFormCtaId(form) ? { cta_id: getFormCtaId(form) } : {}),
         });
       });
     }, true);
@@ -236,6 +242,7 @@ export function initLeadForms(root = document) {
         form_name: form.dataset.formName || window.location.pathname,
         page_path: window.location.pathname || '/',
         page_language: document.documentElement.lang.toLowerCase().startsWith('id') ? 'id' : 'en',
+        ...(getFormCtaId(form) ? { cta_id: getFormCtaId(form) } : {}),
       };
       trackEvent(ANALYTICS_EVENTS.consultationStart, context);
       trackEvent(ANALYTICS_EVENTS.leadFormStart, context);

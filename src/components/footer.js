@@ -68,12 +68,12 @@ export function createFooter() {
         <div class="footer__links">
           <div class="footer__col">
             <div class="footer__col-title">${copy.navigationTitle}</div>
-            ${copy.navigation.map(([label, href]) => `<a href="${localizeCoreHref(href)}" class="footer__link">${label}</a>`).join('')}
+            ${copy.navigation.map(([label, href]) => `<a href="${localizeCoreHref(href)}" class="footer__link"${href === '/konsultasi-gratis' ? ' data-cta-id="footer_consultation"' : ''}>${label}</a>`).join('')}
           </div>
 
           <div class="footer__col">
             <div class="footer__col-title">${copy.servicesTitle}</div>
-            ${copy.services.map(([label, href], index) => `<a href="${localizeCoreHref(href)}" class="footer__link"${index === 0 ? ' style="color: var(--color-accent); font-weight: var(--fw-medium);"' : ''}>${label}</a>`).join('')}
+            ${copy.services.map(([label, href], index) => `<a href="${localizeCoreHref(href)}" class="footer__link"${index === 0 ? ' style="color: var(--color-accent); font-weight: var(--fw-medium);"' : ''}${href === '/konsultasi-gratis' ? ' data-cta-id="footer_consultation_service"' : ''}>${label}</a>`).join('')}
           </div>
 
           <div class="footer__col">
@@ -84,7 +84,7 @@ export function createFooter() {
           <div class="footer__col">
             <div class="footer__col-title">${copy.contactTitle}</div>
             <a href="mailto:marketing@ateliernusa.id" class="footer__link">marketing@ateliernusa.id</a>
-            <a href="https://wa.me/6285190645078" target="_blank" rel="noopener" class="footer__link">+62 851 9064 5078</a>
+            <a href="https://wa.me/6285190645078" target="_blank" rel="noopener" class="footer__link" data-wa-label="footer-whatsapp" data-cta-id="footer_whatsapp">+62 851 9064 5078</a>
           </div>
 
           <div class="footer__col">

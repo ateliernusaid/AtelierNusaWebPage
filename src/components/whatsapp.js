@@ -27,6 +27,7 @@ export function createWhatsApp() {
     // Tracking + in-app-browser safe navigation is handled by the global wa.me
     // listener in main.js. Only the label is set here so events stay attributable.
     waLink.dataset.waLabel = 'floating-button';
+    waLink.dataset.ctaId = 'floating_whatsapp';
 
     document.body.appendChild(waLink);
 }
