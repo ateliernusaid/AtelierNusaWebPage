@@ -84,7 +84,7 @@ export function createFooter() {
           <div class="footer__col">
             <div class="footer__col-title">${copy.contactTitle}</div>
             <a href="mailto:marketing@ateliernusa.id" class="footer__link">marketing@ateliernusa.id</a>
-            <a href="https://wa.me/6285190645078" target="_blank" rel="noopener" class="footer__link">+62 851-9064-5078</a>
+            <a href="https://wa.me/6285190645078" target="_blank" rel="noopener" class="footer__link">+62 851 9064 5078</a>
           </div>
 
           <div class="footer__col">

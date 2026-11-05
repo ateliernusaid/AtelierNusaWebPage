@@ -59,77 +59,157 @@ function setLabel(selector, value) {
   element.appendChild(document.createTextNode(` ${value}`));
 }
 
-function applyHomeIndonesian() {
-  setText('.hero__badge', 'Arsitektur dan konstruksi di Lombok');
-  setText('.hero__title-sub', 'Arsitek dan kontraktor di Mataram');
-  setText('.hero__subtitle', 'Atelier Nusa merancang dan membangun rumah, villa, serta ruang hospitality di Lombok. Kami memperhatikan hal-hal yang tetap penting setelah render selesai: panas, hujan, perawatan, anggaran, dan cara ruang benar-benar digunakan.');
-  setLabel('#hero .btn--primary', 'Konsultasi Gratis');
-  setLabel('#hero .btn--outline', 'Lihat Proyek Kami');
+function setAllDirectText(selector, values) {
+  document.querySelectorAll(selector).forEach((element, index) => {
+    if (values[index] === undefined) return;
+    [...element.childNodes]
+      .filter(node => node.nodeType === Node.TEXT_NODE)
+      .forEach(node => node.remove());
+    element.appendChild(document.createTextNode(` ${values[index]}`));
+  });
+}
 
-  setText('#services .section-label', 'Layanan Kami');
-  setText('#services .section-title', 'Dari Sketsa Pertama hingga Bangunan Selesai');
-  setText('#services .section-desc', 'Kami menjaga desain dan konstruksi tetap terhubung agar setiap keputusan dapat diuji terhadap pekerjaan nyata. Anda mendapatkan proses yang jelas, gambar yang praktis, dan satu tim untuk diajak berdiskusi.');
-  setAll('#services .arch-card__title', ['Desain Villa dan Rumah Tropis', 'Design & Build', 'Kontraktor dan Konstruksi Mataram']);
+function applyHomeIndonesian() {
+  const setMeta = (selector, value) => document.querySelector(selector)?.setAttribute('content', value);
+  document.title = 'Studio Arsitektur dan Konstruksi di Lombok | Atelier Nusa';
+  setMeta('meta[name="description"]', 'Atelier Nusa merancang rumah, villa, ruang hospitality, dan proyek konstruksi di Lombok. Mulai dari lahan, brief, dan keputusan yang membentuk bangunan.');
+  setMeta('meta[property="og:title"]', 'Studio Arsitektur dan Konstruksi di Lombok | Atelier Nusa');
+  setMeta('meta[property="og:description"]', 'Studio di Lombok untuk rumah, villa, ruang hospitality, dan konstruksi. Mulai dari lahan dan keputusan yang membentuk bangunan.');
+  setMeta('meta[name="twitter:title"]', 'Studio Arsitektur dan Konstruksi di Lombok | Atelier Nusa');
+  setMeta('meta[name="twitter:description"]', 'Atelier Nusa merancang rumah, villa, ruang hospitality, dan proyek konstruksi di Lombok.');
+
+  setText('.hero__badge', 'Studio arsitektur dan konstruksi di Lombok');
+  setHtml('.hero__title', 'Sedang merencanakan rumah atau villa di Lombok? <span class="hero__title-sub">Mulai dari lahannya.</span>');
+  setText('.hero__subtitle', 'Sebelum menggambar, kami melihat lahan, akses, matahari, hujan, anggaran, dan cara bangunan akan digunakan. Jika Anda sudah memiliki lokasi atau gambaran awal, ceritakan yang sudah Anda ketahui.');
+  setLabel('#hero .btn--primary', 'Bicarakan proyek Anda');
+  setLabel('#hero .btn--outline', 'Lihat proyek');
+  document.querySelector('#hero .btn--primary')?.setAttribute('href', 'https://wa.me/6285190645078?text=Halo%20Atelier%20Nusa.%20Saya%20ingin%20membicarakan%20proyek%20rumah%20atau%20villa%20di%20Lombok.');
+  setText('.hero__vertical-text', 'Studio arsitektur Lombok');
+
+  setText('#services .section-label', 'Yang Kami Kerjakan');
+  setText('#services .section-title', 'Gambar yang baik dimulai dari pertanyaan biasa');
+  setText('#services .section-desc', 'Di mana jalan masuknya? Ruang mana yang butuh cahaya pagi? Apa yang akan sulit dirawat? Seberapa jauh anggaran dapat berjalan? Kami menanyakan hal ini sebelum keputusan yang indah menjadi mahal untuk diubah.');
+  setAll('#services .arch-card__title', ['Baca lahannya lebih dulu', 'Ubah ide menjadi gambar', 'Tetap dekat dengan pekerjaan']);
   setAll('#services .arch-card__desc', [
-    'Sebelum menggambar, kami mempelajari lahan, matahari, angin, akses, dan lingkungan sekitar. Detail tersebut membentuk denah jauh sebelum material atau fasad dipilih.',
-    'Ketika desain dan konstruksi ditangani satu studio, pertanyaan dapat dijawab saat masih kecil. Kami membawa pemikiran dari sketsa pertama hingga detail yang akhirnya dibangun.',
-    'Membangun adalah rangkaian keputusan biasa yang dilakukan dengan teliti: apa yang dipesan, kapan dipesan, siapa yang perlu berada di lokasi, dan apa yang harus diperiksa sebelum pekerjaan berikutnya dimulai.'
+    'Kami melihat akses, kontur, matahari, angin, tetangga, dan pemandangan yang ingin Anda pertahankan. Detail ini memberi arah lebih banyak daripada gambar referensi.',
+    'Render adalah awal. Kami mengembangkan denah, detail, material, dan informasi biaya agar ide tersebut dapat dipakai di lokasi.',
+    'Saat pembangunan berjalan, pertanyaan kecil muncul setiap hari. Kami membantu memeriksa keputusan yang memengaruhi pesanan, tukang, mutu, dan ruang yang selesai.'
   ]);
 
-  setText('#approach .section-label', 'Cara Kami Bekerja');
-  setText('#approach .section-title', 'Mulai dari tempatnya');
-  setText('.approach__text', 'Setiap proyek di Lombok memiliki kondisi yang berbeda. Lahan pesisir membutuhkan respons yang berbeda dari lereng teduh atau jalan hunian yang ramai. Kami mempelajari matahari, hujan, aliran udara, pemandangan, dan perawatan sejak awal, lalu menggunakannya untuk menentukan posisi ruang, bukaan, naungan, dan area luar.');
-  setText('.stats__number--text', 'Jelas');
-  setAll('.stats__label', ['Proyek yang Dirancang', 'Komunikasi Proyek', 'Klien yang Dilayani', 'Area di Lombok']);
+  setText('#approach .section-label', 'Titik awal kami');
+  setText('#approach .section-title', 'Lahan di Kuta tidak sama dengan lahan di Mataram');
+  setText('.approach__text', 'Udara pesisir, hujan deras, jalan menanjak, jalan lingkungan yang ramai, dan orang yang akan menggunakan bangunan mengubah jawabannya. Kami melihat kondisi tersebut sejak awal, lalu menentukan hal yang perlu diperiksa lebih dulu. Kadang naungan dan aliran udara. Kadang akses, drainase, penyimpanan, atau percakapan yang lebih jujur tentang anggaran.');
+  setAll('.stats__number--text', ['Mataram', 'Rumah', 'Desain', 'Lombok']);
+  setAll('.stats__label', ['Basis studio', 'Villa dan hospitality', 'Keputusan konstruksi ikut dibahas', 'Area kerja']);
 
-  setText('#showcase .section-label', 'Karya Terpilih');
-  setText('#showcase .section-title', 'Proyek Terbaru');
-  setText('#showcase .section-desc', 'Rumah, villa, dan ruang hospitality di Lombok serta pulau-pulau sekitarnya.');
+  setText('#showcase .section-label', 'Karya terpilih');
+  setText('#showcase .section-title', 'Sudah selesai, sedang berjalan, dan masih dieksplorasi');
+  setText('#showcase .section-desc', 'Beberapa rumah dan studi villa dari Lombok. Setiap kartu menunjukkan tahap proyek.');
   setAll('#showcase .project-card__badge', ['Selesai', 'Berjalan', 'Konsep', 'Konsep']);
-  setLabel('#showcase .btn--outline', 'Lihat Semua Proyek');
+  setAll('#showcase .project-card__title', ['Hunian mewah', 'Hunian privat', 'Hunian industrial', 'Villa tropis']);
+  setAll('#showcase .project-card__subtitle', ['Hunian, Kota Mataram', 'Hunian, Lombok Barat', 'Hunian, Mataram', 'Villa, Senggigi']);
+  setLabel('#showcase .btn--outline', 'Lihat semua proyek');
 
-  setText('#testimonials .section-label', 'Feedback Klien');
-  setText('#testimonials .section-title', 'Feedback Klien Terpilih');
-  setText('#testimonials .section-desc', 'Jenis proyek dan lokasi ditampilkan bersama setiap catatan agar konteksnya tetap jelas.');
+  setText('#testimonials .section-label', 'Catatan proyek');
+  setText('#testimonials .section-title', 'Melihat pekerjaan apa adanya');
+  setText('#testimonials .section-desc', 'Kami memilih menunjukkan jenis proyek dan tahapnya daripada mengisi halaman dengan kutipan yang terdengar sempurna tetapi tidak memberi konteks.');
+  setAll('.project-note__status', ['Selesai', 'Berjalan', 'Konsep']);
+  setAll('.testimonial-card__quote', [
+    'Proyek hunian mewah di Kota Mataram. Lihat halaman proyek untuk melihat pekerjaan yang sudah selesai.',
+    'Hunian privat di Lombok Barat. Halaman proyek mencatat pekerjaan ini masih berjalan.',
+    'Studi villa tropis di Senggigi. Ini adalah konsep desain, bukan bangunan yang sudah selesai.'
+  ]);
+  setAll('.testimonial-card__name', ['Hunian mewah', 'Hunian privat', 'Villa tropis']);
+  setAll('.testimonial-card__role', ['Hunian · Kota Mataram', 'Hunian · Lombok Barat', 'Villa · Senggigi']);
 
-  setText('#pricing .section-label', 'Investasi');
-  setText('#pricing .section-title', 'Jelas sejak awal');
-  setText('#pricing .section-desc', 'Kami membahas ruang lingkup dan anggaran sejak awal agar pilihan desain tetap realistis.');
-  setHtml('#pricing .pricing-card:nth-child(1) .pricing-card__price', 'Rp 150k sampai 350k<span class="pricing-card__unit"> / m²</span>');
-  setText('#pricing .pricing-card:nth-child(2) .pricing-card__price', 'Proposal khusus');
-  setText('#pricing .pricing__note', '*Biaya desain berubah sesuai ruang lingkup dan kompleksitas. Konstruksi dihitung setelah peninjauan lahan, brief, dan material.');
+  setText('#artikel .section-label', 'Catatan dan panduan');
+  setText('#artikel .section-title', 'Hal yang berguna dibaca sebelum membangun');
+  setText('#artikel .section-desc', 'Biaya, pertanyaan tentang lahan, dan ide desain yang sering muncul saat berbicara dengan pemilik proyek di Lombok.');
+  setAll('#artikel .artikel-card h3', [
+    'Berapa biaya membangun rumah di Lombok?',
+    'Merancang cafe atau restoran',
+    'Studi desain villa dari Lombok',
+    'Memilih arsitek di Lombok',
+    'Membuat rumah nyaman di iklim NTB',
+    'Panduan biaya rumah dua lantai'
+  ]);
+  setAll('#artikel .artikel-card p', [
+    'Panduan membaca biaya konstruksi berdasarkan luas, lokasi, material, dan tahap proyek.',
+    'Pertanyaan tentang denah, naungan, material, dan cara pengunjung bergerak di dalam ruang.',
+    'Ide untuk villa di Senggigi, Kuta, dan Gili dengan lahan tetap menjadi pertimbangan.',
+    'Hal yang perlu diperiksa dari portofolio, ruang lingkup kerja, biaya, dan percakapan awal.',
+    'Naungan, aliran udara, hujan, dan material yang penting dalam kehidupan sehari hari.',
+    'Titik awal untuk memikirkan struktur, luas, finishing, dan anggaran.'
+  ]);
+  setAll('#artikel .artikel-card span', ['Baca panduan', 'Baca artikel', 'Lihat studi', 'Baca panduan', 'Baca artikel', 'Baca panduan']);
 
-  setText('#roots .section-label', 'Studio');
-  setText('#roots .section-title', 'Cara kerja yang praktis');
-  setAll('.roots__item-title', ['Lahan menjadi titik awal', 'Desain tetap terhubung dengan konstruksi', 'Kami bekerja dari Lombok']);
-  setAll('.roots__item-desc', [
-    'Villa di tepi pantai Kuta Mandalika memiliki kebutuhan berbeda dari rumah keluarga di Mataram atau tempat peristirahatan di lereng Senggigi. Kami menjadikan perbedaan kondisi lahan sebagai bagian dari solusi desain.',
-    'Tim yang mengerjakan desain tetap dekat dengan konstruksi. Hal ini memudahkan klarifikasi detail, penyesuaian keputusan, dan menjaga bangunan selesai tetap dekat dengan maksud gambar.',
-    'Kami berbasis di Mataram dan bekerja di seluruh pulau, dari Senggigi dan Gili hingga Kuta Mandalika dan Lombok Timur. Kedekatan dengan proyek membantu kami mengambil keputusan berdasarkan kondisi lokasi, rantai pasok, dan cuaca yang nyata.'
+  setText('#pricing .section-label', 'Biaya proyek');
+  setText('#pricing .section-title', 'Bicarakan angka sejak awal');
+  setText('#pricing .section-desc', 'Ide yang indah tetap membutuhkan anggaran yang mampu membawanya. Kami membahas ruang lingkup, material, dan konstruksi sebelum desain berjalan terlalu jauh dari kemampuan biaya.');
+  setAll('.pricing-card__title', ['Desain arsitektur', 'Desain dan konstruksi']);
+  setHtml('#pricing .pricing-card:nth-child(1) .pricing-card__price', 'Rp 150.000 sampai Rp 350.000<span class="pricing-card__unit"> / m²</span>');
+  setText('#pricing .pricing-card:nth-child(2) .pricing-card__price', 'Proposal berdasarkan ruang lingkup');
+  setAll('.pricing-card__badge', ['Dibahas setelah brief']);
+  setAllDirectText('#pricing .pricing-card__features li', [
+    'Konsep dan render 3D',
+    'Gambar kerja',
+    'Estimasi biaya',
+    'Diskusi material',
+    'Desain arsitektur',
+    'Diskusi material dan konstruksi',
+    'Koordinasi lokasi',
+    'Ruang lingkup konstruksi disepakati sebelum pekerjaan dimulai'
+  ]);
+  setAllDirectText('#pricing .pricing-card .btn', ['Bicarakan proyek Anda', 'Bicarakan proyek Anda']);
+  setText('#pricing .pricing__note', 'Biaya desain bergantung pada ruang lingkup dan kompleksitas. Konstruksi dihitung setelah kami meninjau lahan, brief, dan material.');
+
+  setText('#faq .section-label', 'FAQ');
+  setText('#faq .section-title', 'Pertanyaan sebelum mulai');
+  setAll('#faq .faq__question span', [
+    'Berapa biaya jasa arsitek di Lombok?',
+    'Berapa lama sebuah proyek berlangsung?',
+    'Apakah Anda bekerja di luar Mataram?',
+    'Apa saja yang dapat Anda bantu?'
+  ]);
+  setAll('#faq .faq__answer p', [
+    'Referensi biaya desain yang tercantum adalah Rp 150.000 sampai Rp 350.000 per meter persegi. Biaya akhir bergantung pada ruang lingkup, kompleksitas, dan informasi yang dibutuhkan proyek.',
+    'Tidak ada satu jawaban untuk semua proyek. Urutannya bergantung pada lahan, ruang lingkup, perizinan, material, dan kecepatan pengambilan keputusan. Kami membahas urutan yang mungkin setelah membaca brief.',
+    'Ya. Kami bekerja di seluruh Lombok, termasuk Senggigi, Kuta Mandalika, Selong Belanak, Gili, dan wilayah Nusa Tenggara Barat yang lebih luas.',
+    'Kami membantu rumah, villa, ruang hospitality, interior, renovasi, desain arsitektur, dan proyek konstruksi.'
   ]);
 
   setText('#konsultasi .cta__title', 'Ceritakan rencana Anda');
-  setText('#konsultasi .cta__desc', 'Anda mungkin sudah memiliki lahan dan brief yang jelas, atau baru memiliki beberapa gambar referensi dan pertanyaan tentang langkah awal. Ceritakan informasi yang sudah ada dan kami akan membantu menentukan langkah berikutnya.');
+  setText('#konsultasi .cta__desc', 'Jika Anda punya lahan, sketsa, atau baru punya pertanyaan, kirimkan yang sudah ada. Lokasi, jenis proyek, tahap, dan kisaran anggaran cukup untuk memulai.');
   setAll('#konsultasi .cta__trust-item span', [
-    'Bagikan lokasi, jenis proyek, dan informasi yang sudah Anda punya.',
-    'Kami meninjau brief dan menjelaskan langkah berikutnya yang paling berguna.',
-    'Anda mendapatkan titik awal yang praktis untuk desain atau konstruksi.',
-    'Konsultasi awal gratis tanpa komitmen',
-    'Langkah berikutnya jelas setelah konsultasi',
-    'Karya terpilih di seluruh Lombok'
+    'Bagikan lokasi, jenis proyek, tahap, dan kisaran anggaran.',
+    'Kami membaca brief dan membalas maksimal 1x24 jam kerja.',
+    'Kami memberi tahu hal yang perlu diperiksa lebih dulu.',
+    'Percakapan awal tanpa komitmen',
+    'Balasan maksimal 1x24 jam kerja',
+    'Berbasis di Mataram dan bekerja di seluruh Lombok'
   ]);
-  setLabel('#konsultasi .cta__links a:nth-child(1)', 'Layanan Arsitektur & Design-Build');
-  setLabel('#konsultasi .cta__links a:nth-child(2)', 'Panduan Biaya Bangun');
-  setLabel('#konsultasi .cta__links a:nth-child(3)', 'Lihat Proyek Villa');
-  setText('#konsultasi .cta__form-title', 'Mulai Konsultasi');
-  setAll('#konsultasi label', ['Nama *', 'WhatsApp *', 'Email (opsional)', 'Jenis Proyek', 'Ceritakan proyek Anda']);
-  setAll('#konsultasi select option', ['Pilih jenis proyek', 'Hunian', 'Villa', 'Komersial / Hospitality', 'Desain Interior', 'Renovasi', 'Lainnya']);
-  document.querySelector('#hp-name')?.setAttribute('placeholder', 'Nama lengkap Anda');
+  setLabel('#konsultasi .cta__links a:nth-child(1)', 'Layanan arsitektur');
+  setLabel('#konsultasi .cta__links a:nth-child(2)', 'Panduan biaya bangun');
+  setLabel('#konsultasi .cta__links a:nth-child(3)', 'Lihat semua proyek');
+  setText('#konsultasi .cta__form-title', 'Bicarakan proyek Anda');
+  setAll('#konsultasi .cta__fg label', ['Nama *', 'WhatsApp *', 'Email opsional', 'Lokasi proyek', 'Jenis proyek', 'Tahap proyek', 'Kisaran anggaran', 'Ceritakan yang sudah Anda ketahui']);
+  setAll('#hp-type option', ['Pilih jenis', 'Hunian', 'Villa', 'Komersial dan hospitality', 'Desain interior', 'Renovasi', 'Lainnya']);
+  setAll('#hp-stage option', ['Pilih tahap', 'Baru mencari informasi', 'Sudah punya lahan', 'Sudah punya konsep', 'Siap mendesain', 'Konstruksi sedang berjalan']);
+  setAll('#hp-budget option', ['Belum yakin', 'Di bawah Rp 500 juta', 'Rp 500 juta sampai Rp 1 miliar', 'Di atas Rp 1 miliar']);
+  document.querySelector('#hp-name')?.setAttribute('placeholder', 'Nama Anda');
   document.querySelector('#hp-email')?.setAttribute('placeholder', 'anda@contoh.com');
-  document.querySelector('#hp-message')?.setAttribute('placeholder', 'contoh: villa 3 kamar di Senggigi dengan gaya tropis modern...');
-  setLabel('#konsultasi .cta__submit', 'Kirim Brief Proyek');
-  setText('#cta-success h3', 'Terima kasih');
-  setText('#cta-success p', 'Kami akan meninjau brief Anda dan menghubungi Anda dengan langkah berikutnya yang paling berguna.');
+  document.querySelector('#hp-location')?.setAttribute('placeholder', 'Senggigi, Mataram, atau area lain');
+  document.querySelector('#hp-message')?.setAttribute('placeholder', 'Ceritakan tentang lahan, bangunan, atau pertanyaan yang ingin Anda jawab.');
+  setLabel('#konsultasi .cta__submit', 'Kirim detail proyek');
+  setText('#cta-success h3', 'Detail Anda sudah kami terima');
+  setText('#cta-success p', 'Kami akan meninjaunya dan membalas maksimal 1x24 jam kerja.');
+
+  setText('#location .section-label', 'Temui kami');
+  setText('#location .section-title', 'Studio Atelier Nusa');
+  setText('#location .section-desc', 'Jl. Jend. Sudirman No.34, Gegutu, Rembiga, Kec. Selaparang, Kota Mataram, NTB 83124');
+  setText('#related-links h2', 'Jelajahi juga');
+  setText('#related-links > div > p', 'Layanan, biaya, dan panduan untuk proyek arsitektur Anda di Lombok.');
+  setAll('#related-links a', ['Jasa arsitek Lombok', 'Biaya arsitek Lombok', 'Arsitek Mataram', 'Portofolio villa', 'Desain interior', 'Konsultasi']);
 }
 
 function applyServicesIndonesian() {

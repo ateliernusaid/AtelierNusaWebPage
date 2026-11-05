@@ -132,25 +132,21 @@ async function submitToAgent(form, fields, waWindow) {
   });
   if (!response.ok) throw new Error(`Lead submission failed (${response.status})`);
 
-  trackEvent(ANALYTICS_EVENTS.leadSubmit, {
+  const funnelContext = {
     form_id: form.id || source,
     form_name: source,
-    page_path: window.location.pathname,
+    page_path: window.location.pathname || '/',
     project_type: type || 'unspecified',
     project_location: location || 'unspecified',
-  });
-  trackEvent(ANALYTICS_EVENTS.consultationRequested, {
-    form_id: form.id || source,
-    form_name: source,
-    page_path: window.location.pathname,
-  });
+  };
+  trackEvent(ANALYTICS_EVENTS.leadSubmit, funnelContext);
+  trackEvent(ANALYTICS_EVENTS.consultationRequested, funnelContext);
 
   // Count the Ads conversion only after the browser accepts the lead handoff.
   trackEvent('ads_conversion_Contact_1', {
+    ...funnelContext,
     value: 1.0,
     currency: 'IDR',
-    form_id: form.id || source,
-    page_path: window.location.pathname,
   });
   // Google Ads conversion — WhatsApp/Contact lead (AW-17872287905)
   if (typeof window.gtag === 'function') {
@@ -237,7 +233,8 @@ export function initLeadForms(root = document) {
     form.addEventListener('focusin', () => {
       const context = {
         form_id: form.id || form.dataset.formName || window.location.pathname,
-        page_path: window.location.pathname,
+        form_name: form.dataset.formName || window.location.pathname,
+        page_path: window.location.pathname || '/',
       };
       trackEvent(ANALYTICS_EVENTS.consultationStart, context);
       trackEvent(ANALYTICS_EVENTS.leadFormStart, context);
