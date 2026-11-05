@@ -14,6 +14,7 @@ function reportContact(label, type) {
         event_category: 'lead',
         event_label: label,
         page_path: window.location.pathname,
+        page_language: document.documentElement.lang.toLowerCase().startsWith('id') ? 'id' : 'en',
     });
     if (typeof window.clarity === 'function') window.clarity('event', type);
 }

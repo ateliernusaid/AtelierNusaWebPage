@@ -225,7 +225,7 @@ export function initLeadForms(root = document) {
         trackEvent('lead_delivery_failed', {
           form_id: form.id || form.dataset.formName || window.location.pathname,
           form_name: form.dataset.formName || window.location.pathname,
-          page_path: window.location.pathname,
+          page_path: window.location.pathname || '/',
         });
       });
     }, true);
@@ -235,6 +235,7 @@ export function initLeadForms(root = document) {
         form_id: form.id || form.dataset.formName || window.location.pathname,
         form_name: form.dataset.formName || window.location.pathname,
         page_path: window.location.pathname || '/',
+        page_language: document.documentElement.lang.toLowerCase().startsWith('id') ? 'id' : 'en',
       };
       trackEvent(ANALYTICS_EVENTS.consultationStart, context);
       trackEvent(ANALYTICS_EVENTS.leadFormStart, context);

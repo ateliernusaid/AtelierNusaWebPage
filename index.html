@@ -125,7 +125,8 @@
         if (typeof gtag === 'function') {
           gtag('event', 'whatsapp_click', {
             event_category: 'lead',
-            event_label: window.location.pathname
+            event_label: window.location.pathname,
+            page_language: document.documentElement.lang.toLowerCase().startsWith('id') ? 'id' : 'en'
           });
           // Google Ads conversion — WhatsApp Lead
           gtag('event', 'conversion', {

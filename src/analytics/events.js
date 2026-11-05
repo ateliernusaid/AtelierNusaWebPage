@@ -17,6 +17,7 @@ export function trackEvent(name, parameters = {}) {
   const eventParameters = {
     ...attribution,
     page_path: window.location.pathname || '/',
+    page_language: document.documentElement.lang.toLowerCase().startsWith('id') ? 'id' : 'en',
     ...parameters,
   };
   if (typeof window.gtag === 'function') {
