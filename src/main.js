@@ -9,6 +9,7 @@ import { createWhatsApp } from './components/whatsapp.js';
 import { initAnimations } from './components/animations.js';
 import { initLightbox } from './components/lightbox.js';
 import { initLeadForms } from './analytics/forms.js';
+import { trackEvent } from './analytics/events.js';
 import { applyLanguage } from './components/language.js';
 import './analytics/leadTracker.js';
 
@@ -158,10 +159,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initLeadForms();
 });
 
-// Measure social-profile clicks so organic distribution can be compared with leads.
+// Measure social-profile clicks without sending the destination URL to analytics.
 document.addEventListener('click', (e) => {
     const link = e.target.closest('a');
-    if (!link || typeof gtag !== 'function') return;
+    if (!link) return;
 
     let host;
     try {
@@ -179,9 +180,7 @@ document.addEventListener('click', (e) => {
                 : null;
     if (!network) return;
 
-    gtag('event', 'social_profile_click', {
+    trackEvent('social_profile_click', {
         social_network: network,
-        link_url: link.href,
-        page_path: window.location.pathname,
     });
 });

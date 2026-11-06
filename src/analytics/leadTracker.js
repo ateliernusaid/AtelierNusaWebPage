@@ -1,4 +1,3 @@
-import { getAttribution } from './attribution.js';
 import { ANALYTICS_EVENTS, trackEvent } from './events.js';
 // UNIVERSAL CONTACT AND CTA TRACKER
 // Loaded by bundled and static pages. A click is a micro-conversion;
@@ -8,16 +7,10 @@ import { ANALYTICS_EVENTS, trackEvent } from './events.js';
 
 function reportContact(label, type, ctaId = '') {
     if (typeof window.gtag !== 'function') return;
-    const attribution = getAttribution();
-    window.gtag('event', type, {
-        ...attribution,
+    trackEvent(type === 'phone_click' ? ANALYTICS_EVENTS.phoneClick : ANALYTICS_EVENTS.whatsappClick, {
         event_category: 'lead',
-        event_label: label,
-        page_path: window.location.pathname,
-        page_language: document.documentElement.lang.toLowerCase().startsWith('id') ? 'id' : 'en',
         ...(ctaId ? { cta_id: ctaId } : {}),
     });
-    if (typeof window.clarity === 'function') window.clarity('event', type);
 }
 function reportCtaClick(element) {
     const ctaId = element.dataset.ctaId;
