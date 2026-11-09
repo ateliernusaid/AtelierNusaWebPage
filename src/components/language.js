@@ -103,9 +103,9 @@ function applyHomeIndonesian() {
   setAll('.stats__label', ['Basis studio', 'Villa dan hospitality', 'Keputusan konstruksi ikut dibahas', 'Area kerja']);
 
   setText('#showcase .section-label', 'Karya terpilih');
-  setText('#showcase .section-title', 'Sudah selesai, sedang berjalan, dan masih dieksplorasi');
+  setText('#showcase .section-title', 'Desain selesai, sedang dibangun, dan masih dieksplorasi');
   setText('#showcase .section-desc', 'Beberapa rumah dan studi villa dari Lombok. Setiap kartu menunjukkan tahap proyek.');
-  setAll('#showcase .project-card__badge', ['Selesai', 'Berjalan', 'Konsep', 'Konsep']);
+  setAll('#showcase .project-card__badge', ['Desain selesai', 'Dalam konstruksi', 'Studi konsep', 'Studi konsep']);
   setAll('#showcase .project-card__title', ['Hunian mewah', 'Hunian privat', 'Hunian industrial', 'Villa tropis']);
   setAll('#showcase .project-card__subtitle', ['Hunian, Kota Mataram', 'Hunian, Lombok Barat', 'Hunian, Mataram', 'Villa, Senggigi']);
   setLabel('#showcase .btn--outline', 'Lihat semua proyek');
@@ -113,7 +113,7 @@ function applyHomeIndonesian() {
   setText('#testimonials .section-label', 'Catatan proyek');
   setText('#testimonials .section-title', 'Melihat pekerjaan apa adanya');
   setText('#testimonials .section-desc', 'Kami memilih menunjukkan jenis proyek dan tahapnya daripada mengisi halaman dengan kutipan yang terdengar sempurna tetapi tidak memberi konteks.');
-  setAll('.project-note__status', ['Selesai', 'Berjalan', 'Konsep']);
+  setAll('.project-note__status', ['Desain selesai', 'Dalam konstruksi', 'Studi konsep']);
   setAll('.testimonial-card__quote', [
     'Proyek hunian mewah di Kota Mataram. Lihat halaman proyek untuk melihat pekerjaan yang sudah selesai.',
     'Hunian privat di Lombok Barat. Halaman proyek mencatat pekerjaan ini masih berjalan.',
@@ -160,7 +160,7 @@ function applyHomeIndonesian() {
     'Koordinasi lokasi',
     'Ruang lingkup konstruksi disepakati sebelum pekerjaan dimulai'
   ]);
-  setAllDirectText('#pricing .pricing-card .btn', ['Bicarakan proyek Anda', 'Bicarakan proyek Anda']);
+  setAllDirectText('#pricing .pricing-card .btn', ['Bicarakan ruang lingkup desain', 'Tinjau ruang lingkup desain dan konstruksi']);
   setText('#pricing .pricing__note', 'Biaya desain bergantung pada ruang lingkup dan kompleksitas. Konstruksi dihitung setelah kami meninjau lahan, brief, dan material.');
 
   setText('#faq .section-label', 'FAQ');
@@ -250,9 +250,9 @@ function applyServicesIndonesian() {
 function applyProjectsIndonesian() {
   setText('.page-hero .section-label', 'Karya Kami');
   setHtml('.page-hero__title', 'Proyek Arsitektur<br>di Lombok');
-  setText('.page-hero__subtitle', 'Pilihan rumah, villa, dan gagasan hospitality dari proyek di dalam dan sekitar Lombok. Sebagian telah selesai, sebagian masih berjalan, dan sebagian lainnya masih berada pada tahap konsep.');
-  setAll('.projects-filter__btn', ['Semua', 'Selesai', 'Berjalan', 'Konsep']);
-  setAll('.project-card__badge', ['Selesai', 'Konsep', 'Konsep', 'Konsep', 'Berjalan', 'Berjalan', 'Konsep', 'Selesai']);
+  setText('.page-hero__subtitle', 'Pilihan rumah, villa, dan gagasan hospitality dari proyek di dalam dan sekitar Lombok. Sebagian telah selesai pada tahap desain, sebagian sedang dalam konstruksi, dan sebagian lainnya masih berupa studi konsep.');
+  setAll('.projects-filter__btn', ['Semua', 'Desain selesai', 'Dalam konstruksi', 'Studi konsep']);
+  setAll('.project-card__badge', ['Desain selesai', 'Studi konsep', 'Studi konsep', 'Studi konsep', 'Dalam konstruksi', 'Dalam konstruksi', 'Studi konsep', 'Desain selesai']);
   setText('.locations .section-label', 'Area Kerja');
   setText('.locations .section-title', 'Di mana kami bekerja');
   setText('.locations .section-desc', 'Sebagian besar pekerjaan kami berada di Lombok. Kondisinya berubah dari satu proyek ke proyek berikutnya, dan perubahan itu menjadi bagian dari percakapan desain.');
@@ -427,7 +427,7 @@ const PROJECT_PAGE_TRANSLATIONS = {
   '/tropical-villa-senggigi': {
     title: 'Villa Tropis di Senggigi | Desain Konsep | Atelier Nusa',
     description: 'Konsep villa tropis di lereng Senggigi dengan pemandangan laut panorama, atap berbidang lebar, dan hubungan dalam-luar yang terbuka.',
-    client: 'Desain Konsep',
+    client: 'Studi konsep',
     paragraphs: [
       'Berada di kontur perbukitan Senggigi yang rimbun, konsep Tropical Villa merupakan eksplorasi hunian lereng yang bekerja selaras dengan lingkungannya. Desainnya mengutamakan keterikatan mendalam pada lanskap, menawarkan pemandangan laut panorama sekaligus ruang tinggal yang intim dan terlindung.',
       'Bahasa arsitekturnya ditentukan oleh atap berbidang lebar yang dirancang menahan guyuran hujan monsun serta memberi naungan penting dari matahari ekuatorial. Palet material hangat berupa kayu lokal, dinding penahan bertekstur, dan beton polish menjadi fondasi visual rumah, memastikan bangunan terasa lahir dari lerengnya, bukan diletakkan di atasnya.',
@@ -441,7 +441,7 @@ const PROJECT_PAGE_TRANSLATIONS = {
   '/industrial-residence-mataram': {
     title: 'Residensial Industrial Mataram | Desain Konsep | Atelier Nusa',
     description: 'Konsep hunian dengan beton ekspos dan estetika industrial yang tetap menerapkan prinsip desain tropis di Mataram.',
-    client: 'Desain Konsep',
+    client: 'Studi konsep',
     paragraphs: [
       'Dirancang sebagai pernyataan arsitektur yang mencolok di lanskap urban Mataram, konsep Industrial Residence merangkul materialitas mentah dan bentuk yang polos. Desain ini menantang norma hunian konvensional dengan berani memamerkan elemen struktural yang biasanya disembunyikan.',
       'Karakter utamanya adalah penggunaan luas beton ekspos cetak papan. Material kokoh ini tidak hanya memberi integritas struktural, tetapi juga menghadirkan estetika brutalis yang konkret, menambatkan rumah dengan mantap pada lahannya. Nada abu-abu alami beton diimbangi oleh rangka baja hitam dan panel kaca berperforma tinggi yang luas.',
@@ -470,7 +470,7 @@ const PROJECT_PAGE_TRANSLATIONS = {
   '/private-residence-lombok-barat': {
     title: 'Residensial Privat Lombok Barat | Konstruksi Berjalan | Atelier Nusa',
     description: 'Renovasi strategis di Lombok Barat yang mempertahankan struktur utama, menghemat biaya, dan meningkatkan kualitas hunian.',
-    client: 'Konstruksi Berjalan',
+    client: 'Dalam konstruksi',
     paragraphs: [
       'Proyek ini berawal dari permintaan renovasi. Sejak awal, klien memiliki satu kekhawatiran yang jelas: mereka tidak ingin pembongkaran total yang dapat meningkatkan biaya konstruksi secara signifikan.',
       'Sebagai arsitek sekaligus pelaksana, kami menyikapinya sebagai peluang desain strategis, bukan keterbatasan. Kami melakukan penilaian menyeluruh terhadap struktur dan konfigurasi ruang yang ada, mengidentifikasi elemen mana yang dapat dipertahankan dan dioptimalkan alih-alih dibangun ulang.',
