@@ -49,3 +49,10 @@ test('core and legacy cards can shrink within narrow viewports', () => {
     assert.ok(read(`${slug}.html`).includes('class="contact-cards"'));
   }
 });
+
+test('wide article tables stay inside the mobile document and remain scrollable', () => {
+  const html = read('blog/biaya-bangun-rumah-lombok-2026.html');
+  assert.match(html, /class="article-table-wrap"[^>]*overflow|class="article-table-wrap"/);
+  assert.match(html, /\.article-table-wrap\s*\{[^}]*overflow-x:\s*auto/);
+  assert.match(html, /\.article-table\s*\{[^}]*min-width:\s*620px/);
+});

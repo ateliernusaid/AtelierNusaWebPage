@@ -144,7 +144,8 @@
     .article-content strong { color: var(--text) }
 
     /* Tables */
-    .article-table { width: 100%; border-collapse: collapse; margin: 32px 0; font-size: 15px; color: var(--text2); background: var(--bg-card); border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--border-lt); }
+    .article-table-wrap { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 32px 0; border: 1px solid var(--border-lt); border-radius: var(--r-md); }
+    .article-table { width: 100%; min-width: 620px; border-collapse: collapse; margin: 0; font-size: 15px; color: var(--text2); background: var(--bg-card); }
     .article-table th { background: var(--bg3); font-family: var(--font-h); color: var(--gold); padding: 16px; text-align: left; font-weight: 600; border-bottom: 1px solid var(--border-lt); }
     .article-table td { padding: 16px; border-bottom: 1px solid var(--border-lt); }
     .article-table tr:last-child td { border-bottom: none; }
@@ -244,6 +245,7 @@
     <h2>1. Cara Membaca Rentang Biaya per Meter Persegi (m²)</h2>
     <p>Biaya per m² adalah titik awal untuk membuat skenario anggaran, bukan harga final. Rentang akan berubah berdasarkan luas, struktur, akses lokasi, material, utilitas, dan lingkup pekerjaan yang masuk dalam penawaran.</p>
 
+    <div class="article-table-wrap" role="region" aria-label="Tabel estimasi biaya konstruksi" tabindex="0">
     <table class="article-table">
       <thead>
         <tr>
@@ -270,6 +272,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
 
     <h2>2. Faktor Kunci yang Mempengaruhi Biaya di Lombok</h2>
     <p>Membangun rumah di pulau Lombok memiliki dinamika tersendiri yang berbeda dengan wilayah perkotaan besar di Jawa atau Bali. Poin-poin di bawah ini sangat krusial untuk dipahami agar anggaran Anda tidak membengkak di tengah jalan:</p>
