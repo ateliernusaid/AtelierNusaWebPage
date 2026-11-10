@@ -56,3 +56,30 @@ test('wide article tables stay inside the mobile document and remain scrollable'
   assert.match(html, /\.article-table-wrap\s*\{[^}]*overflow-x:\s*auto/);
   assert.match(html, /\.article-table\s*\{[^}]*min-width:\s*620px/);
 });
+
+test('project pages expose truthful status and decision snapshots', () => {
+  const expected = {
+    'luxury-residential-mataram': ['Design completed', 'Mataram, Lombok', 'Warm timber, privacy, natural light'],
+    'private-residence-lombok-barat': ['Under construction', 'Lombok Barat', 'Retain the existing structure where possible'],
+    'industrial-residence-mataram': ['Concept study', 'Mataram, Lombok', 'Raw materiality with tropical shading'],
+    'tropical-villa-senggigi': ['Concept study', 'Senggigi, Lombok', 'Deep eaves, terraces, indoor-outdoor living'],
+  };
+  for (const [slug, phrases] of Object.entries(expected)) {
+    const html = read(`${slug}.html`);
+    assert.match(html, /class="project-proof"/);
+    assert.match(html, /class="project-proof__links"/);
+    for (const phrase of phrases) assert.ok(html.includes(phrase), `${slug} should include ${phrase}`);
+  }
+  assert.match(read('src/styles/projects.css'), /\.project-proof__facts\s*\{[\s\S]*grid-template-columns/);
+});
+
+test('legacy contact handlers mirror without duplicating analytics events', () => {
+  const tracker = read('src/analytics/leadTracker.js');
+  assert.match(tracker, /hasInlineContactTracker/);
+  assert.match(tracker, /mirrorOnly:\s*hasInlineContactTracker\(link\)/);
+});
+
+test('conversion mirror host is allowed by the deployed CSP', () => {
+  const vercel = read('vercel.json');
+  assert.match(vercel, /connect-src[^\"]*https:\/\/tracker\.ateliernusa\.id/);
+});

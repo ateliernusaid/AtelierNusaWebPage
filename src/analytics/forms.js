@@ -99,12 +99,17 @@ function readLeadFields(form) {
   };
 }
 function getFormCtaId(form) {
-  return form.dataset.ctaId || form.querySelector('[type="submit"][data-cta-id]')?.dataset.ctaId || '';
+  if (form.dataset.ctaId) return form.dataset.ctaId;
+  const explicit = form.querySelector('[type="submit"][data-cta-id]')?.dataset.ctaId;
+  if (explicit) return explicit;
+  const formName = form.dataset.formName || window.location.pathname.replace(/^\/+|\/+$/g, '') || 'home';
+  return `${formName.replace(/[^a-z0-9]+/gi, '_').replace(/^_+|_+$/g, '')}_form_submit`;
 }
 
 async function submitToAgent(form, fields, waWindow) {
   const { name, phone, email, type, location, stage, message, budget } = fields;
   const source = form.dataset.formName || window.location.pathname;
+  const ctaId = getFormCtaId(form);
   const attribution = getAttribution();
   const payload = {
     source: 'website',
@@ -118,6 +123,8 @@ async function submitToAgent(form, fields, waWindow) {
     budget,
     page: window.location.pathname,
     referrer: document.referrer,
+    cta_id: ctaId,
+    session_id: attribution.session_id || '',
     utm_source: attribution.utm_source,
     utm_medium: attribution.utm_medium,
     utm_campaign: attribution.utm_campaign,
@@ -135,7 +142,6 @@ async function submitToAgent(form, fields, waWindow) {
   });
   if (!response.ok) throw new Error(`Lead submission failed (${response.status})`);
 
-  const ctaId = getFormCtaId(form);
   const funnelContext = {
     form_id: form.id || source,
     form_name: source,

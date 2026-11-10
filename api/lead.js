@@ -39,6 +39,7 @@ export default async function handler(req, res) {
   }
 
   const body = req.body && typeof req.body === 'object' ? req.body : {};
+  const ctaId = trimField(body.cta_id || body.ctaId);
   const payload = {
     source: 'website',
     name: trimField(body.name),
@@ -51,6 +52,8 @@ export default async function handler(req, res) {
     projectType: trimField(body.projectType),
     page: trimField(body.page),
     referrer: trimField(body.referrer),
+    ...(ctaId ? { cta_id: ctaId } : {}),
+    session_id: trimField(body.session_id || body.sessionId),
     utm_source: trimField(body.utm_source),
     utm_medium: trimField(body.utm_medium),
     utm_campaign: trimField(body.utm_campaign),

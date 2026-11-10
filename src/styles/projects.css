@@ -275,6 +275,113 @@
     object-fit: contain;
 }
 
+/* Project proof snapshot */
+.project-proof {
+    padding: var(--space-xl) 0 var(--space-2xl);
+    background: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border-light);
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.project-proof__intro {
+    max-width: 720px;
+    margin: 0 auto var(--space-lg);
+    text-align: center;
+}
+
+.project-proof__eyebrow {
+    display: block;
+    margin-bottom: var(--space-sm);
+    color: var(--color-accent);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+}
+
+.project-proof__intro h2 {
+    margin-bottom: var(--space-sm);
+    font-size: clamp(1.6rem, 3vw, 2.25rem);
+    line-height: 1.2;
+}
+
+.project-proof__intro p {
+    color: var(--color-text-secondary);
+    font-size: var(--fs-body);
+    line-height: var(--lh-relaxed);
+}
+
+.project-proof__facts {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-md);
+    max-width: 960px;
+    margin: 0 auto var(--space-lg);
+}
+
+.project-proof__facts > div {
+    min-width: 0;
+    padding: var(--space-md);
+    background: rgba(20, 28, 38, 0.55);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+}
+
+.project-proof__facts dt {
+    margin-bottom: 6px;
+    color: var(--color-text-muted);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+}
+
+.project-proof__facts dd {
+    color: var(--color-text-primary);
+    font-size: var(--fs-small);
+    line-height: var(--lh-normal);
+    overflow-wrap: anywhere;
+}
+
+.project-proof > .container > .btn {
+    display: flex;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.project-proof__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 18px;
+    max-width: 960px;
+    margin: var(--space-md) auto 0;
+    text-align: center;
+}
+
+.project-proof__links a {
+    color: var(--color-text-secondary);
+    font-size: var(--fs-small);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.project-proof__links a:hover {
+    color: var(--color-accent);
+}
+
+@media (max-width: 768px) {
+    .project-proof__facts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .project-proof__facts {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
 /* Project Description */
 .project-description {
     padding-bottom: var(--space-2xl);

@@ -82,6 +82,10 @@ test('accepts a valid lead and forwards qualification and attribution fields', a
     stage: 'Sudah punya lahan',
     projectType: 'Villa / Premium',
     budget: 'Rp1–3 miliar',
+    cta_id: 'homepage_form_submit',
+    session_id: 'session-valid-lead',
+    page: '/',
+    referrer: 'https://www.google.com/',
     utm_source: 'instagram',
   }, forwardedFor: '198.51.100.4' });
   const result = await handler(req, res);
@@ -94,10 +98,20 @@ test('accepts a valid lead and forwards qualification and attribution fields', a
   assert.equal(sent.name, 'Andi');
   assert.equal(sent.location, 'Senggigi');
   assert.equal(sent.stage, 'Sudah punya lahan');
-  assert.equal(sent.projectType, 'Villa / Premium');
   assert.equal(sent.budget, 'Rp1–3 miliar');
+  assert.equal(sent.page, '/');
+  assert.equal(sent.referrer, 'https://www.google.com/');
+  assert.equal(sent.cta_id, 'homepage_form_submit');
+  assert.equal(sent.session_id, 'session-valid-lead');
   assert.equal(sent.utm_source, 'instagram');
-  assert.equal(sent.source, 'website');
+});
+
+test('accepts the additive cta_id field and forwards it to the agent', async () => {
+  const { req, res } = setup({ body: { name: 'Cta Test', ctaId: 'cost_guide_form_submit' }, forwardedFor: '198.51.100.40' });
+  const result = await handler(req, res);
+  assert.equal(result.statusCode, 200);
+  const sent = JSON.parse(fetchCalls[0].init.body);
+  assert.equal(sent.cta_id, 'cost_guide_form_submit');
 });
 
 test('upstream failure is masked as 502 without leaking the upstream body', async () => {

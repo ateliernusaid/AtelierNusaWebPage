@@ -1,28 +1,39 @@
 import { ANALYTICS_EVENTS, trackEvent } from './events.js';
-// UNIVERSAL CONTACT AND CTA TRACKER
-// Loaded by bundled and static pages. A click is a micro-conversion;
-// a qualified form submission is the lead conversion.
-// ========================================
 
+function getCtaId(element, fallback = '') {
+    const explicit = element?.dataset?.ctaId || element?.dataset?.waLabel;
+    if (explicit) return explicit;
+    const onclick = element?.getAttribute?.('onclick') || '';
+    const inline = onclick.match(/trackCTA\(['"]([^'"]+)['"]\)/)?.[1];
+    if (inline) return inline;
+    if (element?.id) return element.id;
+    return fallback;
+}
 
-function reportContact(label, type, ctaId = '') {
-    if (typeof window.gtag !== 'function') return;
+function reportContact(label, type, ctaId = '', options = {}) {
+    const pageKey = window.location.pathname.replace(/[^a-z0-9]+/gi, '_').replace(/^_+|_+$/g, '') || 'home';
     trackEvent(type === 'phone_click' ? ANALYTICS_EVENTS.phoneClick : ANALYTICS_EVENTS.whatsappClick, {
         event_category: 'lead',
-        ...(ctaId ? { cta_id: ctaId } : {}),
-    });
+        ...(ctaId ? { cta_id: ctaId } : { cta_id: `${pageKey}_${type}` }),
+    }, options);
+}
+
+function hasInlineContactTracker(element) {
+    return /(?:fireConversion|fireGoogleAdsConversion)\s*\(/.test(element?.getAttribute?.('onclick') || '');
 }
 function reportCtaClick(element) {
-    const ctaId = element.dataset.ctaId;
+    const ctaId = getCtaId(element);
     if (!ctaId) return;
-    trackEvent(ANALYTICS_EVENTS.ctaClick, { cta_id: ctaId });
+    const hasLegacyInlineTracker = /trackCTA\(['"][^'"]+['"]\)/.test(element.getAttribute?.('onclick') || '');
+    trackEvent(ANALYTICS_EVENTS.ctaClick, { cta_id: ctaId }, { mirrorOnly: hasLegacyInlineTracker });
 }
 
 if (!window.__atnLeadTracker) {
     window.__atnLeadTracker = true;
+    trackEvent('page_view');
 
     document.addEventListener('click', (e) => {
-        const cta = e.target?.closest?.('[data-cta-id]');
+        const cta = e.target?.closest?.('[data-cta-id], [onclick*="trackCTA"]');
         if (cta) reportCtaClick(cta);
 
         const link = e.target?.closest?.('a[href*="wa.me"], a[href*="api.whatsapp.com"], a[href^="tel:"]');
@@ -41,6 +52,6 @@ if (!window.__atnLeadTracker) {
         }
 
         const isPhone = link.getAttribute('href')?.startsWith('tel:');
-        reportContact(link.dataset.waLabel || window.location.pathname, isPhone ? 'phone_click' : 'whatsapp_click', link.dataset.ctaId || '');
+        reportContact(link.dataset.waLabel || window.location.pathname, isPhone ? 'phone_click' : 'whatsapp_click', getCtaId(link), { mirrorOnly: hasInlineContactTracker(link) });
     }, true);
 }

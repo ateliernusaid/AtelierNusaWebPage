@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'atelier_nusa_attribution';
+const SESSION_KEY = 'atelier_nusa_session_id';
 const CAMPAIGN_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'fbclid'];
 
 function readStored() {
@@ -14,6 +15,21 @@ function saveStored(value) {
     window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(value));
   } catch {
     // Tracking should never block a lead form when storage is unavailable.
+  }
+}
+
+export function getSessionId() {
+  if (typeof window === 'undefined') return '';
+  try {
+    const stored = window.sessionStorage.getItem(SESSION_KEY);
+    if (stored) return stored;
+    const generated = typeof window.crypto?.randomUUID === 'function'
+      ? window.crypto.randomUUID()
+      : `s_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+    window.sessionStorage.setItem(SESSION_KEY, generated);
+    return generated;
+  } catch {
+    return '';
   }
 }
 
@@ -83,6 +99,7 @@ export function getAttribution() {
     first_utm_source: first.utm_source || '',
     first_utm_medium: first.utm_medium || '',
     first_utm_campaign: first.utm_campaign || '',
+    session_id: getSessionId(),
   };
 }
 
