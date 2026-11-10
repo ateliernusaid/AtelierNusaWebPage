@@ -107,8 +107,8 @@ nav.scrolled .logo-img{height:34px}
 .svc-header{padding:0 clamp(2rem,6vw,6rem);margin-bottom:56px}
 .svc-label{font-family:var(--font-b);font-size:11px;font-weight:400;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:inline-block}
 .svc-title{font-family:var(--font-d);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:400;color:var(--text);max-width:560px}
-.svc-scroll{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;padding:0 clamp(2rem,6vw,6rem)}
-.svc-card{background:var(--surface);border:1px solid var(--border-lt);padding:48px 36px;transition:all .5s var(--ease);position:relative;overflow:hidden}
+.svc-scroll{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;padding:0 clamp(2rem,6vw,6rem)}
+.svc-card{min-width:0;background:var(--surface);border:1px solid var(--border-lt);padding:48px 36px;transition:all .5s var(--ease);position:relative;overflow:hidden;overflow-wrap:anywhere}
 .svc-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
 .svc-card:hover::before{transform:scaleX(1)}
 .svc-card:hover{background:var(--surface-h);border-color:var(--border)}
@@ -220,7 +220,7 @@ nav.scrolled .logo-img{height:34px}
   /* Keeps the top-anchored offset; only the horizontal and bottom padding tighten here. */
   .hero-cin__content{padding:20rem 24px 60px}
   .statement{grid-template-columns:1fr;gap:32px;padding:60px 24px}
-  .svc-card{flex:0 0 300px}
+  .svc-scroll{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
   .port-grid{grid-template-columns:1fr;gap:2px}
   .port-item.tall{grid-row:auto}
   .steps-timeline{grid-template-columns:1fr;gap:0}
@@ -237,8 +237,8 @@ nav.scrolled .logo-img{height:34px}
   .hero-cin__actions{flex-direction:column;width:100%}
   .hero-cin__actions .btn-p,.hero-cin__actions .btn-wa{width:100%;justify-content:center}
   .fg-row{grid-template-columns:1fr}
-  .svc-scroll{padding:0 20px}
-  .svc-card{flex:0 0 85vw}
+  .svc-scroll{grid-template-columns:minmax(0,1fr);padding:0 20px}
+  .svc-card{padding:32px 24px}
 }
 
 @media(max-width:600px){

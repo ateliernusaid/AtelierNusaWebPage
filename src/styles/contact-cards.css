@@ -1,0 +1,17 @@
+/* Shared by the standalone contact blocks and the main services page. */
+.contact-cards > * {
+    min-width: 0;
+}
+
+.contact-cards > * > :first-child {
+    flex: 0 0 28px;
+    width: 28px;
+    line-height: 1.25;
+    text-align: center;
+}
+
+.contact-cards > * > :last-child {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}

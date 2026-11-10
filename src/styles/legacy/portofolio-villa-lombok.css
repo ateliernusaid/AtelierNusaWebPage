@@ -1,0 +1,27 @@
+/* Layout restored from tracked revision aa328b2f9; current page content is unchanged. */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',system-ui,sans-serif; }
+        body { background:#f8f6f3; color:#2d2d2d; line-height:1.7; }
+        .container { max-width:1100px; margin:0 auto; padding:0 20px; }
+        header { background:#1a3a3a; color:white; padding:60px 0; text-align:center; }
+        header h1 { font-size:2.5em; margin-bottom:10px; }
+        header p { font-size:1.2em; opacity:0.9; }
+        .cta-btn { display:inline-block; background:#c8a96e; color:#1a3a3a; padding:15px 40px; border-radius:50px; text-decoration:none; font-weight:bold; margin-top:20px; font-size:1.1em; }
+        section { padding:60px 0; }
+        section h2 { font-size:2em; margin-bottom:30px; color:#1a3a3a; text-align:center; }
+        .portfolio-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr)); gap:30px; }
+        .portfolio-card { background:white; border-radius:12px; overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,0.05); }
+        .portfolio-card .img-placeholder { background:linear-gradient(135deg,#1a3a3a,#2d5a5a); height:220px; display:flex; align-items:center; justify-content:center; color:#c8a96e; font-size:3em; }
+        .featured-work { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr)); gap:18px; margin-bottom:34px; }
+        .featured-work a { display:block; color:#1a3a3a; text-decoration:none; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 4px 15px rgba(0,0,0,.05); }
+        .featured-work img { display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; }
+        .featured-work span { display:block; padding:14px 16px; font-weight:700; }
+        .portfolio-card .info { padding:25px; }
+        .portfolio-card .info h3 { color:#1a3a3a; margin-bottom:5px; }
+        .portfolio-card .info .tag { display:inline-block; background:#c8a96e20; color:#c8a96e; padding:3px 12px; border-radius:20px; font-size:0.85em; margin-top:10px; }
+        .testimonial { background:white; }
+        .testimonial-card { background:#f8f6f3; padding:25px; border-radius:12px; margin-bottom:20px; border-left:4px solid #c8a96e; }
+        .testimonial-card .name { font-weight:bold; color:#1a3a3a; }
+        .contact-form { background:#1a3a3a; color:white; }
+        .contact-form input,.contact-form textarea { width:100%; padding:12px; margin-bottom:15px; border:none; border-radius:8px; }
+        .contact-form button { background:#c8a96e; color:#1a3a3a; padding:15px 40px; border:none; border-radius:50px; font-weight:bold; font-size:1.1em; cursor:pointer; }
+        footer { background:#0f2525; color:white; text-align:center; padding:30px 0; font-size:0.9em; }
