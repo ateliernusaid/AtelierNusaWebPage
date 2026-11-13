@@ -85,8 +85,13 @@ test('accepts a valid lead and forwards qualification and attribution fields', a
     cta_id: 'homepage_form_submit',
     session_id: 'session-valid-lead',
     page: '/',
+    landing_page: '/',
     referrer: 'https://www.google.com/',
+    lead_source: 'instagram/social',
+    form_id: 'homepage-lead-form',
+    form_name: 'homepage',
     utm_source: 'instagram',
+    fbclid: 'fbclid-api-contract',
   }, forwardedFor: '198.51.100.4' });
   const result = await handler(req, res);
   assert.equal(result.statusCode, 200);
@@ -104,6 +109,11 @@ test('accepts a valid lead and forwards qualification and attribution fields', a
   assert.equal(sent.cta_id, 'homepage_form_submit');
   assert.equal(sent.session_id, 'session-valid-lead');
   assert.equal(sent.utm_source, 'instagram');
+  assert.equal(sent.landing_page, '/');
+  assert.equal(sent.lead_source, 'instagram/social');
+  assert.equal(sent.form_id, 'homepage-lead-form');
+  assert.equal(sent.form_name, 'homepage');
+  assert.equal(sent.fbclid, 'fbclid-api-contract');
 });
 
 test('accepts the additive cta_id field and forwards it to the agent', async () => {

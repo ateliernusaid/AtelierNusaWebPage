@@ -51,8 +51,12 @@ export default async function handler(req, res) {
     stage: trimField(body.stage),
     projectType: trimField(body.projectType),
     page: trimField(body.page),
+    landing_page: trimField(body.landing_page),
     referrer: trimField(body.referrer),
+    lead_source: trimField(body.lead_source),
     ...(ctaId ? { cta_id: ctaId } : {}),
+    form_id: trimField(body.form_id),
+    form_name: trimField(body.form_name),
     session_id: trimField(body.session_id || body.sessionId),
     utm_source: trimField(body.utm_source),
     utm_medium: trimField(body.utm_medium),
@@ -63,7 +67,6 @@ export default async function handler(req, res) {
     fbclid: trimField(body.fbclid),
     website: trimField(body.website),
   };
-
   if (payload.website) {
     return res.status(202).json({ success: true, accepted: false });
   }

@@ -49,6 +49,8 @@ function readTouch() {
 
   try {
     touch.referrer_host = document.referrer ? new URL(document.referrer).hostname : '';
+    const internalHosts = ['ateliernusa.id', 'www.ateliernusa.id', window.location.hostname];
+    if (internalHosts.includes(touch.referrer_host)) touch.referrer_host = '';
   } catch {
     touch.referrer_host = '';
   }
@@ -96,9 +98,14 @@ export function getAttribution() {
     utm_term: last.utm_term || '',
     utm_content: last.utm_content || '',
     gclid: last.gclid || '',
+    fbclid: last.fbclid || '',
     first_utm_source: first.utm_source || '',
     first_utm_medium: first.utm_medium || '',
     first_utm_campaign: first.utm_campaign || '',
+    first_utm_term: first.utm_term || '',
+    first_utm_content: first.utm_content || '',
+    first_gclid: first.gclid || '',
+    first_fbclid: first.fbclid || '',
     session_id: getSessionId(),
   };
 }

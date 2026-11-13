@@ -10,6 +10,7 @@ const AGENT_MIRRORED_EVENTS = new Set([
   'consultation_start',
   'lead_form_start',
   'lead_submit',
+  'lead_delivery_success',
   'consultation_requested',
   'lead_delivery_failed',
 ]);
@@ -25,12 +26,15 @@ function mirrorToAgent(name, parameters, attribution) {
   const payload = {
     event: name,
     event_id: createEventId(),
+    source: parameters.source || 'website',
     session_id: attribution.session_id || '',
     cta_id: parameters.cta_id || '',
     form_id: parameters.form_id || '',
     form_name: parameters.form_name || '',
     page: window.location.pathname || '/',
+    page_path: parameters.page_path || window.location.pathname || '/',
     referrer: document.referrer || '',
+    lead_source: attribution.lead_source || 'direct',
     landing_page: attribution.landing_page || window.location.pathname || '/',
     utm_source: attribution.utm_source || '',
     utm_medium: attribution.utm_medium || '',
@@ -63,6 +67,8 @@ function mirrorToAgent(name, parameters, attribution) {
 }
 
 export const ANALYTICS_SAFE_KEYS = Object.freeze([
+  'source',
+  'session_id',
   'cta_id',
   'form_id',
   'form_name',
@@ -77,21 +83,32 @@ export const ANALYTICS_SAFE_KEYS = Object.freeze([
 ]);
 
 export const ANALYTICS_EVENTS = Object.freeze({
+  pageView: 'page_view',
+  ctaClick: 'cta_click',
   whatsappClick: 'whatsapp_click',
   phoneClick: 'phone_click',
+  emailClick: 'email_click',
   consultationStart: 'consultation_start',
   leadFormStart: 'lead_form_start',
   leadSubmit: 'lead_submit',
+  leadDeliverySuccess: 'lead_delivery_success',
+  leadDeliveryFailed: 'lead_delivery_failed',
   consultationRequested: 'consultation_requested',
   consultationBooked: 'consultation_booked',
   portfolioView: 'portfolio_view',
-  ctaClick: 'cta_click',
 });
 
 export function trackEvent(name, parameters = {}, options = {}) {
   if (typeof window === 'undefined') return;
-  const attribution = getAttribution();
+  let attribution = {};
+  try {
+    attribution = getAttribution();
+  } catch {
+    // Missing attribution must not block delivery or the other analytics sinks.
+  }
   const eventParameters = {
+    source: parameters.source || 'website',
+    session_id: attribution.session_id || '',
     lead_source: attribution.lead_source || 'direct',
     landing_page: attribution.landing_page || window.location.pathname || '/',
     page_path: window.location.pathname || '/',
@@ -101,13 +118,23 @@ export function trackEvent(name, parameters = {}, options = {}) {
   const safeParameters = Object.fromEntries(
     Object.entries(eventParameters).filter(([key]) => ANALYTICS_SAFE_KEYS.includes(key)),
   );
-  if (!options.mirrorOnly && typeof window.gtag === 'function') {
-    window.gtag('event', name, safeParameters);
+  try {
+    if (!options.mirrorOnly && typeof window.gtag === 'function') {
+      window.gtag('event', name, safeParameters);
+    }
+  } catch {
+    // GA failures must not affect Clarity, the mirror, or lead delivery.
   }
-  // Mirror funnel events into Microsoft Clarity so session recordings
-  // can be filtered by conversion stage (smart events dashboard).
-  if (!options.mirrorOnly && typeof window.clarity === 'function') {
-    window.clarity('event', name);
+  try {
+    if (!options.mirrorOnly && typeof window.clarity === 'function') {
+      window.clarity('event', name);
+    }
+  } catch {
+    // Clarity is best-effort and receives only the event name.
   }
-  mirrorToAgent(name, parameters, attribution);
+  try {
+    mirrorToAgent(name, parameters, attribution);
+  } catch {
+    // Also contain payload/event-ID construction failures before transport.
+  }
 }

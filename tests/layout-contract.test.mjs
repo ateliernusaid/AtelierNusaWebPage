@@ -83,3 +83,11 @@ test('conversion mirror host is allowed by the deployed CSP', () => {
   const vercel = read('vercel.json');
   assert.match(vercel, /connect-src[^\"]*https:\/\/tracker\.ateliernusa\.id/);
 });
+test('shared mobile hamburger keeps a touch-sized hit target', () => {
+  const css = read('src/styles/components.css');
+  const hamburger = css.match(/\.navbar__hamburger\s*\{([^}]+)\}/)[1];
+  assert.match(hamburger, /width:\s*44px/);
+  assert.match(hamburger, /min-width:\s*44px/);
+  assert.match(hamburger, /flex-shrink:\s*0/);
+  assert.match(hamburger, /min-height:\s*44px/);
+});

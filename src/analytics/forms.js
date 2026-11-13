@@ -106,10 +106,21 @@ function getFormCtaId(form) {
   return `${formName.replace(/[^a-z0-9]+/gi, '_').replace(/^_+|_+$/g, '')}_form_submit`;
 }
 
+function getFunnelContext(form, fields = {}) {
+  const formName = form.dataset.formName || window.location.pathname || '/';
+  return {
+    source: 'website',
+    form_id: form.id || formName,
+    form_name: formName,
+    page_path: window.location.pathname || '/',
+    ...(fields.type ? { project_type: fields.type } : {}),
+    ...(fields.location ? { project_location: fields.location } : {}),
+    ...(getFormCtaId(form) ? { cta_id: getFormCtaId(form) } : {}),
+  };
+}
 async function submitToAgent(form, fields, waWindow) {
   const { name, phone, email, type, location, stage, message, budget } = fields;
-  const source = form.dataset.formName || window.location.pathname;
-  const ctaId = getFormCtaId(form);
+  const formContext = getFunnelContext(form, fields);
   const attribution = getAttribution();
   const payload = {
     source: 'website',
@@ -122,8 +133,12 @@ async function submitToAgent(form, fields, waWindow) {
     message,
     budget,
     page: window.location.pathname,
+    landing_page: attribution.landing_page,
     referrer: document.referrer,
-    cta_id: ctaId,
+    lead_source: attribution.lead_source,
+    cta_id: formContext.cta_id || '',
+    form_id: formContext.form_id,
+    form_name: formContext.form_name,
     session_id: attribution.session_id || '',
     utm_source: attribution.utm_source,
     utm_medium: attribution.utm_medium,
@@ -140,30 +155,37 @@ async function submitToAgent(form, fields, waWindow) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   });
-  if (!response.ok) throw new Error(`Lead submission failed (${response.status})`);
+  let result = {};
+  try {
+    result = await response.json();
+  } catch {
+    // A successful lead response is expected to be JSON; malformed responses are treated as failures.
+  }
+  if (!response.ok || result.success !== true || result.accepted === false) {
+    throw new Error(`Lead submission failed (${response.status})`);
+  }
 
-  const funnelContext = {
-    form_id: form.id || source,
-    form_name: source,
-    page_path: window.location.pathname || '/',
-    project_type: type || 'unspecified',
-    project_location: location || 'unspecified',
-    ...(ctaId ? { cta_id: ctaId } : {}),
-  };
-  trackEvent(ANALYTICS_EVENTS.leadSubmit, funnelContext);
-  trackEvent(ANALYTICS_EVENTS.consultationRequested, funnelContext);
+  // lead_submit remains the API-accepted conversion; success makes delivery explicit for funnel reporting.
+  trackEvent(ANALYTICS_EVENTS.leadSubmit, formContext);
+  trackEvent(ANALYTICS_EVENTS.leadDeliverySuccess, formContext);
+
+  trackEvent(ANALYTICS_EVENTS.consultationRequested, formContext);
 
   // Count the Ads conversion only after the browser accepts the lead handoff.
   trackEvent('ads_conversion_Contact_1', {
-    ...funnelContext,
+    ...formContext,
     value: 1.0,
     currency: 'IDR',
   });
   // Google Ads conversion — WhatsApp/Contact lead (AW-17872287905)
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', 'conversion', {
-      send_to: 'AW-17872287905/HE4GCImO_uYcEKHxlcpC'
-    });
+  try {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'conversion', {
+        send_to: 'AW-17872287905/HE4GCImO_uYcEKHxlcpC'
+      });
+    }
+  } catch {
+    // The lead is already accepted; Ads failure must not show a delivery error.
   }
 
   if (waWindow) {
@@ -233,22 +255,14 @@ export function initLeadForms(root = document) {
         if (waWindow && !waWindow.closed) waWindow.close();
         setBusy(form, false);
         showDeliveryError(form, fields);
-        trackEvent('lead_delivery_failed', {
-          form_id: form.id || form.dataset.formName || window.location.pathname,
-          form_name: form.dataset.formName || window.location.pathname,
-          page_path: window.location.pathname || '/',
-          ...(getFormCtaId(form) ? { cta_id: getFormCtaId(form) } : {}),
-        });
+        trackEvent(ANALYTICS_EVENTS.leadDeliveryFailed, getFunnelContext(form, fields));
       });
     }, true);
 
     form.addEventListener('focusin', () => {
       const context = {
-        form_id: form.id || form.dataset.formName || window.location.pathname,
-        form_name: form.dataset.formName || window.location.pathname,
-        page_path: window.location.pathname || '/',
+        ...getFunnelContext(form),
         page_language: document.documentElement.lang.toLowerCase().startsWith('id') ? 'id' : 'en',
-        ...(getFormCtaId(form) ? { cta_id: getFormCtaId(form) } : {}),
       };
       trackEvent(ANALYTICS_EVENTS.consultationStart, context);
       trackEvent(ANALYTICS_EVENTS.leadFormStart, context);
