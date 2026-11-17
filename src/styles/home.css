@@ -515,6 +515,52 @@
     }
 }
 
+/* Homepage brief: one alignment and spacing system beside the lead form. */
+.cta__left.cta__brief {
+    position: static;
+    min-width: 0;
+    display: grid;
+    gap: 24px;
+    text-align: left;
+}
+
+.cta__brief .cta__title,
+.cta__brief .cta__desc {
+    margin: 0;
+}
+
+.cta__brief .cta__trust {
+    align-items: stretch;
+}
+
+.cta__brief .cta__trust-item {
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr);
+    align-items: start;
+}
+
+.cta__brief .cta__trust-item svg {
+    margin-top: 2px;
+    stroke: var(--color-accent);
+}
+
+.cta__brief .cta__links {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+}
+
+.cta__brief .cta__links .btn {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding: 14px 20px;
+    justify-content: flex-start;
+    text-align: left;
+    white-space: normal;
+    font-size: 0.9rem;
+}
+
 /* ========================================
    FAQ SECTION
    ======================================== */

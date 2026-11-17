@@ -91,3 +91,24 @@ test('shared mobile hamburger keeps a touch-sized hit target', () => {
   assert.match(hamburger, /flex-shrink:\s*0/);
   assert.match(hamburger, /min-height:\s*44px/);
 });
+
+test('homepage consultation brief uses consistent alignment without inline layout overrides', () => {
+  const html = read('index.html');
+  const brief = html.split('<div class="cta__left cta__brief">')[1]?.split('<div class="cta__form-box"')[0];
+  assert.ok(brief);
+  assert.doesNotMatch(brief, /style=/);
+  assert.equal((brief.match(/class="cta__trust-item"/g) || []).length, 6);
+  for (const id of ['homepage_services_link', 'homepage_cost_guide_link', 'homepage_projects_link']) {
+    assert.ok(brief.includes(`data-cta-id="${id}"`));
+  }
+  const css = read('src/styles/home.css');
+  const layout = css.match(/\.cta__left\.cta__brief\s*\{([^}]+)\}/)[1];
+  assert.match(layout, /position:\s*static/);
+  assert.match(layout, /gap:\s*24px/);
+  assert.match(layout, /text-align:\s*left/);
+  const links = css.match(/\.cta__brief \.cta__links\s*\{([^}]+)\}/)[1];
+  assert.match(links, /grid-template-columns:\s*minmax\(0, 1fr\)/);
+  const button = css.match(/\.cta__brief \.cta__links \.btn\s*\{([^}]+)\}/)[1];
+  assert.match(button, /width:\s*100%/);
+  assert.match(button, /min-height:\s*44px/);
+});
