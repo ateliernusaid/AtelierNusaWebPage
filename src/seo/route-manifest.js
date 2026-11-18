@@ -6,6 +6,7 @@ export const routeManifest = [
   { file: 'about.html', path: '/about', language: 'en', group: 'brand', adsEligible: false },
   { file: 'services.html', path: '/services', language: 'en', group: 'brand', adsEligible: false },
   { file: 'projects.html', path: '/projects', language: 'en', group: 'portfolio', adsEligible: false },
+  { file: 'projects/unram-residence.html', path: '/projects/unram-residence', language: 'en', group: 'portfolio', adsEligible: false },
   { file: 'luxury-residential-mataram.html', path: '/luxury-residential-mataram', language: 'en', group: 'portfolio', adsEligible: false },
   { file: 'private-residence-lombok-barat.html', path: '/private-residence-lombok-barat', language: 'en', group: 'portfolio', adsEligible: false },
   { file: 'industrial-residence-mataram.html', path: '/industrial-residence-mataram', language: 'en', group: 'portfolio', adsEligible: false },

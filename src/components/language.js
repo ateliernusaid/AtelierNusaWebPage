@@ -105,9 +105,9 @@ function applyHomeIndonesian() {
   setText('#showcase .section-label', 'Karya terpilih');
   setText('#showcase .section-title', 'Desain selesai, sedang dibangun, dan masih dieksplorasi');
   setText('#showcase .section-desc', 'Beberapa rumah dan studi villa dari Lombok. Setiap kartu menunjukkan tahap proyek.');
-  setAll('#showcase .project-card__badge', ['Desain selesai', 'Dalam konstruksi', 'Studi konsep', 'Studi konsep']);
-  setAll('#showcase .project-card__title', ['Hunian mewah', 'Hunian privat', 'Hunian industrial', 'Villa tropis']);
-  setAll('#showcase .project-card__subtitle', ['Hunian, Kota Mataram', 'Hunian, Lombok Barat', 'Hunian, Mataram', 'Villa, Senggigi']);
+  setAll('#showcase .project-card__badge', ['Desain selesai', 'Dalam konstruksi', 'Studi konsep', 'Tahap 01 selesai']);
+  setAll('#showcase .project-card__title', ['Hunian mewah', 'Hunian privat', 'Hunian industrial', 'UNRAM Residence']);
+  setAll('#showcase .project-card__subtitle', ['Hunian, Kota Mataram', 'Hunian, Lombok Barat', 'Hunian, Mataram', 'Serah terima lantai dasar · Mataram']);
   setLabel('#showcase .btn--outline', 'Lihat semua proyek');
 
   setText('#testimonials .section-label', 'Catatan proyek');
