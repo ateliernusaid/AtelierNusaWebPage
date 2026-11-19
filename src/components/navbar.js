@@ -69,7 +69,7 @@ export function createNavbar(activePage = 'home') {
 
       ${isTranslatable ? `<a href="${languageHref}" class="navbar__language" aria-label="${languageLabel} - ${languageTitle}" title="${languageTitle}">${languageLabel}</a>` : ''}
 
-      <button class="navbar__hamburger" id="navHamburger" aria-label="Toggle menu">
+      <button type="button" class="navbar__hamburger" id="navHamburger" aria-label="${isIndonesian ? 'Buka menu' : 'Open menu'}" aria-expanded="false" aria-controls="navMenu">
         <span></span>
         <span></span>
         <span></span>
@@ -83,25 +83,43 @@ export function createNavbar(activePage = 'home') {
   const hamburger = document.getElementById('navHamburger');
   const menu = document.getElementById('navMenu');
 
+  let previousOverflow = '';
+  const setMenuOpen = (open, restoreFocus = false) => {
+    if (open) previousOverflow = document.body.style.overflow;
+    hamburger.classList.toggle('open', open);
+    menu.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', String(open));
+    hamburger.setAttribute('aria-label', isIndonesian
+      ? (open ? 'Tutup menu' : 'Buka menu')
+      : (open ? 'Close menu' : 'Open menu'));
+    document.body.style.overflow = open ? 'hidden' : previousOverflow;
+    if (restoreFocus) hamburger.focus();
+  };
+
   hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('open');
-    menu.classList.toggle('open');
-    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+    setMenuOpen(hamburger.getAttribute('aria-expanded') !== 'true');
   });
 
-  // Close menu when clicking a link
+  // Escape returns keyboard focus to the disclosure control.
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu.classList.contains('open')) {
+      event.preventDefault();
+      setMenuOpen(false, true);
+    }
+  });
+
   menu.querySelectorAll('.navbar__link').forEach(link => {
     link.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      menu.classList.remove('open');
-      document.body.style.overflow = '';
+      if (menu.classList.contains('open')) setMenuOpen(false);
     });
   });
 
   // Magnetic hover effect on nav links
   const navLinks = menu.querySelectorAll('.navbar__link');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   navLinks.forEach(link => {
     link.addEventListener('mousemove', (e) => {
+      if (reducedMotion.matches) return;
       const rect = link.getBoundingClientRect();
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;

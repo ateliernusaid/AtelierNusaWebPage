@@ -4,6 +4,9 @@ import { resolve } from 'path';
 export default defineConfig({
     root: '.',
     plugins: [],
+    define: {
+        __ATN_BUILD_ID__: JSON.stringify(process.env.VERCEL_GIT_COMMIT_SHA || '2026-11-19-p0-p2'),
+    },
     build: {
         rollupOptions: {
             input: {

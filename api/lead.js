@@ -42,6 +42,7 @@ export default async function handler(req, res) {
   const ctaId = trimField(body.cta_id || body.ctaId);
   const payload = {
     source: 'website',
+    build_id: trimField(body.build_id),
     name: trimField(body.name),
     email: trimField(body.email),
     phone: trimField(body.phone),

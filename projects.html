@@ -156,6 +156,11 @@
                 A selection of homes, villas, and hospitality ideas from projects in and around Lombok. Some are built,
                 some are still in progress, and some remain at the drawing stage.
             </p>
+            <p class="section-desc">
+                <a href="/biaya-bangun-rumah-lombok" data-cta-id="projects_early_cost_guide" data-cta-copy-en="Building cost guide" data-cta-copy-id="Panduan biaya bangun">Building cost guide</a>
+                <span aria-hidden="true"> · </span>
+                <a href="/konsultasi-gratis" data-cta-id="projects_early_consultation" data-cta-copy-en="Discuss your project" data-cta-copy-id="Konsultasikan proyek Anda">Discuss your project</a>
+            </p>
         </div>
     </section>
 
@@ -312,7 +317,7 @@
                     Send us what you know so far - a location, a rough brief, or a few references. We can help you see
                     what needs answering before the project moves further.
                 </p>
-                <a href="/#konsultasi" class="btn btn--primary">
+                <a href="/#konsultasi" class="btn btn--primary" data-cta-id="projects_consultation">
                     Start a Conversation
                 </a>
             </div>
@@ -324,6 +329,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const filterBtns = document.querySelectorAll('.projects-filter__btn');
             const cards = document.querySelectorAll('.project-card[data-category]');
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -334,6 +340,13 @@
                     const filter = btn.dataset.filter;
 
                     cards.forEach(card => {
+                        if (reducedMotion.matches) {
+                            card.style.display = filter === 'all' || card.dataset.category === filter ? '' : 'none';
+                            card.style.opacity = '1';
+                            card.style.transform = 'none';
+                            card.style.transition = 'none';
+                            return;
+                        }
                         if (filter === 'all' || card.dataset.category === filter) {
                             card.style.display = '';
                             card.style.opacity = '0';

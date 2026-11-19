@@ -9,14 +9,16 @@ const windowStub = {
   location: {
     pathname: '/konsultasi-gratis',
     search: '?utm_source=instagram&utm_medium=social&utm_campaign=organic-distribution&utm_content=consultation&fbclid=fbclid-contract',
+    href: 'http://localhost/konsultasi-gratis?utm_source=instagram',
+    origin: 'http://localhost',
   },
+  eventHandlers: {},
   sessionStorage: {
-    getItem(key) {
-      return storage.get(key) || null;
-    },
-    setItem(key, value) {
-      storage.set(key, String(value));
-    },
+    getItem(key) { return storage.get(key) || null; },
+    setItem(key, value) { storage.set(key, String(value)); },
+  },
+  addEventListener(type, handler) {
+    (this.eventHandlers[type] ||= []).push(handler);
   },
   crypto: {
     randomUUID: () => 'session-contract-test',
@@ -129,10 +131,12 @@ test('trackEvent sends a safe analytics payload and an attributed agent mirror',
   assert.equal(gtagCalls.at(-1)[2].project_type, undefined);
   assert.equal(gtagCalls.at(-1)[2].source, 'website');
   assert.equal(gtagCalls.at(-1)[2].session_id, 'session-contract-test');
+  assert.equal(gtagCalls.at(-1)[2].build_id, '2026-11-19-p0-p2');
   assert.equal(beaconCalls.length, beaconBefore + 1);
 
   const mirrored = await readBeacon();
   assert.equal(mirrored.event, 'lead_submit');
+  assert.equal(mirrored.build_id, '2026-11-19-p0-p2');
   assert.equal(mirrored.session_id, 'session-contract-test');
   assert.equal(mirrored.cta_id, 'consultation_form_submit');
   assert.equal(mirrored.form_name, 'konsultasi-gratis');
@@ -143,6 +147,22 @@ test('trackEvent sends a safe analytics payload and an attributed agent mirror',
   assert.equal(mirrored.page_path, '/funnel/consultation');
   assert.equal(mirrored.lead_source, 'instagram/social');
   assert.equal(mirrored.fbclid, 'fbclid-contract');
+});
+
+test('client errors report a safe source and deduplicate identical errors', async () => {
+  const before = beaconCalls.length;
+  events.installClientErrorTelemetry();
+  const errorHandler = windowStub.eventHandlers.error.at(-1);
+  errorHandler({ error: { name: 'TypeError' }, filename: 'http://localhost/src/app.js', lineno: 22 });
+  errorHandler({ error: { name: 'TypeError' }, filename: 'http://localhost/src/app.js', lineno: 22 });
+  assert.equal(beaconCalls.length, before + 1);
+  const report = await readBeacon(before);
+  assert.equal(report.event, 'client_error');
+  assert.equal(report.build_id, '2026-11-19-p0-p2');
+  assert.equal(report.error_type, 'TypeError');
+  assert.equal(report.error_source, '/src/app.js');
+  assert.equal(report.error_line, 22);
+  assert.equal(report.message, undefined);
 });
 
 test('mirror-only legacy events do not duplicate GA or Clarity events', async () => {
@@ -206,6 +226,7 @@ test('form flow separates accepted delivery from failed delivery without product
       successEvents.push(await readBeacon(index));
     }
     assert.deepEqual(successEvents.map((entry) => entry.event), [
+      'lead_submit_attempt',
       'lead_submit',
       'lead_delivery_success',
       'consultation_requested',
@@ -232,6 +253,7 @@ test('form flow separates accepted delivery from failed delivery without product
       failureEvents.push(await readBeacon(index));
     }
     assert.deepEqual(failureEvents.map((entry) => entry.event), [
+      'lead_submit_attempt',
       'lead_delivery_failed',
     ]);
     assert.equal(failureHarness.error.hidden, false);
@@ -253,7 +275,8 @@ test('analytics vendor exceptions are isolated and remaining destinations still 
     windowStub.gtag = () => { throw new Error('GA unavailable'); };
     windowStub.clarity = (...args) => clarityCalls.push(args);
     assert.doesNotThrow(() => events.trackEvent('lead_delivery_success'));
-    assert.equal(clarityCalls.length, 1);
+    assert.equal(clarityCalls.filter(args => args[0] === 'event').length, 1);
+    assert.ok(clarityCalls.some(args => args[0] === 'set' && args[1] === 'atn_build_id'));
     assert.equal(beaconCalls.length, before + 1);
 
     windowStub.gtag = originalGtag;
@@ -300,11 +323,47 @@ test('accepted form keeps success UI and WhatsApp handoff even when GA, Ads and 
     assert.equal(popup.closed, false);
     assert.match(popup.location.href, /^https:\/\/wa\.me\//);
     const names = await Promise.all(beaconCalls.slice(before).map(async entry => JSON.parse(await entry.body.text()).event));
-    assert.deepEqual(names, ['lead_submit', 'lead_delivery_success', 'consultation_requested']);
+    assert.deepEqual(names, ['lead_submit_attempt', 'lead_submit', 'lead_delivery_success', 'consultation_requested']);
   } finally {
     globalThis.fetch = originalFetch;
     windowStub.open = originalOpen;
     windowStub.gtag = originalGtag;
     windowStub.clarity = originalClarity;
   }
+});
+
+test('form focus reports form start but never consultation intent', async () => {
+  const harness = createFormHarness();
+  const before = beaconCalls.length;
+  forms.initLeadForms({ querySelectorAll: () => [harness.form] });
+  harness.handlers.focusin({ target: { matches: () => false, type: 'submit' } });
+  assert.equal(beaconCalls.length, before);
+  harness.handlers.focusin({ target: { matches: () => true, name: 'nama', type: 'text' } });
+  harness.handlers.focusin({ target: { matches: () => true, name: 'nama', type: 'text' } });
+  assert.equal(beaconCalls.length, before + 1);
+  assert.equal((await readBeacon()).event, 'lead_form_start');
+});
+
+test('error telemetry drops messages, personal paths, query tokens and custom error names', async () => {
+  const handler = windowStub.eventHandlers.error.at(-1);
+  handler({ error: { name: 'visitor@example.com', message: 'private brief' }, filename: 'http://localhost/customer/private?token=secret', lineno: 23 });
+  const report = await readBeacon();
+  assert.equal(report.error_type, 'Error');
+  assert.equal(report.error_source, 'inline');
+  assert.equal(report.referrer, '');
+  assert.equal(report.fbclid, '');
+  assert.doesNotMatch(JSON.stringify(report), /private|secret|visitor@example/);
+});
+
+test('error telemetry reports unhandled rejection safely and caps distinct reports', async () => {
+  const rejectionHandler = windowStub.eventHandlers.unhandledrejection.at(-1);
+  const before = beaconCalls.length;
+  rejectionHandler({ reason: {} });
+  const rejection = await readBeacon(before);
+  assert.equal(rejection.event, 'client_error');
+  assert.equal(rejection.error_type, 'unhandled_rejection');
+  for (let line = 1; line <= 20; line += 1) {
+    windowStub.eventHandlers.error.at(-1)({ error: { name: 'Error' }, filename: `http://localhost/src/chunk-${line}.js`, lineno: line });
+  }
+  assert.ok(beaconCalls.length - before <= 10);
 });

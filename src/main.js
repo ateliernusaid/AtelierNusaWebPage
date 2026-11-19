@@ -34,6 +34,14 @@ function ensureMainLandmark() {
     document.body.appendChild(main);
 }
 
+// New funnel links use document language after the existing page translation.
+function initLocalizedCtas() {
+    const isIndonesian = document.documentElement.lang.toLowerCase().startsWith('id');
+    document.querySelectorAll('[data-cta-copy-en][data-cta-copy-id]').forEach((link) => {
+        link.textContent = isIndonesian ? link.dataset.ctaCopyId : link.dataset.ctaCopyEn;
+    });
+}
+
 // ========================================
 // CONTACT ENGAGEMENT TRACKER
 // Lives in analytics/leadTracker.js so static pages that never bundle main.js
@@ -48,20 +56,30 @@ function ensureMainLandmark() {
 // ========================================
 function initCursor() {
     if (!window.matchMedia('(pointer: fine)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     // Satu element ring saja — tidak ada dot terpisah
     const ring = document.createElement('div');
     ring.className = 'cursor__ring';
     document.body.appendChild(ring);
 
-    // Ring langsung ikut cursor (no lag = tidak terlihat "double")
+    // Coalesce pointer writes into one frame, using the latest position.
+    let cursorFrame = 0;
+    let cursorX = 0;
+    let cursorY = 0;
     document.addEventListener('mousemove', (e) => {
-        ring.style.left = e.clientX + 'px';
-        ring.style.top  = e.clientY + 'px';
+        cursorX = e.clientX;
+        cursorY = e.clientY;
+        if (cursorFrame) return;
+        cursorFrame = requestAnimationFrame(() => {
+            ring.style.left = cursorX + 'px';
+            ring.style.top = cursorY + 'px';
+            cursorFrame = 0;
+        });
     }, { passive: true });
 
     // Besar saat hover element interaktif
-    const interactives = 'a, button, [role="button"], .btn, .btn-wa, .proj, .svc, .step';
+    const interactives = 'a, button, [role="button"], .btn, .btn-wa';
     document.addEventListener('mouseover', (e) => {
         if (e.target.closest(interactives)) ring.classList.add('cursor--hover');
     });
@@ -79,16 +97,25 @@ function initCursor() {
 // Thin gold line at the top of the page
 // ========================================
 function initScrollProgress() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const bar = document.createElement('div');
     bar.className = 'scroll-progress';
     document.body.prepend(bar);
 
-    window.addEventListener('scroll', () => {
+    let progressFrame = 0;
+    const updateProgress = () => {
         const scrolled = window.scrollY;
         const total = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = total > 0 ? scrolled / total : 0;
+        const progress = total > 0 ? Math.min(1, Math.max(0, scrolled / total)) : 0;
         bar.style.transform = `scaleX(${progress})`;
-    }, { passive: true });
+        progressFrame = 0;
+    };
+    const scheduleProgress = () => {
+        if (!progressFrame) progressFrame = requestAnimationFrame(updateProgress);
+    };
+    window.addEventListener('scroll', scheduleProgress, { passive: true });
+    window.addEventListener('resize', scheduleProgress, { passive: true });
+    updateProgress();
 }
 
 // ========================================
@@ -105,45 +132,11 @@ function initLazyImageFade() {
     });
 }
 
-// ========================================
-// COUNT-UP ANIMATION
-// Numbers animate from 0 when scrolled into view
-// ========================================
-function initCountUp() {
-    const counters = document.querySelectorAll('[data-count]');
-    if (counters.length === 0) return;
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            const el = entry.target;
-            if (el.dataset.counted) return;
-            el.dataset.counted = 'true';
-
-            const target = parseInt(el.dataset.count, 10);
-            const suffix = el.dataset.suffix || '';
-            const duration = 2000;
-            const start = performance.now();
-
-            function update(now) {
-                const elapsed = now - start;
-                const progress = Math.min(elapsed / duration, 1);
-                // easeOutExpo
-                const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-                const current = Math.round(ease * target);
-                el.textContent = current + suffix;
-                if (progress < 1) requestAnimationFrame(update);
-            }
-            requestAnimationFrame(update);
-        });
-    }, { threshold: 0.3 });
-
-    counters.forEach(el => observer.observe(el));
-}
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     applyLanguage();
+    initLocalizedCtas();
     ensureMainLandmark();
     createNavbar(getActivePage());
     createFooter();
@@ -155,7 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initCursor();
     initScrollProgress();
     initLazyImageFade();
-    initCountUp();
     initLeadForms();
 });
 

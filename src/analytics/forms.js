@@ -1,3 +1,4 @@
+import { SITE_BUILD_ID } from './build.js';
 import { getAttribution } from './attribution.js';
 import { ANALYTICS_EVENTS, trackEvent } from './events.js';
 
@@ -124,6 +125,7 @@ async function submitToAgent(form, fields, waWindow) {
   const attribution = getAttribution();
   const payload = {
     source: 'website',
+    build_id: SITE_BUILD_ID,
     name,
     phone,
     email,
@@ -164,8 +166,6 @@ async function submitToAgent(form, fields, waWindow) {
   if (!response.ok || result.success !== true || result.accepted === false) {
     throw new Error(`Lead submission failed (${response.status})`);
   }
-
-  // lead_submit remains the API-accepted conversion; success makes delivery explicit for funnel reporting.
   trackEvent(ANALYTICS_EVENTS.leadSubmit, formContext);
   trackEvent(ANALYTICS_EVENTS.leadDeliverySuccess, formContext);
 
@@ -248,6 +248,8 @@ export function initLeadForms(root = document) {
       }
 
       const fields = readLeadFields(form);
+      const formContext = getFunnelContext(form, fields);
+      trackEvent(ANALYTICS_EVENTS.leadSubmitAttempt, formContext);
       const waWindow = window.open('', '_blank', 'noopener,noreferrer');
       setBusy(form, true);
       submitToAgent(form, fields, waWindow).catch((error) => {
@@ -259,13 +261,12 @@ export function initLeadForms(root = document) {
       });
     }, true);
 
-    form.addEventListener('focusin', () => {
-      const context = {
-        ...getFunnelContext(form),
-        page_language: document.documentElement.lang.toLowerCase().startsWith('id') ? 'id' : 'en',
-      };
-      trackEvent(ANALYTICS_EVENTS.consultationStart, context);
-      trackEvent(ANALYTICS_EVENTS.leadFormStart, context);
-    }, { once: true });
+    let formStarted = false;
+    form.addEventListener('focusin', (event) => {
+      const field = event.target;
+      if (formStarted || !field?.matches?.('input, select, textarea') || field.name === 'website' || ['submit', 'button', 'hidden'].includes(field.type)) return;
+      formStarted = true;
+      trackEvent(ANALYTICS_EVENTS.leadFormStart, getFunnelContext(form));
+    });
   });
 }

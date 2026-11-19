@@ -83,6 +83,7 @@ test('accepts a valid lead and forwards qualification and attribution fields', a
     projectType: 'Villa / Premium',
     budget: 'Rp1–3 miliar',
     cta_id: 'homepage_form_submit',
+    build_id: 'release-contract',
     session_id: 'session-valid-lead',
     page: '/',
     landing_page: '/',
@@ -107,6 +108,7 @@ test('accepts a valid lead and forwards qualification and attribution fields', a
   assert.equal(sent.page, '/');
   assert.equal(sent.referrer, 'https://www.google.com/');
   assert.equal(sent.cta_id, 'homepage_form_submit');
+  assert.equal(sent.build_id, 'release-contract');
   assert.equal(sent.session_id, 'session-valid-lead');
   assert.equal(sent.utm_source, 'instagram');
   assert.equal(sent.landing_page, '/');

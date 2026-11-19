@@ -2,6 +2,15 @@
    PROJECTS PAGE STYLES
    ======================================== */
 
+/* Compact planning links share the existing section-desc layout across pages. */
+.section-desc > a[data-cta-copy-en] {
+    display: inline-block;
+    padding-block: 0.5rem;
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
 .projects-filter {
     display: flex;
     justify-content: center;
@@ -49,6 +58,37 @@
 
 .projects-grid .project-card {
     height: 380px;
+}
+
+/* Non-linked portfolio studies are static, not dead-end click targets. */
+.projects-grid > div.project-card {
+    cursor: default;
+}
+
+.projects-grid > div.project-card:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.projects-grid > div.project-card .project-card__image,
+.projects-grid > div.project-card:hover .project-card__image {
+    transform: none;
+    filter: none;
+    transition: none;
+}
+
+.projects-grid > div.project-card .project-card__overlay,
+.projects-grid > div.project-card:hover .project-card__overlay {
+    opacity: 1;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transition: none;
+}
+
+.projects-grid > div.project-card .project-card__subtitle {
+    opacity: 1;
+    transform: none;
+    transition: none;
 }
 
 @media (max-width: 768px) {

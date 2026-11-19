@@ -3,6 +3,16 @@
 // ========================================
 
 export function initAnimations() {
+    // Reveal content and final stats immediately without decorative JS motion.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('.reveal, .stagger-parent').forEach((el) => el.classList.add('visible'));
+        document.querySelectorAll('.arch-reveal').forEach((el) => el.classList.add('revealed'));
+        document.querySelectorAll('[data-count]').forEach((el) => {
+            el.textContent = parseInt(el.getAttribute('data-count'), 10) + (el.dataset.suffix || '');
+        });
+        return;
+    }
+
     // Intersection Observer for .reveal animations
     const revealObserver = new IntersectionObserver(
         (entries) => {

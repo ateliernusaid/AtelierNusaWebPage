@@ -1,4 +1,6 @@
-import { ANALYTICS_EVENTS, trackEvent } from './events.js';
+import { ANALYTICS_EVENTS, installClientErrorTelemetry, trackEvent } from './events.js';
+
+installClientErrorTelemetry();
 
 function getCtaId(element, fallback = '') {
     const explicit = element?.dataset?.ctaId || element?.dataset?.waLabel;
@@ -26,6 +28,14 @@ function reportCtaClick(element) {
     if (!ctaId) return;
     const hasLegacyInlineTracker = /trackCTA\(['"][^'"]+['"]\)/.test(element.getAttribute?.('onclick') || '');
     trackEvent(ANALYTICS_EVENTS.ctaClick, { cta_id: ctaId }, { mirrorOnly: hasLegacyInlineTracker });
+    const href = element.getAttribute?.('href') || '';
+    const consultationLink = element.matches?.('a[href]') && (element.dataset.funnelEvent === ANALYTICS_EVENTS.consultationStart || /^\/(?:konsultasi-gratis)(?:[?#]|$)/.test(href) || /^(?:\/[^?#]*)?#(?:konsultasi|estimasi)$/.test(href));
+    if (consultationLink) {
+        trackEvent(ANALYTICS_EVENTS.consultationStart, {
+            cta_id: ctaId,
+            event_category: 'lead',
+        });
+    }
 }
 
 if (!window.__atnLeadTracker) {
@@ -33,7 +43,7 @@ if (!window.__atnLeadTracker) {
     trackEvent('page_view');
 
     document.addEventListener('click', (e) => {
-        const cta = e.target?.closest?.('[data-cta-id], [onclick*="trackCTA"]');
+        const cta = e.target?.closest?.('a[data-cta-id], button[data-cta-id], a[onclick*="trackCTA"], button[onclick*="trackCTA"]');
         if (cta) reportCtaClick(cta);
 
         const link = e.target?.closest?.('a[href*="wa.me"], a[href*="api.whatsapp.com"], a[href^="tel:"]');
