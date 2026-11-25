@@ -762,10 +762,27 @@
       } catch (e) { window._utmData = { source: 'direct', medium: '', campaign: '', term: '' }; }
     })();
 
+    // Legacy pages call trackCTA(location) from an inline onclick. It used to
+    // reach Google Ads only, so these CTA clicks never appeared in the agent's
+    // funnel. The beacon keeps working when gtag is blocked.
     function trackCTA(location) {
       if (typeof gtag === 'function') {
         gtag('event', 'cta_click', { event_category: 'engagement', event_label: location });
       }
+      try {
+        var body = JSON.stringify({
+          event: 'cta_click',
+          event_id: 'cta_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
+          source: 'website',
+          cta_id: location || 'unknown',
+          page: window.location.pathname || '/',
+          page_path: window.location.pathname || '/'
+        });
+        if (navigator.sendBeacon) {
+          if (navigator.sendBeacon('/api/conversion', new Blob([body], { type: 'application/json' }))) return;
+        }
+        fetch('/api/conversion', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body, keepalive: true }).catch(function () {});
+      } catch (e) { /* tracking must never block the click */ }
     }
 
     // NAV SCROLL

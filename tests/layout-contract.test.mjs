@@ -87,6 +87,25 @@ test('conversion mirror stays same-origin so the deployed CSP needs no exception
 });
 
 
+test('legacy CTA handlers report to the agent funnel, not only to Ads', () => {
+  // These pages call trackCTA() from inline onclick attributes. Before this
+  // guard they reached Google Ads only, so their CTA clicks were invisible in
+  // the agent funnel while still looking tracked on the page.
+  const legacyPages = [
+    'architect-kuta-mandalika', 'architect-lombok', 'architect-mataram',
+    'arsitek-bangun-rumah-lombok', 'arsitek-gili-trawangan', 'arsitek-hotel-lombok',
+    'arsitek-rumah-2-lantai-mataram', 'arsitek-selong-belanak', 'arsitek-villa-senggigi',
+    'lombok-villa-architect', 'villa-designer-lombok',
+  ];
+  for (const slug of legacyPages) {
+    const html = read(`${slug}.html`);
+    assert.ok(html.includes('function trackCTA'), `${slug} should keep trackCTA`);
+    const fn = html.slice(html.indexOf('function trackCTA'), html.indexOf('function trackCTA') + 1400);
+    assert.ok(fn.includes('/api/conversion'), `${slug} trackCTA must mirror to the agent`);
+    assert.ok(fn.includes('cta_id'), `${slug} trackCTA must send a cta_id`);
+  }
+});
+
 test('shared mobile hamburger keeps a touch-sized hit target', () => {
   const css = read('src/styles/components.css');
   const hamburger = css.match(/\.navbar__hamburger\s*\{([^}]+)\}/)[1];
