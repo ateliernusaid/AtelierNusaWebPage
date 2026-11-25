@@ -124,6 +124,9 @@ test('interior and villa pages keep separate search intents', () => {
   assert.match(manifest, /interior-designer-lombok\.html', path: '\/interior-designer-lombok'/);
   assert.match(read('public/sitemap.xml'), /interior-designer-lombok/);
   assert.match(read('services.html'), /href="\/interior-designer-lombok"/);
+  // A page must be a Vite entry, otherwise the build emits nothing and the
+  // route 404s in production even though the file exists in the repo.
+  assert.match(read('vite.config.js'), /interior-designer-lombok\.html'/);
 });
 
 test('shared mobile hamburger keeps a touch-sized hit target', () => {

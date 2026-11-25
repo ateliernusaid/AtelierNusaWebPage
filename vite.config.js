@@ -26,6 +26,7 @@ export default defineConfig({
                 lombokVillaArchitect: resolve(__dirname, 'lombok-villa-architect.html'),
                 architectMataram: resolve(__dirname, 'architect-mataram.html'),
                 villaDesignerLombok: resolve(__dirname, 'villa-designer-lombok.html'),
+                interiorDesignerLombok: resolve(__dirname, 'interior-designer-lombok.html'),
                 architectKutaMandalika: resolve(__dirname, 'architect-kuta-mandalika.html'),
                 arsitekMataram: resolve(__dirname, 'arsitek-mataram.html'),
                 artikel: resolve(__dirname, 'artikel.html'),
