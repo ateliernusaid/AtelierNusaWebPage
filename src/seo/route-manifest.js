@@ -18,6 +18,7 @@ export const routeManifest = [
   { file: 'lombok-villa-architect.html', path: '/lombok-villa-architect', language: 'en', group: 'acquisition', adsEligible: true },
   { file: 'architect-mataram.html', path: '/architect-mataram', language: 'en', group: 'acquisition', adsEligible: true },
   { file: 'villa-designer-lombok.html', path: '/villa-designer-lombok', language: 'en', group: 'acquisition', adsEligible: true },
+  { file: 'interior-designer-lombok.html', path: '/interior-designer-lombok', language: 'en', group: 'acquisition', adsEligible: true },
   { file: 'architect-kuta-mandalika.html', path: '/architect-kuta-mandalika', language: 'en', group: 'acquisition', adsEligible: true },
   { file: 'arsitek-mataram.html', path: '/arsitek-mataram', language: 'id', group: 'acquisition', adsEligible: true },
   { file: 'arsitek-kuta-mandalika.html', path: '/arsitek-kuta-mandalika', language: 'id', group: 'acquisition', adsEligible: true },

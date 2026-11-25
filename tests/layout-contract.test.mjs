@@ -106,6 +106,26 @@ test('legacy CTA handlers report to the agent funnel, not only to Ads', () => {
   }
 });
 
+test('interior and villa pages keep separate search intents', () => {
+  // These two pages used to compete for "interior designer lombok". The
+  // dedicated page now owns that phrase; the villa page owns villa design.
+  const interior = read('interior-designer-lombok.html');
+  assert.match(interior, /<title>Interior Designer Lombok/);
+  assert.match(interior, /<h1>An Interior Designer/);
+  assert.match(interior, /rel="canonical" href="https:\/\/www\.ateliernusa\.id\/interior-designer-lombok"/);
+  assert.match(interior, /hreflang="id" href="https:\/\/www\.ateliernusa\.id\/desain-interior-lombok"/);
+
+  const villa = read('villa-designer-lombok.html');
+  assert.match(villa, /<title>Villa Designer Lombok/);
+  const villaTitle = villa.match(/<title>([^<]*)<\/title>/)[1];
+  assert.ok(!/interior/i.test(villaTitle), 'villa page title must not target interior intent');
+
+  const manifest = read('src/seo/route-manifest.js');
+  assert.match(manifest, /interior-designer-lombok\.html', path: '\/interior-designer-lombok'/);
+  assert.match(read('public/sitemap.xml'), /interior-designer-lombok/);
+  assert.match(read('services.html'), /href="\/interior-designer-lombok"/);
+});
+
 test('shared mobile hamburger keeps a touch-sized hit target', () => {
   const css = read('src/styles/components.css');
   const hamburger = css.match(/\.navbar__hamburger\s*\{([^}]+)\}/)[1];
