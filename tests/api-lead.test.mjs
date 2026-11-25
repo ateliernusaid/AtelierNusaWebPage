@@ -100,7 +100,7 @@ test('accepts a valid lead and forwards qualification and attribution fields', a
   assert.equal(result.statusCode, 200);
   assert.deepEqual(result.body, { success: true });
   assert.equal(fetchCalls.length, 1);
-  assert.equal(fetchCalls[0].url, 'https://agent.example.com/webhook/lead');
+  assert.equal(fetchCalls[0].url, 'https://tracker.ateliernusa.id/relay/lead');
   assert.equal(fetchCalls[0].init.headers['X-Webhook-Key'], 'test-key');
   const sent = JSON.parse(fetchCalls[0].init.body);
   assert.equal(sent.name, 'Andi');
@@ -151,31 +151,39 @@ test('rejects a 2xx upstream response without a successful acknowledgment', asyn
   }
 });
 
-test('falls back to the relay when the configured host cannot be reached', async () => {
-  const { req, res } = setup({ body: { name: 'Network Fallback' }, forwardedFor: '198.51.100.7' });
+test('tries the relay before the configured host so a dead host costs nothing', async () => {
+  const { req, res } = setup({ body: { name: 'Order Check' }, forwardedFor: '198.51.100.7' });
   globalThis.fetch = async (url) => {
     fetchCalls.push({ url: String(url) });
-    if (String(url).startsWith('https://agent.example.com')) throw new Error('ETIMEDOUT');
     return { ok: true, status: 200, json: async () => ({ success: true, leadId: 'relay-lead' }) };
   };
   const result = await handler(req, res);
   assert.equal(result.statusCode, 200);
-  assert.equal(fetchCalls.length, 2);
-  assert.equal(fetchCalls[1].url, 'https://tracker.ateliernusa.id/relay/lead');
+  assert.equal(fetchCalls.length, 1);
+  assert.equal(fetchCalls[0].url, 'https://tracker.ateliernusa.id/relay/lead');
 });
 
-test('falls back to the relay when the configured host rejects the key', async () => {
-  const { req, res } = setup({ body: { name: 'Auth Fallback' }, forwardedFor: '198.51.100.8' });
+test('falls through to the configured host when the relay rejects the lead', async () => {
+  const { req, res } = setup({ body: { name: 'Network Fallback' }, forwardedFor: '198.51.100.9' });
   globalThis.fetch = async (url) => {
     fetchCalls.push({ url: String(url) });
-    if (String(url).startsWith('https://agent.example.com')) {
-      return { ok: false, status: 401, json: async () => ({ error: 'Unauthorized' }) };
-    }
-    return { ok: true, status: 200, json: async () => ({ success: true, leadId: 'relay-lead' }) };
+    if (String(url).startsWith('https://tracker.ateliernusa.id')) throw new Error('ETIMEDOUT');
+    return { ok: true, status: 200, json: async () => ({ success: true, leadId: 'direct-lead' }) };
   };
   const result = await handler(req, res);
   assert.equal(result.statusCode, 200);
   assert.equal(fetchCalls.length, 2);
+  assert.equal(fetchCalls[1].url, 'https://agent.example.com/webhook/lead');
+});
+
+test('reports 502 when every candidate rejects the lead', async () => {
+  const { req, res } = setup({ body: { name: 'All Fail' }, forwardedFor: '198.51.100.8' });
+  globalThis.fetch = async (url) => {
+    fetchCalls.push({ url: String(url) });
+    return { ok: false, status: 401, json: async () => ({ error: 'Unauthorized' }) };
+  };
+  const result = await handler(req, res);
+  assert.equal(result.statusCode, 502);
 });
 
 test('rate-limits a single IP after 5 requests per minute', async () => {

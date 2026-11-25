@@ -94,14 +94,15 @@ export default async function handler(req, res) {
 
   const headers = { 'Content-Type': 'application/json' };
   if (agentKey) headers['X-Webhook-Key'] = agentKey;
-  // Try the configured host first (when present), then the first-party relay
-  // whose nginx injects the webhook key. A stale configured host or a rejected
-  // key must not take lead delivery down.
-  const candidates = [];
+  // The relay is the known-good path: nginx injects the webhook key, so it works
+  // even when the configured key is stale. It goes first because a black-holed
+  // legacy host would otherwise burn the whole budget before the fallback runs.
+  // A configured host stays as a secondary attempt only.
+  const candidates = [DEFAULT_RELAY_URL];
   if (process.env.AGENT_WEBHOOK_URL) {
-    candidates.push(new URL('/webhook/lead', process.env.AGENT_WEBHOOK_URL).href);
+    const configured = new URL('/webhook/lead', process.env.AGENT_WEBHOOK_URL).href;
+    if (configured !== DEFAULT_RELAY_URL) candidates.push(configured);
   }
-  candidates.push(DEFAULT_RELAY_URL);
   // Each attempt gets a fresh budget so a black-holed host cannot starve the fallback.
   const attemptTimeoutMs = Math.max(8_000, Math.floor(AGENT_WEBHOOK_TIMEOUT_MS / candidates.length));
   const send = async (target) => {
