@@ -186,6 +186,23 @@ test('reports 502 when every candidate rejects the lead', async () => {
   assert.equal(result.statusCode, 502);
 });
 
+test('probe requests exercise the relay but are marked as dry-run', async () => {
+  const { req, res } = setup({ body: { name: 'PROD-PROBE', phone: '+620000000000', __probe: true }, forwardedFor: '198.51.100.10' });
+  const result = await handler(req, res);
+  assert.equal(result.statusCode, 200);
+  assert.equal(fetchCalls.length, 1);
+  assert.equal(fetchCalls[0].url, 'https://tracker.ateliernusa.id/relay/lead');
+  const sent = JSON.parse(fetchCalls[0].init.body);
+  assert.equal(sent.source, 'e2e_test');
+});
+
+test('a real submission is never downgraded to the dry-run source', async () => {
+  const { req, res } = setup({ body: { name: 'Real Lead', phone: '+628123456789' }, forwardedFor: '198.51.100.11' });
+  await handler(req, res);
+  const sent = JSON.parse(fetchCalls[0].init.body);
+  assert.equal(sent.source, 'website');
+});
+
 test('rate-limits a single IP after 5 requests per minute', async () => {
   const ip = '192.0.2.99';
   let last;

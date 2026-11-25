@@ -47,9 +47,15 @@ export default async function handler(req, res) {
   }
 
   const body = req.body && typeof req.body === 'object' ? req.body : {};
+
+  // Health probes must exercise the real relay path without creating a lead.
+  // The agent dry-runs source 'e2e_test', so the probe still proves that the
+  // network route and the webhook key both work.
+  const isProbe = body.__probe === true;
+
   const ctaId = trimField(body.cta_id || body.ctaId);
   const payload = {
-    source: 'website',
+    source: isProbe ? 'e2e_test' : 'website',
     build_id: trimField(body.build_id),
     name: trimField(body.name),
     email: trimField(body.email),
