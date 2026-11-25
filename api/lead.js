@@ -1,7 +1,9 @@
 const MAX_FIELD_LENGTH = 500;
 const PHONE_RE = /^[+()\-.\s\d]{7,20}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const AGENT_WEBHOOK_TIMEOUT_MS = 8_000;
+// The agent acknowledges once the lead is durably stored, but a cold AI
+// provider can still push past a few seconds, so keep a generous ceiling.
+const AGENT_WEBHOOK_TIMEOUT_MS = 25_000;
 
 // The relay is served on the same origin that hosts the agent, and nginx injects
 // the webhook key server-side. Using it as the default keeps lead delivery
@@ -101,7 +103,7 @@ export default async function handler(req, res) {
   }
   candidates.push(DEFAULT_RELAY_URL);
   // Each attempt gets a fresh budget so a black-holed host cannot starve the fallback.
-  const attemptTimeoutMs = Math.max(1_500, Math.floor(AGENT_WEBHOOK_TIMEOUT_MS / candidates.length));
+  const attemptTimeoutMs = Math.max(8_000, Math.floor(AGENT_WEBHOOK_TIMEOUT_MS / candidates.length));
   const send = async (target) => {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), attemptTimeoutMs);
