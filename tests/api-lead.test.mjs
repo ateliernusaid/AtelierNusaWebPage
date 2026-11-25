@@ -5,7 +5,7 @@ import handler from '../api/lead.js';
 const ENV = { AGENT_WEBHOOK_URL: 'https://agent.example.com', AGENT_WEBHOOK_KEY: 'test-key' };
 
 let fetchCalls = [];
-let fetchResponse = { ok: true, status: 200, json: async () => ({}) };
+let fetchResponse = { ok: true, status: 200, json: async () => ({ success: true, leadId: 'test-lead' }) };
 
 function mockRes() {
   return {
@@ -38,11 +38,13 @@ test('rejects non-POST methods with 405', async () => {
   assert.equal(result.statusCode, 405);
 });
 
-test('returns 503 when webhook env is not configured', async () => {
-  const { req, res } = setup({ env: {} });
+test('falls back to the first-party relay when webhook env is not configured', async () => {
+  const { req, res } = setup({ env: {}, body: { name: 'Relay Fallback' } });
   const result = await handler(req, res);
-  assert.equal(result.statusCode, 503);
-  assert.equal(fetchCalls.length, 0);
+  assert.equal(result.statusCode, 200);
+  assert.equal(fetchCalls.length, 1);
+  assert.equal(fetchCalls[0].url, 'https://bonus.ateliernusa.web.id/relay/lead');
+  assert.equal(fetchCalls[0].init.headers['X-Webhook-Key'], undefined);
 });
 
 test('rejects payloads with no contact field (400)', async () => {
@@ -136,6 +138,44 @@ test('upstream failure is masked as 502 without leaking the upstream body', asyn
   } finally {
     fetchResponse = { ok: true, status: 200, json: async () => ({}) };
   }
+});
+test('rejects a 2xx upstream response without a successful acknowledgment', async () => {
+  fetchResponse = { ok: true, status: 200, json: async () => ({}) };
+  try {
+    const { req, res } = setup({ body: { name: 'No Ack' }, forwardedFor: '198.51.100.6' });
+    const result = await handler(req, res);
+    assert.equal(result.statusCode, 502);
+    assert.ok(!JSON.stringify(result.body).includes('internal'));
+  } finally {
+    fetchResponse = { ok: true, status: 200, json: async () => ({ success: true, leadId: 'test-lead' }) };
+  }
+});
+
+test('falls back to the relay when the configured host cannot be reached', async () => {
+  const { req, res } = setup({ body: { name: 'Network Fallback' }, forwardedFor: '198.51.100.7' });
+  globalThis.fetch = async (url) => {
+    fetchCalls.push({ url: String(url) });
+    if (String(url).startsWith('https://agent.example.com')) throw new Error('ETIMEDOUT');
+    return { ok: true, status: 200, json: async () => ({ success: true, leadId: 'relay-lead' }) };
+  };
+  const result = await handler(req, res);
+  assert.equal(result.statusCode, 200);
+  assert.equal(fetchCalls.length, 2);
+  assert.equal(fetchCalls[1].url, 'https://bonus.ateliernusa.web.id/relay/lead');
+});
+
+test('falls back to the relay when the configured host rejects the key', async () => {
+  const { req, res } = setup({ body: { name: 'Auth Fallback' }, forwardedFor: '198.51.100.8' });
+  globalThis.fetch = async (url) => {
+    fetchCalls.push({ url: String(url) });
+    if (String(url).startsWith('https://agent.example.com')) {
+      return { ok: false, status: 401, json: async () => ({ error: 'Unauthorized' }) };
+    }
+    return { ok: true, status: 200, json: async () => ({ success: true, leadId: 'relay-lead' }) };
+  };
+  const result = await handler(req, res);
+  assert.equal(result.statusCode, 200);
+  assert.equal(fetchCalls.length, 2);
 });
 
 test('rate-limits a single IP after 5 requests per minute', async () => {

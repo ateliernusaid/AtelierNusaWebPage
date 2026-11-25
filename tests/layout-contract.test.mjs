@@ -79,10 +79,14 @@ test('legacy contact handlers mirror without duplicating analytics events', () =
   assert.match(tracker, /mirrorOnly:\s*hasInlineContactTracker\(link\)/);
 });
 
-test('conversion mirror host is allowed by the deployed CSP', () => {
-  const vercel = read('vercel.json');
-  assert.match(vercel, /connect-src[^\"]*https:\/\/tracker\.ateliernusa\.id/);
+test('conversion mirror stays same-origin so the deployed CSP needs no exception', () => {
+  const events = read('src/analytics/events.js');
+  assert.match(events, /const AGENT_CONVERSION_ENDPOINT = '\/api\/conversion';/);
+  const proxy = read('api/conversion.js');
+  assert.match(proxy, /https:\/\/bonus\.ateliernusa\.web\.id\/webhook\/conversion/);
 });
+
+
 test('shared mobile hamburger keeps a touch-sized hit target', () => {
   const css = read('src/styles/components.css');
   const hamburger = css.match(/\.navbar__hamburger\s*\{([^}]+)\}/)[1];

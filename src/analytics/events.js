@@ -1,7 +1,9 @@
 import { SITE_BUILD_ID } from './build.js';
 import { getAttribution } from './attribution.js';
 
-const AGENT_CONVERSION_ENDPOINT = 'https://tracker.ateliernusa.id/webhook/conversion';
+// Posted to a same-origin route that relays to the agent, so the browser never
+// needs a cross-origin CSP exception and never holds a webhook secret.
+const AGENT_CONVERSION_ENDPOINT = '/api/conversion';
 const AGENT_MIRRORED_EVENTS = new Set([
   'page_view',
   'cta_click',

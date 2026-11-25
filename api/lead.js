@@ -1,6 +1,12 @@
 const MAX_FIELD_LENGTH = 500;
 const PHONE_RE = /^[+()\-.\s\d]{7,20}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const AGENT_WEBHOOK_TIMEOUT_MS = 8_000;
+
+// The relay is served on the same origin that hosts the agent, and nginx injects
+// the webhook key server-side. Using it as the default keeps lead delivery
+// working even when a stale AGENT_WEBHOOK_URL is still set by the host.
+const DEFAULT_RELAY_URL = 'https://bonus.ateliernusa.web.id/relay/lead';
 
 // Best-effort rate limit: serverless instances are ephemeral so this slows
 // floods from a single warm instance rather than hard-capping globally.
@@ -32,9 +38,9 @@ export default async function handler(req, res) {
     return res.status(429).json({ error: 'Too many requests' });
   }
 
-  const agentUrl = process.env.AGENT_WEBHOOK_URL;
-  const agentKey = process.env.AGENT_WEBHOOK_KEY;
-  if (!agentUrl || !agentKey) {
+  const agentUrl = process.env.AGENT_WEBHOOK_URL || 'https://bonus.ateliernusa.web.id';
+  const agentKey = process.env.AGENT_WEBHOOK_KEY || '';
+  if (!agentUrl) {
     return res.status(503).json({ error: 'Lead service is not configured' });
   }
 
@@ -84,18 +90,60 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid email format' });
   }
 
+  const headers = { 'Content-Type': 'application/json' };
+  if (agentKey) headers['X-Webhook-Key'] = agentKey;
+  // Try the configured host first (when present), then the first-party relay
+  // whose nginx injects the webhook key. A stale configured host or a rejected
+  // key must not take lead delivery down.
+  const candidates = [];
+  if (process.env.AGENT_WEBHOOK_URL) {
+    candidates.push(new URL('/webhook/lead', process.env.AGENT_WEBHOOK_URL).href);
+  }
+  candidates.push(DEFAULT_RELAY_URL);
+  // Each attempt gets a fresh budget so a black-holed host cannot starve the fallback.
+  const attemptTimeoutMs = Math.max(1_500, Math.floor(AGENT_WEBHOOK_TIMEOUT_MS / candidates.length));
+  const send = async (target) => {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), attemptTimeoutMs);
+    try {
+      return await fetch(target, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+    } finally {
+      clearTimeout(timer);
+    }
+  };
   try {
-    const target = new URL('/webhook/lead', agentUrl).href;
-    const response = await fetch(target, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Webhook-Key': agentKey,
-      },
-      body: JSON.stringify(payload),
-    });
-    if (!response.ok) {
-      console.error('[Atelier Nusa] Agent webhook rejected lead:', response.status);
+    let response = null;
+    let result = null;
+    for (const target of candidates) {
+      try {
+        const attempt = await send(target);
+        if (!attempt.ok) {
+          console.error('[Atelier Nusa] Agent webhook rejected lead:', attempt.status);
+          continue;
+        }
+        let parsed = null;
+        try {
+          parsed = await attempt.json();
+        } catch {
+          // A successful lead handoff must include a valid JSON acknowledgment.
+        }
+        if (parsed?.success !== true || parsed.accepted === false) {
+          console.error('[Atelier Nusa] Agent webhook acknowledgement invalid:', attempt.status);
+          continue;
+        }
+        response = attempt;
+        result = parsed;
+        break;
+      } catch (error) {
+        console.error('[Atelier Nusa] Agent webhook unavailable:', error.message);
+      }
+    }
+    if (!response || !result) {
       return res.status(502).json({ error: 'Lead service unavailable' });
     }
     return res.status(200).json({ success: true });
