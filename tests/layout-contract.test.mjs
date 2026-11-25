@@ -83,7 +83,7 @@ test('conversion mirror stays same-origin so the deployed CSP needs no exception
   const events = read('src/analytics/events.js');
   assert.match(events, /const AGENT_CONVERSION_ENDPOINT = '\/api\/conversion';/);
   const proxy = read('api/conversion.js');
-  assert.match(proxy, /https:\/\/bonus\.ateliernusa\.web\.id\/webhook\/conversion/);
+  assert.match(proxy, /https:\/\/tracker\.ateliernusa\.id\/webhook\/conversion/);
 });
 
 

@@ -43,7 +43,7 @@ test('falls back to the first-party relay when webhook env is not configured', a
   const result = await handler(req, res);
   assert.equal(result.statusCode, 200);
   assert.equal(fetchCalls.length, 1);
-  assert.equal(fetchCalls[0].url, 'https://bonus.ateliernusa.web.id/relay/lead');
+  assert.equal(fetchCalls[0].url, 'https://tracker.ateliernusa.id/relay/lead');
   assert.equal(fetchCalls[0].init.headers['X-Webhook-Key'], undefined);
 });
 
@@ -161,7 +161,7 @@ test('falls back to the relay when the configured host cannot be reached', async
   const result = await handler(req, res);
   assert.equal(result.statusCode, 200);
   assert.equal(fetchCalls.length, 2);
-  assert.equal(fetchCalls[1].url, 'https://bonus.ateliernusa.web.id/relay/lead');
+  assert.equal(fetchCalls[1].url, 'https://tracker.ateliernusa.id/relay/lead');
 });
 
 test('falls back to the relay when the configured host rejects the key', async () => {

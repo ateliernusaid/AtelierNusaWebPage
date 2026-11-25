@@ -40,7 +40,7 @@ test('forwards the payload to the first-party relay', async () => {
   const result = await handler(req, res);
   assert.equal(result.statusCode, 204);
   assert.equal(calls.length, 1);
-  assert.equal(calls[0].url, 'https://bonus.ateliernusa.web.id/webhook/conversion');
+  assert.equal(calls[0].url, 'https://tracker.ateliernusa.id/webhook/conversion');
   assert.deepEqual(JSON.parse(calls[0].init.body), body);
 });
 

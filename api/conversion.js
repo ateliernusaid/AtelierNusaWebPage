@@ -3,7 +3,7 @@
 // the tracker host out of the browser and removes any CORS requirement.
 
 const TARGET = process.env.AGENT_CONVERSION_URL
-  || 'https://bonus.ateliernusa.web.id/webhook/conversion';
+  || 'https://tracker.ateliernusa.id/webhook/conversion';
 const TIMEOUT_MS = 5_000;
 const MAX_BODY = 8 * 1024;
 

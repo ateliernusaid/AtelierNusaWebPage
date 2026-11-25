@@ -6,7 +6,7 @@ const AGENT_WEBHOOK_TIMEOUT_MS = 8_000;
 // The relay is served on the same origin that hosts the agent, and nginx injects
 // the webhook key server-side. Using it as the default keeps lead delivery
 // working even when a stale AGENT_WEBHOOK_URL is still set by the host.
-const DEFAULT_RELAY_URL = 'https://bonus.ateliernusa.web.id/relay/lead';
+const DEFAULT_RELAY_URL = 'https://tracker.ateliernusa.id/relay/lead';
 
 // Best-effort rate limit: serverless instances are ephemeral so this slows
 // floods from a single warm instance rather than hard-capping globally.
@@ -38,7 +38,7 @@ export default async function handler(req, res) {
     return res.status(429).json({ error: 'Too many requests' });
   }
 
-  const agentUrl = process.env.AGENT_WEBHOOK_URL || 'https://bonus.ateliernusa.web.id';
+  const agentUrl = process.env.AGENT_WEBHOOK_URL || 'https://tracker.ateliernusa.id';
   const agentKey = process.env.AGENT_WEBHOOK_KEY || '';
   if (!agentUrl) {
     return res.status(503).json({ error: 'Lead service is not configured' });
